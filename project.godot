@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 GameManager="*res://Scripts/Systems/GameManager.gd"
 Global="*res://Scripts/Systems/Global.gd"
 
+[dotnet]
+
+project/assembly_name="CaveDiver"
+
 [input]
 
 right={

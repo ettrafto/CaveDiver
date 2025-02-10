@@ -1,6 +1,2 @@
 res://main_scene.tscn
-res://Scripts/Systems/GameManager.gd
 res://Scripts/Player/Player.gd
-res://Scripts/HUD/hud.gd
-res://Scripts/Map/Map.gd
-res://Scripts/Systems/SaveSystem.gd
