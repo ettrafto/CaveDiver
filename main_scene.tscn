@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=4 uid="uid://bw61hcrsu2ee5"]
+[gd_scene load_steps=9 format=4 uid="uid://bw61hcrsu2ee5"]
 
-[ext_resource type="Texture2D" uid="uid://bc7bae33s28ir" path="res://Assets/Art/CaveTiles1/CaveBG.png" id="3_debib"]
-[ext_resource type="Texture2D" uid="uid://df07d81malalj" path="res://Assets/Art/diver/diver1.png" id="3_mpcjb"]
+[ext_resource type="Texture2D" uid="uid://cj56st2s3rft8" path="res://Assets/Art/CaveTiles1/CaveBG.png" id="3_debib"]
+[ext_resource type="Texture2D" uid="uid://8bsvqcd8cg7m" path="res://Assets/Art/diver/diver1.png" id="3_mpcjb"]
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="4_pwyh5"]
-[ext_resource type="Texture2D" uid="uid://d3o5ck02o5idq" path="res://Assets/Art/CaveTiles1/CaveG.png" id="4_x3thl"]
+[ext_resource type="Texture2D" uid="uid://bit0vlbx7vurt" path="res://Assets/Art/CaveTiles1/CaveG.png" id="4_x3thl"]
+[ext_resource type="Script" path="res://Scripts/HUD/HUD.gd" id="5_6w5lm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mydmx"]
 texture = ExtResource("4_x3thl")
@@ -1902,29 +1903,33 @@ tile_set = SubResource("TileSet_54ow2")
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="Player"]
-position = Vector2(-136.36, -165.35)
+position = Vector2(5.36848, -73.5484)
 motion_mode = 1
 script = ExtResource("4_pwyh5")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/CharacterBody2D"]
+position = Vector2(0, -62)
 polygon = PackedVector2Array(30, 81, 20, 76, 9, 75, 1, 70, -5, 69, -10, 69, -17, 70, -20, 66, -23, 58, -18, 49, -10, 49, -4, 54, 8, 59, 8, 66, 16, 68, 23, 68, 31, 75)
 
 [node name="Sprite2D" type="Sprite2D" parent="Player/CharacterBody2D"]
-position = Vector2(6, 66)
+position = Vector2(5, 3)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("3_mpcjb")
 
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("5_6w5lm")
 
 [node name="Oxygen" type="ProgressBar" parent="HUD"]
 visible = false
+layout_mode = 0
 offset_right = 4.0
 offset_bottom = 27.0
 
 [node name="Weight" type="ProgressBar" parent="HUD"]
 visible = false
+layout_mode = 0
 offset_right = 4.0
 offset_bottom = 27.0
 
@@ -1935,3 +1940,6 @@ visible = false
 layout_mode = 0
 offset_right = 4.0
 offset_bottom = 27.0
+step = 1.0
+
+[connection signal="bcd_change" from="Player/CharacterBody2D" to="HUD" method="_on_character_body_2d_bcd_change"]

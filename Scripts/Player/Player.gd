@@ -1,63 +1,51 @@
 extends CharacterBody2D
 
-@export var move_speed: float = 200.0  # Max movement speed
+signal bcd_change
+
+@export var max_speed: float = 200.0  # Max horizontal movement speed
 @export var acceleration: float = 1000.0  # How fast the player speeds up
-@export var deceleration: float = 100.0  # Water resistance (slows movement)
+@export var drag: float = 10  # Water resistance (slows movement)
 @export var gravity: float = 9.8  # Not used much underwater but can simulate sinking
 
 # Buoyancy-related stats
-var weight: float = 1
-var bcd_capacity: float = 1
-var bcd_inflation: float = 1
+var weight: float = 12.5
+var bcd_capacity: float = 25
 var buoyancy: float = 0  
-var vertical_speed: float = 0  
+var depth: int = 0
 
-# Movement input & momentum
-var velocity_input: Vector2 = Vector2.ZERO
-var momentum: Vector2 = Vector2.ZERO  # Store momentum
+# velocity input & momentum
+var move_input: float
+var rotate_input: float
+var accelerated_vel = Vector2.ZERO
+var bouyancy_input: float
+var test = Vector2.ZERO
 
 @onready var hud = get_tree().get_first_node_in_group("HUD")
 
+#gets the input values range -1 to 1
+func get_movement_input():	
+	move_input = int(Input.is_action_pressed("right")) - int(Input.is_action_pressed("left"))
+	rotate_input = Input.get_axis("tilt_down","tilt_up")
+	bouyancy_input = int(Input.is_action_pressed("inflate_bcd")) - int(Input.is_action_pressed("deflate_bcd"))
+	
+#changes the velocity and rotation of the player
 func _physics_process(delta):
-	# Inflate/Deflate BCD
-	if Input.is_action_just_pressed("inflate_bcd"):
-		inflate_bcd(0.1)
-	if Input.is_action_just_pressed("deflate_bcd"):
-		deflate_bcd(0.1)
-
-	# Buoyancy Calculation
-	buoyancy = (bcd_inflation * bcd_capacity) - weight
-	if buoyancy > 0:
-		vertical_speed = -abs(buoyancy) * move_speed * 0.5  
-	elif buoyancy < 0:
-		vertical_speed = abs(buoyancy) * move_speed * 0.5  
+	get_movement_input()
+	
+	if bouyancy_input != 0:
+		GameManager.bcd_inflation = clamp(GameManager.bcd_inflation + bouyancy_input * 0.01,0,1)
+		bcd_change.emit()
+	
+	buoyancy = GameManager.bcd_inflation * bcd_capacity - weight
+	
+	if rotate_input != 0:
+		rotation = clamp(rotation + 0.02 * rotate_input,-0.75,0.5)
+	if move_input != 0:
+		velocity += transform.x * move_input * delta * acceleration
 	else:
-		vertical_speed = 0  
-
-	# Get movement input
-	velocity_input.x = Input.get_action_strength("right") - Input.get_action_strength("left")
-	velocity_input.y = vertical_speed * delta  
-
-	# Apply acceleration when moving
-	if velocity_input.length() > 0:
-		momentum += velocity_input * acceleration * delta  # Speed up
-		momentum = momentum.limit_length(move_speed)  # Cap max speed
-	else:
-		# Apply deceleration when no input
-		momentum = momentum.lerp(Vector2.ZERO, deceleration * delta)
-
-	# Apply movement
-	velocity = momentum
+		velocity = velocity.move_toward(Vector2.ZERO, drag)
+	
+	velocity.y -= buoyancy
+	velocity = velocity.limit_length(max_speed)
+	
 	move_and_slide()
-
-func inflate_bcd(amount: float):
-	"""Increase BCD inflation"""
-	bcd_inflation = clamp(bcd_inflation + amount, 0, 10)
-	if hud:
-		hud.update_weight_and_bcd()
-
-func deflate_bcd(amount: float):
-	"""Decrease BCD inflation"""
-	bcd_inflation = clamp(bcd_inflation - amount, 0, 10)
-	if hud:
-		hud.update_weight_and_bcd()
