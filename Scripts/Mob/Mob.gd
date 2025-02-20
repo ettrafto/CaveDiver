@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var health: float = 10
+@export var health: float = 1
 @export var awareness: float = 0.6
 @export var aggression = 0
 @export var fear = 0
@@ -90,13 +90,20 @@ func _physics_process(delta: float) -> void:
 	if health <= 0 and alive:
 		die()
 		
-	if not alive and death_fade > MAX_FADE:
-		death_fade = lerp(death_fade, 0.5, delta/5)
-		shade(death_fade, death_fade, death_fade)
 	
 	if alive:
 		approach_player(delta)
 	else:
+		# makes sprite's color slowly fade to 50% of its normal color
+		if death_fade > MAX_FADE:
+			death_fade = lerp(death_fade, 0.5, delta/5)
+			shade(death_fade, death_fade, death_fade)
+			
+		if abs(rotation) > 0.001:
+			rotation = clampf(rotation - rotation * accel/2 * delta, min(0, rotation), max(0, rotation))
+		else:
+			rotation = 0
+		
 		# if dead, drift to cave floor
 		velocity = velocity.lerp(Vector2.DOWN * 25, 10 * delta)
 	
