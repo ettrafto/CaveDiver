@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var health: float = 1
+@export var health: float = 3
 @export var awareness: float = 0.6
 @export var aggression = 0
 @export var fear = 0
@@ -89,7 +89,6 @@ func _physics_process(delta: float) -> void:
 	# kills mob if health is 0
 	if health <= 0 and alive:
 		die()
-		
 	
 	if alive:
 		approach_player(delta)
@@ -114,7 +113,7 @@ func _physics_process(delta: float) -> void:
 		var collision := get_slide_collision(index)
 		var body := collision.get_collider()
 		#print("Collided with: ", body.name)
-		if body.name == "PlayerBody":
+		if body.name == "PlayerBody" and alive:
 			#print("	Collided with a player")
 			hurt(1)
 
