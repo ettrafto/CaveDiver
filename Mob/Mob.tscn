@@ -237,7 +237,7 @@ script = ExtResource("1_pjnhb")
 material = SubResource("ShaderMaterial_ca8wf")
 rotation = 0.0107695
 sprite_frames = SubResource("SpriteFrames_fltpk")
-animation = &"death"
+animation = &"hurt"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-5, 1)
@@ -246,3 +246,8 @@ shape = SubResource("CapsuleShape2D_n5qr6")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 debug_enabled = true
+
+[node name="HitCooldown" type="Timer" parent="."]
+process_callback = 0
+
+[connection signal="timeout" from="HitCooldown" to="." method="_on_hit_cooldown_timeout"]
