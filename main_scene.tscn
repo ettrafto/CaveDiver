@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=4 uid="uid://bw61hcrsu2ee5"]
+[gd_scene load_steps=10 format=4 uid="uid://bw61hcrsu2ee5"]
 
-[ext_resource type="Texture2D" uid="uid://cj56st2s3rft8" path="res://Assets/Art/CaveTiles1/CaveBG.png" id="3_debib"]
-[ext_resource type="Texture2D" uid="uid://8bsvqcd8cg7m" path="res://Assets/Art/diver/diver1.png" id="3_mpcjb"]
+[ext_resource type="Texture2D" uid="uid://dl0whk8can5rx" path="res://Assets/Art/CaveTiles1/CaveBG.png" id="3_debib"]
+[ext_resource type="Texture2D" uid="uid://m3cgsjtu281v" path="res://Assets/Art/diver/diver1.png" id="3_mpcjb"]
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="4_pwyh5"]
-[ext_resource type="Texture2D" uid="uid://bit0vlbx7vurt" path="res://Assets/Art/CaveTiles1/CaveG.png" id="4_x3thl"]
+[ext_resource type="Texture2D" uid="uid://dimpgxeu3oakl" path="res://Assets/Art/CaveTiles1/CaveG.png" id="4_x3thl"]
 [ext_resource type="Script" path="res://Scripts/HUD/HUD.gd" id="5_6w5lm"]
+[ext_resource type="PackedScene" uid="uid://c8i7a05824we3" path="res://Mob/Mob.tscn" id="5_o7yvq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mydmx"]
 texture = ExtResource("4_x3thl")
@@ -1875,6 +1876,11 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_mydmx")
 sources/1 = SubResource("TileSetAtlasSource_sk2l4")
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_0diyu"]
+vertices = PackedVector2Array(325.531, -70.0078, 325.531, 270.789, -151.563, 271.813, -150.539, -71.0313)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-160.518, -81.0641, 335.531, -79.9904, 335.531, 280.772, -161.592, 279.699)])
+
 [node name="MainScene" type="Node2D"]
 position = Vector2(234, -46)
 scale = Vector2(1.86272, 1.86272)
@@ -1898,20 +1904,23 @@ position = Vector2(-40, 70)
 tile_map_data = PackedByteArray("AAD3//f/AAAhABkAAAD5//n/AAAiABgAAAD5//r/AAAiABkAAAD6//n/AAAjABgAAAD6//r/AAAjABkAAAD5//v/AAAiABgAAAD5//z/AAAiABkAAAD6//v/AAAjABgAAAD6//z/AAAjABkAAAD5//3/AAAiABgAAAD5//7/AAAiABkAAAD6//3/AAAjABgAAAD6//7/AAAjABkAAAD5////AAAiABgAAAD5/wAAAAAiABkAAAD6////AAAjABgAAAD6/wAAAAAjABkAAAD5/wEAAAAiABgAAAD5/wIAAAAiABkAAAD6/wEAAAAjABgAAAD6/wIAAAAjABkAAAD5/wMAAAAiABgAAAD5/wQAAAAiABkAAAD6/wMAAAAjABgAAAD6/wQAAAAjABkAAAD5/wUAAAAiABgAAAD5/wYAAAAiABkAAAD6/wUAAAAjABgAAAD6/wYAAAAjABkAAAD5/wcAAAAiABgAAAD5/wgAAAAiABkAAAD6/wcAAAAjABgAAAD6/wgAAAAjABkAAAD5/wkAAAAiABgAAAD5/woAAAAiABkAAAD6/wkAAAAjABgAAAD6/woAAAAjABkAAAD7//f/AAAgABoAAAD7//j/AAAgABsAAAD8//f/AAAhABoAAAD8//j/AAAhABsAAAD9//f/AAAgABoAAAD9//j/AAAgABsAAAD+//f/AAAhABoAAAD+//j/AAAhABsAAAD///f/AAAgABoAAAD///j/AAAgABsAAAAAAPf/AAAhABoAAAAAAPj/AAAhABsAAAABAPf/AAAgABoAAAABAPj/AAAgABsAAAACAPf/AAAhABoAAAACAPj/AAAhABsAAAADAPf/AAAgABoAAAADAPj/AAAgABsAAAAEAPf/AAAhABoAAAAEAPj/AAAhABsAAAAFAPf/AAAgABoAAAAFAPj/AAAgABsAAAAGAPf/AAAhABoAAAAGAPj/AAAhABsAAAAHAPf/AAAgABoAAAAHAPj/AAAgABsAAAAIAPf/AAAhABoAAAAIAPj/AAAhABsAAAAJAPf/AAAgABoAAAAJAPj/AAAgABsAAAAKAPf/AAAhABoAAAAKAPj/AAAhABsAAAALAPf/AAAgABoAAAALAPj/AAAgABsAAAAMAPf/AAAhABoAAAAMAPj/AAAhABsAAAANAPf/AAAgABoAAAANAPj/AAAgABsAAAAOAPf/AAAhABoAAAAOAPj/AAAhABsAAAAPAPf/AAAgABoAAAAPAPj/AAAgABsAAAAQAPf/AAAhABoAAAAQAPj/AAAhABsAAAARAPf/AAAgABoAAAARAPj/AAAgABsAAAASAPf/AAAhABoAAAASAPj/AAAhABsAAAATAPf/AAAgABoAAAATAPj/AAAgABsAAAAUAPf/AAAhABoAAAAUAPj/AAAeAB0AAAAVAPn/AAAkABgAAAAVAPr/AAAkABkAAAAWAPn/AAAlABgAAAAWAPr/AAAlABkAAAAVAPv/AAAkABgAAAAVAPz/AAAkABkAAAAWAPv/AAAlABgAAAAWAPz/AAAlABkAAAAVAP3/AAAkABgAAAAVAP7/AAAkABkAAAAWAP3/AAAlABgAAAAWAP7/AAAlABkAAAAVAP//AAAkABgAAAAVAAAAAAAkABkAAAAWAP//AAAlABgAAAAWAAAAAAAlABkAAAAVAAEAAAAkABgAAAAVAAIAAAAkABkAAAAWAAEAAAAlABgAAAAWAAIAAAAlABkAAAAVAAMAAAAkABgAAAAVAAQAAAAkABkAAAAWAAMAAAAlABgAAAAWAAQAAAAlABkAAAAVAAUAAAAkABgAAAAVAAYAAAAkABkAAAAWAAUAAAAlABgAAAAWAAYAAAAlABkAAAAVAAcAAAAkABgAAAAVAAgAAAAkABkAAAAWAAcAAAAlABgAAAAWAAgAAAAlABkAAAAVAAkAAAAkABgAAAAVAAoAAAAkABkAAAAWAAkAAAAlABgAAAAWAAoAAAAlABkAAAD7/wsAAAAgABwAAAD7/wwAAAAgAB0AAAD8/wsAAAAhABwAAAD8/wwAAAAhAB0AAAD9/wsAAAAgABwAAAD9/wwAAAAgAB0AAAD+/wsAAAAhABwAAAD+/wwAAAAhAB0AAAD//wsAAAAgABwAAAD//wwAAAAgAB0AAAAAAAsAAAAhABwAAAAAAAwAAAAhAB0AAAABAAsAAAAgABwAAAABAAwAAAAgAB0AAAACAAsAAAAhABwAAAACAAwAAAAhAB0AAAADAAsAAAAgABwAAAADAAwAAAAgAB0AAAAEAAsAAAAhABwAAAAEAAwAAAAhAB0AAAAFAAsAAAAgABwAAAAFAAwAAAAgAB0AAAAGAAsAAAAhABwAAAAGAAwAAAAhAB0AAAAHAAsAAAAgABwAAAAHAAwAAAAgAB0AAAAIAAsAAAAhABwAAAAIAAwAAAAhAB0AAAAJAAsAAAAgABwAAAAJAAwAAAAgAB0AAAAKAAsAAAAhABwAAAAKAAwAAAAhAB0AAAALAAsAAAAgABwAAAALAAwAAAAgAB0AAAAMAAsAAAAhABwAAAAMAAwAAAAhAB0AAAANAAsAAAAgABwAAAANAAwAAAAgAB0AAAAOAAsAAAAhABwAAAAOAAwAAAAhAB0AAAAPAAsAAAAgABwAAAAPAAwAAAAgAB0AAAAQAAsAAAAhABwAAAAQAAwAAAAhAB0AAAARAAsAAAAgABwAAAARAAwAAAAgAB0AAAASAAsAAAAhABwAAAASAAwAAAAhAB0AAAATAAsAAAAgABwAAAATAAwAAAAgAB0AAAAUAAsAAAAhABwAAAAUAAwAAAAhAB0AAAD6//j/AAAeAB0AAAD6//f/AAAeAB0AAAD5//f/AAAeAB0AAAD5//j/AAAeAB0AAAAVAPf/AAAeAB0AAAAWAPf/AAAeAB0AAAAWAPj/AAAeAB0AAAAVAPj/AAAeAB0AAAAVAAsAAAAeAB0AAAAVAAwAAAAeAB0AAAAWAAwAAAAeAB0AAAAWAAsAAAAeAB0AAAD6/wsAAAAeAB0AAAD5/wsAAAAeAB0AAAD5/wwAAAAeAB0AAAD6/wwAAAAeAB0AAAA=")
 tile_set = SubResource("TileSet_54ow2")
 
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="Map"]
+navigation_polygon = SubResource("NavigationPolygon_0diyu")
+
 [node name="Player" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="Player"]
+[node name="PlayerBody" type="CharacterBody2D" parent="Player"]
 position = Vector2(5.36848, -73.5484)
 motion_mode = 1
 script = ExtResource("4_pwyh5")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/CharacterBody2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/PlayerBody"]
 position = Vector2(0, -62)
 polygon = PackedVector2Array(30, 81, 20, 76, 9, 75, 1, 70, -5, 69, -10, 69, -17, 70, -20, 66, -23, 58, -18, 49, -10, 49, -4, 54, 8, 59, 8, 66, 16, 68, 23, 68, 31, 75)
 
-[node name="Sprite2D" type="Sprite2D" parent="Player/CharacterBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Player/PlayerBody"]
 position = Vector2(5, 3)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("3_mpcjb")
@@ -1942,4 +1951,9 @@ offset_right = 4.0
 offset_bottom = 27.0
 step = 1.0
 
-[connection signal="bcd_change" from="Player/CharacterBody2D" to="HUD" method="_on_character_body_2d_bcd_change"]
+[connection signal="bcd_change" from="Player/PlayerBody" to="HUD" method="_on_character_body_2d_bcd_change"]
+
+[node name="Mob" parent="." instance=ExtResource("5_o7yvq")]
+editor_description = " Default Mob Template "
+motion_mode = 1
+awareness = 0.5
