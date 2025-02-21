@@ -21,10 +21,7 @@ func update_bars():
 	if GameManager:
 		#oxygen_bar.value = GameManager.oxygen
 		#weight_bar.value = GameManager.weight
-<<<<<<< HEAD
 		print(GameManager.bcd_inflation)
-=======
->>>>>>> player_movement_tg
 		bcd_bar.set_value(GameManager.bcd_inflation * 100)
 		
 
