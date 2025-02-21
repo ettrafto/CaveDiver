@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://m3cgsjtu281v" path="res://Assets/Art/diver/diver1.png" id="3_mpcjb"]
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="4_pwyh5"]
 [ext_resource type="Texture2D" uid="uid://dimpgxeu3oakl" path="res://Assets/Art/CaveTiles1/CaveG.png" id="4_x3thl"]
+[ext_resource type="Script" path="res://Scripts/HUD/HUD.gd" id="5_6w5lm"]
 [ext_resource type="PackedScene" uid="uid://c8i7a05824we3" path="res://Mob/Mob.tscn" id="5_o7yvq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mydmx"]
@@ -1911,21 +1912,23 @@ navigation_polygon = SubResource("NavigationPolygon_0diyu")
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
 [node name="PlayerBody" type="CharacterBody2D" parent="Player"]
-position = Vector2(-136.36, -165.35)
+position = Vector2(5.36848, -73.5484)
 motion_mode = 1
 script = ExtResource("4_pwyh5")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/PlayerBody"]
+position = Vector2(0, -62)
 polygon = PackedVector2Array(30, 81, 20, 76, 9, 75, 1, 70, -5, 69, -10, 69, -17, 70, -20, 66, -23, 58, -18, 49, -10, 49, -4, 54, 8, 59, 8, 66, 16, 68, 23, 68, 31, 75)
 
 [node name="Sprite2D" type="Sprite2D" parent="Player/PlayerBody"]
-position = Vector2(6, 66)
+position = Vector2(5, 3)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("3_mpcjb")
 
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("5_6w5lm")
 
 [node name="Oxygen" type="ProgressBar" parent="HUD"]
 visible = false
@@ -1946,6 +1949,9 @@ visible = false
 layout_mode = 0
 offset_right = 4.0
 offset_bottom = 27.0
+step = 1.0
+
+[connection signal="bcd_change" from="Player/PlayerBody" to="HUD" method="_on_character_body_2d_bcd_change"]
 
 [node name="Mob" parent="." instance=ExtResource("5_o7yvq")]
 editor_description = " Default Mob Template "
