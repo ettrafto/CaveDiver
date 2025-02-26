@@ -158,6 +158,7 @@ radius = 17.0
 height = 44.0
 
 [node name="Mob" type="CharacterBody2D"]
+editor_description = "Default Mob Template"
 script = ExtResource("1_pjnhb")
 metadata/_edit_group_ = true
 
