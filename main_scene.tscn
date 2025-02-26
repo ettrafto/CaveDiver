@@ -1,11 +1,13 @@
-[gd_scene load_steps=10 format=4 uid="uid://bw61hcrsu2ee5"]
+[gd_scene load_steps=15 format=4 uid="uid://bw61hcrsu2ee5"]
 
-[ext_resource type="Texture2D" uid="uid://dl0whk8can5rx" path="res://Assets/Art/CaveTiles1/CaveBG.png" id="3_debib"]
-[ext_resource type="Texture2D" uid="uid://m3cgsjtu281v" path="res://Assets/Art/diver/diver1.png" id="3_mpcjb"]
+[ext_resource type="Texture2D" uid="uid://cj56st2s3rft8" path="res://Assets/Art/CaveTiles1/CaveBG.png" id="3_debib"]
+[ext_resource type="Texture2D" uid="uid://8bsvqcd8cg7m" path="res://Assets/Art/diver/diver1.png" id="3_mpcjb"]
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="4_pwyh5"]
-[ext_resource type="Texture2D" uid="uid://dimpgxeu3oakl" path="res://Assets/Art/CaveTiles1/CaveG.png" id="4_x3thl"]
+[ext_resource type="Texture2D" uid="uid://bit0vlbx7vurt" path="res://Assets/Art/CaveTiles1/CaveG.png" id="4_x3thl"]
 [ext_resource type="Script" path="res://Scripts/HUD/HUD.gd" id="5_6w5lm"]
-[ext_resource type="PackedScene" uid="uid://c8i7a05824we3" path="res://Mob/Mob.tscn" id="5_o7yvq"]
+[ext_resource type="PackedScene" uid="uid://c8btmt1p1c5oi" path="res://Mob/Hitbox.tscn" id="5_drt5h"]
+[ext_resource type="PackedScene" uid="uid://dhafxmdd71i72" path="res://Mob/Hurtbox.tscn" id="6_nebgd"]
+[ext_resource type="PackedScene" uid="uid://c8i7a05824we3" path="res://Mob/Mob.tscn" id="8_xcfsc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mydmx"]
 texture = ExtResource("4_x3thl")
@@ -1881,6 +1883,14 @@ vertices = PackedVector2Array(325.531, -70.0078, 325.531, 270.789, -151.563, 271
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-160.518, -81.0641, 335.531, -79.9904, 335.531, 280.772, -161.592, 279.699)])
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tsws6"]
+radius = 13.9458
+height = 32.1826
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0k3fl"]
+radius = 10.3643
+height = 61.6075
+
 [node name="MainScene" type="Node2D"]
 position = Vector2(234, -46)
 scale = Vector2(1.86272, 1.86272)
@@ -1905,6 +1915,7 @@ tile_map_data = PackedByteArray("AAD3//f/AAAhABkAAAD5//n/AAAiABgAAAD5//r/AAAiABk
 tile_set = SubResource("TileSet_54ow2")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="Map"]
+visible = false
 navigation_polygon = SubResource("NavigationPolygon_0diyu")
 
 [node name="Player" type="Node2D" parent="."]
@@ -1924,6 +1935,25 @@ polygon = PackedVector2Array(30, 81, 20, 76, 9, 75, 1, 70, -5, 69, -10, 69, -17,
 position = Vector2(5, 3)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("3_mpcjb")
+
+[node name="Hitbox" parent="Player/PlayerBody" instance=ExtResource("5_drt5h")]
+position = Vector2(-18.2529, -3.22106)
+rotation = 1.61277
+collision_layer = 8
+collision_mask = 64
+
+[node name="CollisionShape2D" parent="Player/PlayerBody/Hitbox" index="0"]
+shape = SubResource("CapsuleShape2D_tsws6")
+
+[node name="Hurtbox" parent="Player/PlayerBody" instance=ExtResource("6_nebgd")]
+position = Vector2(3.22111, 3.22114)
+collision_layer = 32
+collision_mask = 16
+
+[node name="CollisionShape2D" parent="Player/PlayerBody/Hurtbox" index="0"]
+position = Vector2(6.55651e-07, 1.90735e-06)
+rotation = -1.19163
+shape = SubResource("CapsuleShape2D_0k3fl")
 
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3
@@ -1951,9 +1981,16 @@ offset_right = 4.0
 offset_bottom = 27.0
 step = 1.0
 
+[node name="Mob" parent="." instance=ExtResource("8_xcfsc")]
+position = Vector2(-46.169, 61.7377)
+
+[node name="Hitbox" parent="Mob" index="6"]
+visible = false
+
 [connection signal="bcd_change" from="Player/PlayerBody" to="HUD" method="_on_character_body_2d_bcd_change"]
 
-[node name="Mob" parent="." instance=ExtResource("5_o7yvq")]
-editor_description = " Default Mob Template "
-motion_mode = 1
-awareness = 0.5
+[editable path="Player/PlayerBody/Hitbox"]
+[editable path="Player/PlayerBody/Hurtbox"]
+[editable path="Mob"]
+[editable path="Mob/Hurtbox"]
+[editable path="Mob/Hitbox"]
