@@ -12,13 +12,14 @@ extends CharacterBody2D
 # aliases for commonly referenced nodes
 @onready var player = $"../Player/PlayerBody"
 @onready var nav = $NavigationAgent2D
-@onready var sprite = $AnimatedSprite2D
+@onready var sprite = $Sprite2D
+@onready var anim_player = $AnimationPlayer
+@onready var hurtbox = $Hurtbox/CollisionShape2D
 
-# prevents multiple hits in quick succession
-# This is set true when the mob is hit, and set back to false when the timer expires
-var invincible: bool = false
-# this is the cooldown in seconds until the mob can be damaged again
-var invincibilty_cooldown = 1
+func _ready():
+	# for some reason,the hurtbox is always instantiated disabled
+	# this re-enables it
+	hurtbox.set_deferred("disabled", false)
 
 # this is set to false when the mob dies and is checked to enable the death effects
 var alive: bool = true
@@ -35,14 +36,14 @@ var death_fade = 1.0
 # shades the sprite by multiplying the RGB values of each pixel by the given factors
 # used for both the death shader and camoflauge
 func shade(red_factor=1, green_factor=1, blue_factor=1, alpha=1):
-	$AnimatedSprite2D.material.set_shader_parameter("red_factor", red_factor)
-	$AnimatedSprite2D.material.set_shader_parameter("green_factor", green_factor)
-	$AnimatedSprite2D.material.set_shader_parameter("blue_factor", blue_factor)
-	$AnimatedSprite2D.material.set_shader_parameter("alpha", alpha)
+	sprite.material.set_shader_parameter("red_factor", red_factor)
+	sprite.material.set_shader_parameter("green_factor", green_factor)
+	sprite.material.set_shader_parameter("blue_factor", blue_factor)
+	sprite.material.set_shader_parameter("alpha", alpha)
 
 func die():
 	alive = false
-	$AnimatedSprite2D.play("death")
+	anim_player.play("Die")
 	# here you can define additional behavior after death (i.e. explodes)
 
 func approach_player(delta):
@@ -51,32 +52,35 @@ func approach_player(delta):
 	# get player's position
 	nav.target_position = player.global_position
 	
-	# prevent the mob from transitioning into another animation until it's invincibilty cooldown has expired
-	if $HitCooldown.time_left > 0:
-		sprite.play("hurt")
-	else:
-		# persue if within aggro range
-		if nav.distance_to_target() <= detection_range:
-			# create a vector of length 1 pointing towards the next pathfinding point
-			direction = nav.get_next_path_position() - global_position
-			direction = direction.normalized()
-			
-			# linear interpolation to apply acceleration
-			velocity = velocity.lerp(direction * speed, accel * delta)
-			# rotate sprite to match movement direction
-			rotation = velocity.angle()
-				
-		# return to idle
-		elif velocity.length() != 0:
-			# decelerate towards 0
-			velocity = velocity.lerp(Vector2.ZERO, accel/2 * delta)
-			# rotate towards 0; will be replaced with an "idle" animation & movement pattern
-			rotation = clampf(rotation - rotation * accel/2 * delta, min(0, rotation), max(0, rotation))
+	# prevent the mob from transitioning into another animation until the current one has finished
+	if (
+		anim_player.current_animation == "Hurt"
+		or anim_player.current_animation == "Attack"
+	):
+		return
+	
+	# persue if within aggro range
+	if nav.distance_to_target() <= detection_range:
+		# create a vector of length 1 pointing towards the next pathfinding point
+		direction = nav.get_next_path_position() - global_position
+		direction = direction.normalized()
 		
-		if velocity.length() != 0:
-			sprite.play("swim")
-		else:
-			sprite.play("idle")
+		# linear interpolation to apply acceleration
+		velocity = velocity.lerp(direction * speed, accel * delta)
+		# rotate sprite to match movement direction
+		rotation = velocity.angle()
+			
+	# return to idle
+	elif velocity.length() != 0:
+		# decelerate towards 0
+		velocity = velocity.lerp(Vector2.ZERO, accel/2.0 * delta)
+		# rotate towards 0; will be replaced with an "idle" animation & movement pattern
+		rotation = clampf(rotation - rotation * accel/2.0 * delta, min(0, rotation), max(0, rotation))
+	
+	if velocity.length() != 0:
+		anim_player.play("Swim")
+	else:
+		anim_player.play("Idle")
 	
 	# flip sprite only on vertical axis bc rotation takes care of the horizontal flip
 	if rotation > PI/2 or rotation < -PI/2:
@@ -87,13 +91,13 @@ func approach_player(delta):
 # Function to run every time the mob is injured
 # Takes the amount of damage as an argument
 func hurt(damage: float):
-	if not invincible:
-		invincible = true
-		velocity = velocity/4.0
-		print("Hurt")
-		sprite.play("hurt")
-		health -= damage
-		$HitCooldown.start()
+	velocity = velocity/4.0
+	print("Hurt")
+	anim_player.play("Hurt")
+	# this is required to immediately start the new animation
+	# otherwise, it doesn't start soon enough to disable the hurtbox
+	anim_player.advance(0)
+	health -= damage
 
 func _physics_process(delta: float) -> void:
 	# kills mob if health is 0
@@ -106,7 +110,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		# makes sprite's color slowly fade to 50% of its normal color
 		if death_fade > MAX_FADE:
-			death_fade = lerp(death_fade, 0.5, delta/5)
+			death_fade = lerp(death_fade, MAX_FADE, delta/5)
 			shade(death_fade, death_fade, death_fade)
 			
 		if abs(rotation) > 0.001:
@@ -114,23 +118,14 @@ func _physics_process(delta: float) -> void:
 		else:
 			rotation = 0
 		
-		# if dead, drift to cave floor
+		# drift to cave floor
 		velocity = velocity.lerp(Vector2.DOWN * 25, 10 * delta)
 	
 	# move mob based on velocity
 	move_and_slide()
 	
-	#check for player collisions
-	for index in get_slide_collision_count():
-		var collision := get_slide_collision(index)
-		var body := collision.get_collider()
-		#print("Collided with: ", body.name)
-		if body.name == "PlayerBody" and alive:
-			#print("	Collided with a player")
-			hurt(1)
 
-# timer for i-frames after the mob has been damaged
-func _on_hit_cooldown_timeout() -> void:
-	invincible = false
-	$HitCooldown.stop()
-	print("timer timeout")
+func _on_hurtbox_area_entered(_area: Area2D) -> void:
+	print("mob hurtbox entered")
+	#if alive:
+	hurt(1)
