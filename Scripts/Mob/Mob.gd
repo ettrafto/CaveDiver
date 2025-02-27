@@ -1,8 +1,8 @@
-extends CharacterBody2D
+extends RigidBody2D
 
 # variables defining the basic attributes of the mob
 # these can be customized per-type or per-instance to change behavior
-@export var health: float = 3
+@export var health: float = 50
 @export var awareness: float = 0.6
 @export var aggression = 0
 @export var fear = 0
@@ -20,6 +20,8 @@ func _ready():
 	# for some reason,the hurtbox is always instantiated disabled
 	# this re-enables it
 	hurtbox.set_deferred("disabled", false)
+	gravity_scale = 0.0
+	
 
 # this is set to false when the mob dies and is checked to enable the death effects
 var alive: bool = true
@@ -43,10 +45,12 @@ func shade(red_factor=1, green_factor=1, blue_factor=1, alpha=1):
 
 func die():
 	alive = false
+	# drift to cave floor
+	gravity_scale = 0.2
 	anim_player.play("Die")
 	# here you can define additional behavior after death (i.e. explodes)
 
-func approach_player(delta):
+func approach_player(state):
 	var direction = Vector3()
 	
 	# get player's position
@@ -54,8 +58,10 @@ func approach_player(delta):
 	
 	# prevent the mob from transitioning into another animation until the current one has finished
 	if (
-		anim_player.current_animation == "Hurt"
-		or anim_player.current_animation == "Attack"
+		#anim_player.current_animation == "Hurt"
+		#or anim_player.current_animation == "Attack"
+		anim_player.is_playing() == true
+		and anim_player.current_animation != "Idle"
 	):
 		return
 	
@@ -64,23 +70,19 @@ func approach_player(delta):
 		# create a vector of length 1 pointing towards the next pathfinding point
 		direction = nav.get_next_path_position() - global_position
 		direction = direction.normalized()
-		
+		anim_player.queue("Swim")		
 		# linear interpolation to apply acceleration
-		velocity = velocity.lerp(direction * speed, accel * delta)
+		#velocity = velocity.lerp(direction * speed, accel * delta)
 		# rotate sprite to match movement direction
-		rotation = velocity.angle()
+		#rotation = velocity.angle()
 			
 	# return to idle
-	elif velocity.length() != 0:
+	elif state.linear_velocity.length() != 0:
 		# decelerate towards 0
-		velocity = velocity.lerp(Vector2.ZERO, accel/2.0 * delta)
+		# velocity = velocity.lerp(Vector2.ZERO, accel/2.0 * delta)
 		# rotate towards 0; will be replaced with an "idle" animation & movement pattern
-		rotation = clampf(rotation - rotation * accel/2.0 * delta, min(0, rotation), max(0, rotation))
-	
-	if velocity.length() != 0:
-		anim_player.play("Swim")
-	else:
-		anim_player.play("Idle")
+		rotation = clampf(rotation - rotation * accel/2.0 * state.step, min(0, rotation), max(0, rotation))
+		anim_player.queue("Idle")
 	
 	# flip sprite only on vertical axis bc rotation takes care of the horizontal flip
 	if rotation > PI/2 or rotation < -PI/2:
@@ -91,7 +93,7 @@ func approach_player(delta):
 # Function to run every time the mob is injured
 # Takes the amount of damage as an argument
 func hurt(damage: float):
-	velocity = velocity/4.0
+	#velocity = velocity/4.0
 	print("Hurt")
 	anim_player.play("Hurt")
 	# this is required to immediately start the new animation
@@ -99,30 +101,24 @@ func hurt(damage: float):
 	anim_player.advance(0)
 	health -= damage
 
-func _physics_process(delta: float) -> void:
+func _integrate_forces(state) -> void:
 	# kills mob if health is 0
 	if health <= 0 and alive:
 		die()
 	
 	if alive:
-		approach_player(delta)
+		approach_player(state)
 	# otherwise, fade out corpse and have it sink to cave floor
 	else:
 		# makes sprite's color slowly fade to 50% of its normal color
 		if death_fade > MAX_FADE:
-			death_fade = lerp(death_fade, MAX_FADE, delta/5)
+			death_fade = lerp(death_fade, MAX_FADE, state.step/5)
 			shade(death_fade, death_fade, death_fade)
 			
 		if abs(rotation) > 0.001:
-			rotation = clampf(rotation - rotation * accel/2 * delta, min(0, rotation), max(0, rotation))
+			rotation = clampf(rotation - rotation * accel/2 * state.step, min(0, rotation), max(0, rotation))
 		else:
-			rotation = 0
-		
-		# drift to cave floor
-		velocity = velocity.lerp(Vector2.DOWN * 25, 10 * delta)
-	
-	# move mob based on velocity
-	move_and_slide()
+			rotation = 0	
 	
 
 func _on_hurtbox_area_entered(_area: Area2D) -> void:

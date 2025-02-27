@@ -128,7 +128,6 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_eg7qh"]
 resource_name = "Swim"
 length = 1.2
-loop_mode = 1
 step = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -157,8 +156,10 @@ _data = {
 radius = 31.2178
 height = 71.7403
 
-[node name="Mob" type="CharacterBody2D"]
+[node name="Mob" type="RigidBody2D"]
 editor_description = "Default Mob Template"
+collision_layer = 4
+collision_mask = 7
 script = ExtResource("1_pjnhb")
 metadata/_edit_group_ = true
 
@@ -185,6 +186,7 @@ libraries = {
 autoplay = "Idle"
 
 [node name="Hurtbox" parent="." instance=ExtResource("4_a38h6")]
+visible = false
 collision_layer = 64
 collision_mask = 8
 
@@ -194,6 +196,7 @@ shape = SubResource("CapsuleShape2D_frul3")
 disabled = true
 
 [node name="Hitbox" parent="." instance=ExtResource("5_58ufe")]
+visible = false
 collision_layer = 16
 collision_mask = 32
 
