@@ -1914,6 +1914,7 @@ tile_set = SubResource("TileSet_54ow2")
 navigation_polygon = SubResource("NavigationPolygon_0diyu")
 
 [node name="Player" type="Node2D" parent="."]
+scale = Vector2(2, 2)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(223.329, 174.476)
@@ -1979,6 +1980,7 @@ step = 1.0
 
 [node name="Mob" parent="." instance=ExtResource("8_xcfsc")]
 position = Vector2(250, 250)
+scale = Vector2(2, 2)
 
 [node name="Hitbox" parent="Mob" index="5"]
 visible = false
