@@ -15,8 +15,21 @@ extends CharacterBody2D
 @onready var sprite = $Sprite2D
 @onready var anim_player = $AnimationPlayer
 @onready var hurtbox = $Hurtbox/CollisionShape2D
+@onready var nav_region = $"../Map/NavigationRegion2D"
+
+# variables for map and region used for getting random points 
+# in a NavigationRegion
+var map: RID = NavigationServer2D.map_create()
+var region: RID = NavigationServer2D.region_create()
+
+func setup_nav_server():
+	NavigationServer2D.map_set_active(map, true)
+	NavigationServer2D.region_set_transform(region, Transform2D())
+	NavigationServer2D.region_set_map(region, map)
+	NavigationServer2D.region_set_navigation_polygon(region, nav_region.navigation_polygon)
 
 func _ready():
+	setup_nav_server()
 	# for some reason,the hurtbox is always instantiated disabled
 	# this re-enables it
 	hurtbox.set_deferred("disabled", false)
@@ -100,6 +113,11 @@ func hurt(damage: float):
 	health -= damage
 
 func _physics_process(delta: float) -> void:
+	var new_position = NavigationServer2D.region_get_random_point(region, 1, false)
+	print(position, global_position)
+	position = new_position
+	return
+	
 	# kills mob if health is 0
 	if health <= 0 and alive:
 		die()
