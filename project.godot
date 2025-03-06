@@ -75,8 +75,8 @@ tilt_down={
 
 [physics]
 
-2d/default_linear_damp=5.0
-2d/default_angular_damp=20.0
+2d/default_linear_damp=2.0
+2d/default_angular_damp=12.0
 
 [rendering]
 
