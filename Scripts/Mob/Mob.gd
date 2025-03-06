@@ -6,7 +6,7 @@ extends RigidBody2D
 @export var awareness: float = 0.6
 @export var aggression = 0
 @export var fear = 0
-@export var speed = 40
+@export var impulse = 200
 @export var accel = 7
 
 # aliases for commonly referenced nodes
@@ -25,6 +25,10 @@ func _ready():
 
 # this is set to false when the mob dies and is checked to enable the death effects
 var alive: bool = true
+
+# stores the direction to the next pathfinding location
+# setting this as a global so that methods called from AnimationPlayer keys can access it
+var movement_direction: Vector2 = Vector2.ZERO
 
 # maximum range at which the mob can detect the player
 var max_detection = 500
@@ -50,45 +54,33 @@ func die():
 	anim_player.play("Die")
 	# here you can define additional behavior after death (i.e. explodes)
 
-func approach_player(state):
-	var direction = Vector3()
-	
+func approach_player(state):	
 	# get player's position
 	nav.target_position = player.global_position
-	
-	# prevent the mob from transitioning into another animation until the current one has finished
-	if (
-		#anim_player.current_animation == "Hurt"
-		#or anim_player.current_animation == "Attack"
-		anim_player.is_playing() == true
-		and anim_player.current_animation != "Idle"
-	):
-		return
-	
-	# persue if within aggro range
-	if nav.distance_to_target() <= detection_range:
-		# create a vector of length 1 pointing towards the next pathfinding point
-		direction = nav.get_next_path_position() - global_position
-		direction = direction.normalized()
-		anim_player.queue("Swim")		
-		# linear interpolation to apply acceleration
-		#velocity = velocity.lerp(direction * speed, accel * delta)
-		# rotate sprite to match movement direction
-		#rotation = velocity.angle()
-			
-	# return to idle
-	elif state.linear_velocity.length() != 0:
-		# decelerate towards 0
-		# velocity = velocity.lerp(Vector2.ZERO, accel/2.0 * delta)
-		# rotate towards 0; will be replaced with an "idle" animation & movement pattern
-		rotation = clampf(rotation - rotation * accel/2.0 * state.step, min(0, rotation), max(0, rotation))
-		anim_player.queue("Idle")
 	
 	# flip sprite only on vertical axis bc rotation takes care of the horizontal flip
 	if rotation > PI/2 or rotation < -PI/2:
 		sprite.flip_v = true
 	else:
 		sprite.flip_v = false
+	
+	# prevent the mob from transitioning into another animation until the current one has finished
+	if anim_player.is_playing() == true and anim_player.current_animation != "Idle":
+		return
+	
+	# persue if within aggro range
+	if nav.distance_to_target() <= detection_range:
+		# create a vector of length 1 pointing towards the next pathfinding point
+		movement_direction = nav.get_next_path_position() - global_position
+		movement_direction = movement_direction.normalized()
+		anim_player.play("Swim")		
+			
+	# return to idle
+	elif state.linear_velocity.length() != 0:
+		# rotate towards 0; will be replaced with an "idle" animation & movement pattern
+		rotation = clampf(rotation - rotation * accel/2.0 * state.step, min(0, rotation), max(0, rotation))
+		anim_player.queue("Idle")
+	
 	
 # Function to run every time the mob is injured
 # Takes the amount of damage as an argument
@@ -100,6 +92,13 @@ func hurt(damage: float):
 	# otherwise, it doesn't start soon enough to disable the hurtbox
 	anim_player.advance(0)
 	health -= damage
+
+# This function is called from and Animation Key to move the mob as part of its animation	
+func apply_swim_impulse() -> void:
+	apply_central_impulse(movement_direction * impulse)
+	var angle = rotation - movement_direction.angle()
+	# -5000 seems to be about right for getting the rotation to track the player
+	apply_torque_impulse(angle * -5000)
 
 func _integrate_forces(state) -> void:
 	# kills mob if health is 0
