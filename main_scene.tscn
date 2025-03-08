@@ -1926,9 +1926,11 @@ scale = Vector2(2, 2)
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(223.329, 174.476)
 
-[node name="PlayerBody" type="CharacterBody2D" parent="Player"]
+[node name="RigidBody2D" type="RigidBody2D" parent="Player"]
+position = Vector2(5.36848, -73.5484)
+gravity_scale = 0.0
 use_parent_material = true
-position = Vector2(350, 150)
+center_of_mass_mode = 1
 collision_layer = 2
 collision_mask = 7
 motion_mode = 1
@@ -2007,8 +2009,6 @@ material = ExtResource("10_6xdyb")
 position = Vector2(700, 600)
 awareness = 0.5
 
-[connection signal="bcd_change" from="Player/PlayerBody" to="HUD" method="_on_character_body_2d_bcd_change"]
-
 [editable path="Player/PlayerBody/Hitbox"]
 [editable path="Player/PlayerBody/Hurtbox"]
 [editable path="Mob"]
@@ -2017,3 +2017,4 @@ awareness = 0.5
 [editable path="Mob2"]
 [editable path="Mob2/Hurtbox"]
 [editable path="Mob2/Hitbox"]
+[connection signal="bcd_change" from="Player/RigidBody2D" to="HUD" method="_on_character_body_2d_bcd_change"]

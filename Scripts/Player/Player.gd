@@ -1,60 +1,59 @@
-extends CharacterBody2D
+extends RigidBody2D
 
 signal bcd_change
 
 @export var max_speed: float = 200.0  # Max horizontal movement speed
 @export var acceleration: float = 1000.0  # How fast the player speeds up
 @export var drag: float = 10  # Water resistance (slows movement)
-@export var gravity: float = 9.8  # Not used much underwater but can simulate sinking
+
+@onready var move_force = Vector2(200,0)
 
 # Buoyancy-related stats
-var weight: float = 12.5
-var bcd_capacity: float = 25
-var buoyancy: float = 0  
-var depth: int = 0
-
 # velocity input & momentum
 var move_input: float
 var rotate_input: float
-var accelerated_vel = Vector2.ZERO
-var bouyancy_input: float
-var test = Vector2.ZERO
+var buoyancy_input: float
 
 @onready var hud = get_tree().get_first_node_in_group("HUD")
 
-#gets the input values range -1 to 1
-func get_movement_input():	
-	move_input = int(Input.is_action_pressed("right")) - int(Input.is_action_pressed("left"))
-	rotate_input = Input.get_axis("tilt_down","tilt_up")
-	bouyancy_input = int(Input.is_action_pressed("inflate_bcd")) - int(Input.is_action_pressed("deflate_bcd"))
-	
+func _ready() -> void:
+	set_inertia(1)
 #changes the velocity and rotation of the player
-func _physics_process(delta):
-	get_movement_input()
+func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
+	_move(state)
+	_rotate(state)
+	_buoyancy()
 	
-	if bouyancy_input != 0:
-		GameManager.bcd_inflation = clamp(GameManager.bcd_inflation + bouyancy_input * 0.01,0,1)
-		bcd_change.emit()
+func _get_move_dir():
+	return Input.get_action_strength("right") - Input.get_action_strength("left")
+
+#handles the buoyancy calculation using constant force
+func _buoyancy():
+	buoyancy_input = 0.0
+	buoyancy_input = Input.get_action_strength("inflate_bcd") - Input.get_action_strength("deflate_bcd")
+	print(buoyancy_input)
+	if buoyancy_input:
+		GameManager.bcd_inflation += buoyancy_input * 0.1
+		
+
+func _move(state):
 	
-	buoyancy = GameManager.bcd_inflation * bcd_capacity - weight
-	
-	if rotate_input != 0:
-		rotation = clamp(rotation + 0.02 * rotate_input,-0.75,0.5)
-	if move_input != 0:
-		velocity += transform.x * move_input * delta * acceleration
+	var input = _get_move_dir()
+	if !input:
+		state.apply_force(Vector2())
 	else:
-		velocity = velocity.move_toward(Vector2.ZERO, drag)
+		var direction: Vector2
+		direction.x = input * acceleration   
+		state.apply_force(direction.rotated(rotation))
+		
 	
-	velocity.y -= buoyancy
-	velocity = velocity.limit_length(max_speed)
+func _get_rotation_dir():
+	return Input.get_action_strength("tilt_up") - Input.get_action_strength("tilt_down")
+
+func _rotate(state):
+	if -1 < rotation and rotation < 1:
+		state.apply_torque(_get_rotation_dir() * 10)
 	
-	move_and_slide()
 	
-	# this code checks for collisions with RigidBody nodes (which will likely all be mobs)
-	# and applies a force to them 
-	for i in get_slide_collision_count():
-		var collision = get_slide_collision(i)
-		if collision.get_collider() is RigidBody2D:
-			var push_force = 1.5
-			collision.get_collider().apply_central_impulse(-collision.get_normal() * push_force * velocity)
-			velocity -= velocity/2			
+	
+	
