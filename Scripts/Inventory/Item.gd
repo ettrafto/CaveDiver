@@ -1,5 +1,5 @@
 # Item.gd
-extends RefCounted
+extends RefCounted # used for auto memory mgmt
 class_name Item
 
 var type: String
