@@ -3,17 +3,17 @@
 ## File Structure
 - Project
   - Scenes/
-    - Player/
-    - World/
-    - UI/
+	- Player/
+	- World/
+	- UI/
   - Scripts/
-    - Player/
-    - World/
-    - Systems/
+	- Player/
+	- World/
+	- Systems/
   - Assets/
-    - Art/
-    - Audio/
-    - Fonts/
+	- Art/
+	- Audio/
+	- Fonts/
   - Data/
-    - Levels/
-    - Config/
+	- Levels/
+	- Config/
