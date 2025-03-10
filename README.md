@@ -18,6 +18,7 @@ CaveDiver is an underwater diving game developed with Godot 4. The game features
   - Multiple scenes including the main scene and test scenes for features like the inventory system.
 
 ## File Structure
+```
 CaveDiver/
 ├── Mob/
 │   ├── Mob.tscn
@@ -46,3 +47,4 @@ CaveDiver/
 ├── icon.svg
 ├── project.godot
 └── README.md
+```
