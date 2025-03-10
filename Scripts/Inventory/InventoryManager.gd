@@ -15,3 +15,4 @@ func _ready():
 	var new_item = Item.new("tool", "wrench", Vector2(0, 0), 3)
 	if person_inventory.add_item(new_item, Vector2(0, 0)):
 		print("Item added to inventory!")
+		

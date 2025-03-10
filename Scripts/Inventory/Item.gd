@@ -12,3 +12,4 @@ func _init(_type: String, _name: String, _loc: Vector2, _weight: int):
 	name = _name
 	loc = _loc
 	weight = _weight
+	

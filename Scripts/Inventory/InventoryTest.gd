@@ -23,3 +23,4 @@ func _ready():
 		print("Test passed: wrench moved to (3,2)")
 	else:
 		print("Test failed: could not move wrench")
+		

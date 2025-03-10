@@ -54,3 +54,4 @@ func move_item(from_pos: Vector2, to_pos: Vector2) -> bool:
 		if item:
 			add_item(item, from_pos)
 	return false
+	
