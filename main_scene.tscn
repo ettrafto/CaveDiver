@@ -1931,20 +1931,27 @@ position = Vector2(5.36848, -73.5484)
 gravity_scale = 0.0
 use_parent_material = true
 center_of_mass_mode = 1
+<<<<<<< HEAD
 collision_layer = 2
 collision_mask = 7
 motion_mode = 1
+=======
+lock_rotation = true
+linear_damp = 2.5
+angular_damp = 1.0
+>>>>>>> 1540520 (player rotation fixed and limited with buoyancy. need some fine tuning on speed)
 script = ExtResource("4_pwyh5")
 metadata/_edit_group_ = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/PlayerBody"]
 position = Vector2(0, -62)
+scale = Vector2(1.5, 1.5)
 polygon = PackedVector2Array(30, 81, 20, 76, 9, 75, 1, 70, -5, 69, -10, 69, -17, 70, -20, 66, -23, 58, -18, 49, -10, 49, -4, 54, 8, 59, 8, 66, 16, 68, 23, 68, 31, 75)
 
 [node name="Sprite2D" type="Sprite2D" parent="Player/PlayerBody"]
 use_parent_material = true
 position = Vector2(5, 3)
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_mpcjb")
 
 [node name="Hitbox" parent="Player/PlayerBody" instance=ExtResource("5_drt5h")]
@@ -2017,4 +2024,5 @@ awareness = 0.5
 [editable path="Mob2"]
 [editable path="Mob2/Hurtbox"]
 [editable path="Mob2/Hitbox"]
-[connection signal="bcd_change" from="Player/RigidBody2D" to="HUD" method="_on_character_body_2d_bcd_change"]
+[connection signal="bcd_change" from="Player/RigidBody2D" to="HUD" method="_on_rigid_body_2d_bcd_change"]
+

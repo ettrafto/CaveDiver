@@ -38,5 +38,5 @@ func _on_health_changed(new_health):
 func _on_oxygen_changed(new_oxygen):
 	update_bars()
 
-func _on_character_body_2d_bcd_change() -> void:
+func _on_rigid_body_2d_bcd_change():
 	update_bars()
