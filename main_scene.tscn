@@ -1901,6 +1901,10 @@ material = ExtResource("1_rgmf6")
 
 [node name="EnviornmentalObjects" type="Node2D" parent="Map"]
 
+[node name="Silt" parent="Map/EnviornmentalObjects" instance=ExtResource("6_hq1ik")]
+position = Vector2(68.7168, 102.001)
+scale = Vector2(0.75, 0.75)
+
 [node name="Background" type="TileMapLayer" parent="Map"]
 z_index = -5
 use_parent_material = true
@@ -1931,15 +1935,12 @@ position = Vector2(5.36848, -73.5484)
 gravity_scale = 0.0
 use_parent_material = true
 center_of_mass_mode = 1
-<<<<<<< HEAD
 collision_layer = 2
 collision_mask = 7
 motion_mode = 1
-=======
 lock_rotation = true
 linear_damp = 2.5
 angular_damp = 1.0
->>>>>>> 1540520 (player rotation fixed and limited with buoyancy. need some fine tuning on speed)
 script = ExtResource("4_pwyh5")
 metadata/_edit_group_ = true
 
