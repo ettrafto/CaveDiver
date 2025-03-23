@@ -12,7 +12,7 @@ func _ready():
 	person_inventory = Inventory.new(6, 4)
 	
 	# Example: Create a new item and add it to the person's inventory
-	var new_item = Item.new("tool", "wrench", Vector2(0, 0), 3)
+	var new_item = Item.new("tool", "wrench", 3)
 	if person_inventory.add_item(new_item, Vector2(0, 0)):
 		print("Item added to inventory!")
 		
