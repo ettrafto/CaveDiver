@@ -5,8 +5,8 @@
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="4_pwyh5"]
 [ext_resource type="Texture2D" uid="uid://bit0vlbx7vurt" path="res://Assets/Art/CaveTiles1/CaveG.png" id="4_x3thl"]
 [ext_resource type="Script" path="res://Scripts/HUD/HUD.gd" id="5_6w5lm"]
-[ext_resource type="PackedScene" path="res://Mob/Hitbox.tscn" id="5_drt5h"]
-[ext_resource type="PackedScene" path="res://Mob/Hurtbox.tscn" id="6_nebgd"]
+[ext_resource type="PackedScene" uid="uid://c8btmt1p1c5oi" path="res://Mob/Hitbox.tscn" id="5_drt5h"]
+[ext_resource type="PackedScene" uid="uid://dhafxmdd71i72" path="res://Mob/Hurtbox.tscn" id="6_nebgd"]
 [ext_resource type="PackedScene" uid="uid://c8i7a05824we3" path="res://Mob/Mob.tscn" id="8_xcfsc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mydmx"]
@@ -1922,6 +1922,8 @@ position = Vector2(223.329, 174.476)
 
 [node name="PlayerBody" type="CharacterBody2D" parent="Player"]
 position = Vector2(200, 100)
+collision_layer = 2
+collision_mask = 7
 motion_mode = 1
 script = ExtResource("4_pwyh5")
 

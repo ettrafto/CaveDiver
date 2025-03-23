@@ -2,7 +2,7 @@ extends RigidBody2D
 
 # variables defining the basic attributes of the mob
 # these can be customized per-type or per-instance to change behavior
-@export var health: float = 50
+@export var health: float = 1
 @export var awareness: float = 0.6
 @export var aggression = 0
 @export var fear = 0
@@ -57,6 +57,10 @@ func die():
 	$Hurtbox.set("monitorable", false)
 	$Hitbox.set("monitoring", false)
 	$Hitbox.set("monitorable", false)
+	# disable collision with the player and other mobs
+	set_collision_mask_value(2, false) # player
+	set_collision_mask_value(3, false) # mob
+	set_collision_layer_value(3, false) # mob
 	# drift to cave floor
 	gravity_scale = 0.2
 	anim_player.play("Die")
