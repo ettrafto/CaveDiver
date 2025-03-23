@@ -15,6 +15,7 @@ extends RigidBody2D
 @onready var sprite = $Sprite2D
 @onready var anim_player = $AnimationPlayer
 @onready var hurtbox = $Hurtbox/CollisionShape2D
+@onready var hitbox = $Hitbox/CollisionShape2D
 
 func _ready():
 	# for some reason,the hurtbox is always instantiated disabled
@@ -49,6 +50,13 @@ func shade(red_factor=1, green_factor=1, blue_factor=1, alpha=1):
 
 func die():
 	alive = false
+	# disable hurt/hitboxes
+	hurtbox.set("disabled", true)
+	hitbox.set("disabled", true)
+	$Hurtbox.set("monitoring", false)
+	$Hurtbox.set("monitorable", false)
+	$Hitbox.set("monitoring", false)
+	$Hitbox.set("monitorable", false)
 	# drift to cave floor
 	gravity_scale = 0.2
 	anim_player.play("Die")
@@ -122,5 +130,4 @@ func _integrate_forces(state) -> void:
 
 func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	print("mob hurtbox entered")
-	#if alive:
 	hurt(1)
