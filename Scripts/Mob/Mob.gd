@@ -85,12 +85,14 @@ func approach_player(state):
 		# create a vector of length 1 pointing towards the next pathfinding point
 		movement_direction = nav.get_next_path_position() - global_position
 		movement_direction = movement_direction.normalized()
-		anim_player.play("Swim")		
-			
+		anim_player.play("Swim")
+		
 	# return to idle
 	elif state.linear_velocity.length() != 0:
 		# rotate towards 0; will be replaced with an "idle" animation & movement pattern
+		#print("Rotation: ", rotation/PI)
 		rotation = clampf(rotation - rotation * accel/2.0 * state.step, min(0, rotation), max(0, rotation))
+		
 		anim_player.queue("Idle")
 	
 	
@@ -108,9 +110,21 @@ func hurt(damage: float):
 # This function is called from and Animation Key to move the mob as part of its animation	
 func apply_swim_impulse() -> void:
 	apply_central_impulse(movement_direction * impulse)
-	var angle = rotation - movement_direction.angle()
-	# -5000 seems to be about right for getting the rotation to track the player
-	apply_torque_impulse(angle * -5000)
+	
+	var angle = movement_direction.angle() - rotation
+	# if angle to rotate is more than 180deg, get the shorter distance around the circle
+	if abs(angle) > PI:
+		# to calculate the correct direction of rotation, flip the original rotation direction
+		angle = (2 * PI - abs(angle)) * -1 * sign(angle)
+	
+	# to calculate the correct instantaneous torque to rotate r radians:
+	# angular velocity = r/(1 - angular_damping/phys_tps)^t * phys_tps
+	# because the torque is instantaneous, we can substitue angular velocity for angular acceleration
+	# and calculate torque as angular velocity * moment of inertia
+	var moment_of_inertia = 1.0/PhysicsServer2D.body_get_direct_state(get_rid()).inverse_inertia
+	var omega = angle/4.48 * 60
+	var torque = moment_of_inertia * omega
+	apply_torque_impulse(torque)
 
 func _integrate_forces(state) -> void:
 	# kills mob if health is 0
