@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://c8i7a05824we3" path="res://Mob/Mob.tscn" id="8_xcfsc"]
 [ext_resource type="Material" uid="uid://8o2yodwffd3x" path="res://Shaders/Mob.tres" id="10_6xdyb"]
 [ext_resource type="Script" uid="uid://nlpb4fatxvju" path="res://Shaders/ShaderContext.gd" id="10_sg8do"]
+[ext_resource type="PackedScene" uid="uid://dc7pd2nhl2ows" path="res://Things/silt.tscn" id="6_hq1ik"]
+
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mydmx"]
 texture = ExtResource("4_x3thl")

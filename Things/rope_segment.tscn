@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://6h5y87iow3xe"]
+
+[ext_resource type="Script" uid="uid://bu46v7oiks7wi" path="res://Things/rope_segment.gd" id="1_jykfr"]
+[ext_resource type="Texture2D" uid="uid://duoy7rsq8ne23" path="res://Assets/Art/rope_segment.png" id="1_vv2so"]
+
+[node name="Rope_segment" type="Node2D"]
+script = ExtResource("1_jykfr")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+node_b = NodePath("../RigidBody2D")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+position = Vector2(0, 6)
+scale = Vector2(1, 1.5)
+texture = ExtResource("1_vv2so")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
