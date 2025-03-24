@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dc7pd2nhl2ows"]
 
-[ext_resource type="Texture2D" uid="uid://bfvb2xq5dbl88" path="res://Assets/Art/silt-pile.png" id="1_2w3v0"]
-[ext_resource type="Script" uid="uid://clum74ws7e4tl" path="res://Things/silt.gd" id="1_k4l6w"]
+[ext_resource type="Texture2D" uid="uid://cdwd5jieywghy" path="res://Assets/Art/silt-pile.png" id="1_2w3v0"]
+[ext_resource type="Script" uid="uid://clum74ws7e4tl" path="res://Scripts/Map/silt.gd" id="1_k4l6w"]
 [ext_resource type="Texture2D" uid="uid://buiapjgdoom1l" path="res://Assets/Particles/silt-particle-placeholder.png" id="1_o53bi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k4l6w"]
