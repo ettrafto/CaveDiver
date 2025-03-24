@@ -1,6 +1,7 @@
 extends RigidBody2D
 
 signal bcd_change
+signal place_rope
 
 @export var max_speed: float = 200.0  # Max horizontal movement speed
 @export var acceleration: float = 1000.0  # How fast the player speeds up
@@ -13,6 +14,7 @@ signal bcd_change
 var move_input: float
 var rotate_input: float
 var buoyancy_input: float
+
 
 @onready var hud = get_tree().get_first_node_in_group("HUD")
 
@@ -59,6 +61,11 @@ func _rotate():
 			rotation += input
 		elif rotation <= -1 and input > 0:
 			rotation += input
-	
 			
+
+		
+		
+	
+	
+	
 	
