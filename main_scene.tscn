@@ -11,8 +11,10 @@
 [ext_resource type="PackedScene" uid="uid://c8i7a05824we3" path="res://Mob/Mob.tscn" id="8_xcfsc"]
 [ext_resource type="Material" uid="uid://8o2yodwffd3x" path="res://Shaders/Mob.tres" id="10_6xdyb"]
 [ext_resource type="Script" uid="uid://nlpb4fatxvju" path="res://Shaders/ShaderContext.gd" id="10_sg8do"]
-[ext_resource type="PackedScene" uid="uid://dc7pd2nhl2ows" path="res://Things/silt.tscn" id="6_hq1ik"]
 
+
+[ext_resource type="PackedScene" uid="uid://dc7pd2nhl2ows" path="res://Things/silt.tscn" id="3_nfk4m"]
+[ext_resource type="PackedScene" uid="uid://cyo2yviksowvg" path="res://Things/rope_anchor.tscn" id="6_hq1ik"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mydmx"]
 texture = ExtResource("4_x3thl")
@@ -2027,5 +2029,11 @@ awareness = 0.5
 [editable path="Mob2"]
 [editable path="Mob2/Hurtbox"]
 [editable path="Mob2/Hitbox"]
+[node name="rope_anchor" parent="." instance=ExtResource("6_hq1ik")]
+position = Vector2(-71.401, -53.1481)
+
+[node name="Silt" parent="." instance=ExtResource("3_nfk4m")]
+position = Vector2(-45.0953, 125.623)
+
 [connection signal="bcd_change" from="Player/RigidBody2D" to="HUD" method="_on_rigid_body_2d_bcd_change"]
 
