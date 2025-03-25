@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=4 uid="uid://bw61hcrsu2ee5"]
+[gd_scene load_steps=11 format=4 uid="uid://bw61hcrsu2ee5"]
 
 [ext_resource type="Texture2D" uid="uid://cykrlw2lyroj5" path="res://Assets/Art/CaveTiles1/CaveBG.png" id="3_debib"]
 [ext_resource type="Texture2D" uid="uid://p7gejfpsykn4" path="res://Assets/Art/diver/diver1.png" id="3_mpcjb"]
+[ext_resource type="PackedScene" uid="uid://dc7pd2nhl2ows" path="res://Things/silt.tscn" id="3_nfk4m"]
 [ext_resource type="Script" uid="uid://cwhoaqwlt6pcq" path="res://Scripts/Player/Player.gd" id="4_pwyh5"]
 [ext_resource type="Texture2D" uid="uid://dq74o4078noip" path="res://Assets/Art/CaveTiles1/CaveG.png" id="4_x3thl"]
 [ext_resource type="Script" uid="uid://dibl6hyrasel7" path="res://Scripts/HUD/HUD.gd" id="5_6w5lm"]
+[ext_resource type="PackedScene" uid="uid://cyo2yviksowvg" path="res://Things/rope_anchor.tscn" id="6_hq1ik"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mydmx"]
 texture = ExtResource("4_x3thl")
@@ -1947,5 +1949,11 @@ layout_mode = 0
 offset_right = 4.0
 offset_bottom = 27.0
 step = 1.0
+
+[node name="rope_anchor" parent="." instance=ExtResource("6_hq1ik")]
+position = Vector2(-71.401, -53.1481)
+
+[node name="Silt" parent="." instance=ExtResource("3_nfk4m")]
+position = Vector2(-45.0953, 125.623)
 
 [connection signal="bcd_change" from="Player/RigidBody2D" to="HUD" method="_on_rigid_body_2d_bcd_change"]
