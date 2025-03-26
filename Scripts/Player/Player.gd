@@ -62,10 +62,9 @@ func _rotate():
 			rotation += input
 		elif rotation <= -1 and input > 0:
 			rotation += input
-			
-
 		
-		
+func _misc_input():
+	return Input.get_action_strength("rope")
 	
 	
 	
