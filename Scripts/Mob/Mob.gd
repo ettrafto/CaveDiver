@@ -89,13 +89,9 @@ func approach_player(state):
 		
 	# return to idle
 	elif state.linear_velocity.length() != 0:
-		# rotate towards 0; will be replaced with an "idle" animation & movement pattern
-		#print("Rotation: ", rotation/PI)
-		rotation = clampf(rotation - rotation * accel/2.0 * state.step, min(0, rotation), max(0, rotation))
-		
 		anim_player.queue("Idle")
-	
-	
+
+
 # Function to run every time the mob is injured
 # Takes the amount of damage as an argument
 func hurt(damage: float):
@@ -107,16 +103,8 @@ func hurt(damage: float):
 	anim_player.advance(0)
 	health -= damage
 
-# This function is called from and Animation Key to move the mob as part of its animation	
-func apply_swim_impulse() -> void:
-	apply_central_impulse(movement_direction * impulse)
-	
-	var angle = movement_direction.angle() - rotation
-	# if angle to rotate is more than 180deg, get the shorter distance around the circle
-	if abs(angle) > PI:
-		# to calculate the correct direction of rotation, flip the original rotation direction
-		angle = (2 * PI - abs(angle)) * -1 * sign(angle)
-	
+
+func calc_impulse_for_rotation(angle) -> float:
 	# to calculate the correct instantaneous torque to rotate r radians:
 	# angular velocity = r/(1 - angular_damping/phys_tps)^t * phys_tps
 	# because the torque is instantaneous, we can substitue angular velocity for angular acceleration
@@ -124,7 +112,34 @@ func apply_swim_impulse() -> void:
 	var moment_of_inertia = 1.0/PhysicsServer2D.body_get_direct_state(get_rid()).inverse_inertia
 	var omega = angle/4.48 * 60
 	var torque = moment_of_inertia * omega
-	apply_torque_impulse(torque)
+	return torque
+
+
+func calc_shortest_rotation(target, current) -> float:
+	var angle = target - current;
+	# if angle to rotate is more than 180deg, get the shorter distance around the circle
+	if abs(angle) > PI:
+		# to calculate the correct direction of rotation, flip the original rotation direction
+		angle = (2 * PI - abs(angle)) * -1 * sign(angle)
+	return angle
+
+
+# This function is called from and Animation Key to move the mob as part of its animation	
+func apply_swim_impulse() -> void:
+	apply_central_impulse(movement_direction * impulse)
+	var angle = calc_shortest_rotation(movement_direction.angle(), rotation)
+	apply_torque_impulse(calc_impulse_for_rotation(angle))
+	
+
+func apply_idle_impulse() -> void:
+	print("0: ", Vector2(1, 0).angle(), ", pi: ", Vector2(-1, 0).angle(), ", rot: ", rotation)
+	var rot_to_zero = calc_shortest_rotation(Vector2(1, 0).angle(), rotation)
+	var rot_to_pi = calc_shortest_rotation(Vector2(-1, 0).angle(), rotation)
+	print("0: ", rot_to_zero, ", pi: ", rot_to_pi)
+	var angle = rot_to_zero if abs(rot_to_zero) < abs(rot_to_pi) else rot_to_pi
+	print("angle: ", angle)
+	apply_torque_impulse(calc_impulse_for_rotation(angle))
+
 
 func _integrate_forces(state) -> void:
 	# kills mob if health is 0
