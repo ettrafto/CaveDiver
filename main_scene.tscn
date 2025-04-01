@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://c8i7a05824we3" path="res://Mob/Mob.tscn" id="8_xcfsc"]
 [ext_resource type="Material" uid="uid://8o2yodwffd3x" path="res://Shaders/Mob.tres" id="10_6xdyb"]
 [ext_resource type="Script" uid="uid://nlpb4fatxvju" path="res://Shaders/ShaderContext.gd" id="10_sg8do"]
+[ext_resource type="Script" uid="uid://dp744l4me4jt" path="res://Scripts/Dive/DiveProfile.gd" id="9_7ycvg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mydmx"]
 texture = ExtResource("4_x3thl")
@@ -1992,6 +1993,7 @@ step = 1.0
 
 [node name="Mob" parent="." instance=ExtResource("8_xcfsc")]
 editor_description = " Default Mob Template "
+<<<<<<< HEAD
 material = ExtResource("10_6xdyb")
 position = Vector2(357, 390)
 awareness = 0.5
@@ -2005,7 +2007,13 @@ script = ExtResource("10_sg8do")
 editor_description = " Default Mob Template "
 material = ExtResource("10_6xdyb")
 position = Vector2(700, 600)
+=======
+position = Vector2(357, 390)
+>>>>>>> 9a4de17 (implemented sprinting and basic dive computation)
 awareness = 0.5
+
+[node name="DiveController" type="Node" parent="."]
+script = ExtResource("9_7ycvg")
 
 [connection signal="bcd_change" from="Player/PlayerBody" to="HUD" method="_on_character_body_2d_bcd_change"]
 
