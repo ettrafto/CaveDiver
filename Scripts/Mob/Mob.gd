@@ -73,8 +73,11 @@ func approach_player(state):
 	# flip sprite only on vertical axis bc rotation takes care of the horizontal flip
 	if rotation > PI/2 or rotation < -PI/2:
 		sprite.flip_v = true
+		print("y: ", $Hitbox.position.x)
+		$Hitbox.position.y = abs($Hitbox.position.y)
 	else:
 		sprite.flip_v = false
+		$Hitbox.position.y = -abs($Hitbox.position.y)
 	
 	# prevent the mob from transitioning into another animation until the current one has finished
 	if anim_player.is_playing() == true and anim_player.current_animation != "Idle":

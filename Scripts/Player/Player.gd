@@ -55,6 +55,6 @@ func _physics_process(delta):
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		if collision.get_collider() is RigidBody2D:
-			var push_force = 4
+			var push_force = 1.5
 			collision.get_collider().apply_central_impulse(-collision.get_normal() * push_force * velocity)
 			velocity -= velocity/2			

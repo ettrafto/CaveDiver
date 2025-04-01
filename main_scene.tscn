@@ -1921,11 +1921,12 @@ scale = Vector2(2, 2)
 position = Vector2(223.329, 174.476)
 
 [node name="PlayerBody" type="CharacterBody2D" parent="Player"]
-position = Vector2(200, 100)
+position = Vector2(342.5, 161.5)
 collision_layer = 2
 collision_mask = 7
 motion_mode = 1
 script = ExtResource("4_pwyh5")
+metadata/_edit_group_ = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/PlayerBody"]
 position = Vector2(0, -62)
@@ -1982,7 +1983,7 @@ offset_bottom = 27.0
 step = 1.0
 
 [node name="Mob" parent="." instance=ExtResource("8_xcfsc")]
-position = Vector2(250, 250)
+position = Vector2(357, 390)
 
 [connection signal="bcd_change" from="Player/PlayerBody" to="HUD" method="_on_character_body_2d_bcd_change"]
 
