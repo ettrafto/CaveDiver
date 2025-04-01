@@ -1,16 +1,3 @@
-# ex. LISTENING FOR HEALTH CHANGES IN HUD.gd
-#func _ready():
- #   GameManager.connect("health_changed", self, "_on_health_changed")
-#
-#func _on_health_changed(new_health):
-#   $HealthBar.value = new_health
-#
-#
-# ex. REDUCING HEALTH IN PLAYER.gd
-# GameManager.decrease_health(10)
-#
-
-
 extends Node
 
 # Player stats
@@ -20,6 +7,9 @@ var bcd_inflation: float = 0.5
 var oxygen: int = 100
 var max_oxygen: int = 100 
 var oxygen_consumption_rate: float = 0.5
+
+# New property for player movement state ("idle", "normal", "sprint")
+var movement_state: String = "normal"
 
 # Game state
 var game_paused: bool = false
