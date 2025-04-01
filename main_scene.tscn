@@ -5,8 +5,8 @@
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="4_pwyh5"]
 [ext_resource type="Texture2D" uid="uid://bit0vlbx7vurt" path="res://Assets/Art/CaveTiles1/CaveG.png" id="4_x3thl"]
 [ext_resource type="Script" path="res://Scripts/HUD/HUD.gd" id="5_6w5lm"]
-[ext_resource type="PackedScene" path="res://Mob/Hitbox.tscn" id="5_drt5h"]
-[ext_resource type="PackedScene" path="res://Mob/Hurtbox.tscn" id="6_nebgd"]
+[ext_resource type="PackedScene" uid="uid://c8btmt1p1c5oi" path="res://Mob/Hitbox.tscn" id="5_drt5h"]
+[ext_resource type="PackedScene" uid="uid://dhafxmdd71i72" path="res://Mob/Hurtbox.tscn" id="6_nebgd"]
 [ext_resource type="PackedScene" uid="uid://c8i7a05824we3" path="res://Mob/Mob.tscn" id="8_xcfsc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mydmx"]
@@ -1921,9 +1921,12 @@ scale = Vector2(2, 2)
 position = Vector2(223.329, 174.476)
 
 [node name="PlayerBody" type="CharacterBody2D" parent="Player"]
-position = Vector2(200, 100)
+position = Vector2(342.5, 161.5)
+collision_layer = 2
+collision_mask = 7
 motion_mode = 1
 script = ExtResource("4_pwyh5")
+metadata/_edit_group_ = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/PlayerBody"]
 position = Vector2(0, -62)
@@ -1980,7 +1983,7 @@ offset_bottom = 27.0
 step = 1.0
 
 [node name="Mob" parent="." instance=ExtResource("8_xcfsc")]
-position = Vector2(250, 250)
+position = Vector2(357, 390)
 
 [connection signal="bcd_change" from="Player/PlayerBody" to="HUD" method="_on_character_body_2d_bcd_change"]
 
