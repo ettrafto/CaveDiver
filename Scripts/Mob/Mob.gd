@@ -17,7 +17,21 @@ extends RigidBody2D
 @onready var hurtbox = $Hurtbox/CollisionShape2D
 @onready var hitbox = $Hitbox/CollisionShape2D
 
+@onready var nav_region = $"../Map/NavigationRegion2D"
+
+# variables for map and region used for getting random points 
+# in a NavigationRegion
+var map: RID = NavigationServer2D.map_create()
+var region: RID = NavigationServer2D.region_create()
+
+func setup_nav_server():
+	NavigationServer2D.map_set_active(map, true)
+	NavigationServer2D.region_set_transform(region, Transform2D())
+	NavigationServer2D.region_set_map(region, map)
+	NavigationServer2D.region_set_navigation_polygon(region, nav_region.navigation_polygon)
+
 func _ready():
+	setup_nav_server()
 	# for some reason,the hurtbox is always instantiated disabled
 	# this re-enables it
 	hurtbox.set_deferred("disabled", false)
@@ -106,7 +120,6 @@ func hurt(damage: float):
 	anim_player.advance(0)
 	health -= damage
 
-
 func calc_impulse_for_rotation(angle) -> float:
 	# to calculate the correct instantaneous torque to rotate r radians:
 	# angular velocity = r/(1 - angular_damping/phys_tps)^t * phys_tps
@@ -151,6 +164,9 @@ func _integrate_forces(state) -> void:
 	
 	if alive:
 		approach_player(state)
+    # var new_position = NavigationServer2D.region_get_random_point(region, 1, false)
+	  # print(position, global_position)
+	  # position = new_position
 	# otherwise, fade out corpse and have it sink to cave floor
 	else:
 		# makes sprite's color slowly fade to 50% of its normal color
