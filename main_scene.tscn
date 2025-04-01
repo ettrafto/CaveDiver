@@ -1984,6 +1984,9 @@ step = 1.0
 
 [node name="Mob" parent="." instance=ExtResource("8_xcfsc")]
 position = Vector2(357, 390)
+editor_description = " Default Mob Template "
+motion_mode = 1
+awareness = 0.5
 
 [connection signal="bcd_change" from="Player/PlayerBody" to="HUD" method="_on_character_body_2d_bcd_change"]
 
