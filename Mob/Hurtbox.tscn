@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhafxmdd71i72"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e8qkr"]
+size = Vector2(129, 76)
+
+[node name="Hurtbox" type="Area2D"]
+editor_description = "A generic hurtbox for detecting collisions with hitboxes"
+light_mask = 0
+visibility_layer = 512
+collision_layer = 96
+collision_mask = 24
+input_pickable = false
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 0
+visibility_layer = 512
+shape = SubResource("RectangleShape2D_e8qkr")
+debug_color = Color(0.783772, 0.283683, 0.820484, 0.42)
