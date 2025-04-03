@@ -16,14 +16,14 @@ direction = Vector3(0, -1, 0)
 spread = 25.0
 initial_velocity_min = 10.0
 initial_velocity_max = 15.0
-gravity = Vector3(0, 2, 0)
+gravity = Vector3(0, 9.8, 0)
 radial_accel_min = -5.0
 radial_accel_max = 15.0
 scale_max = 2.0
 turbulence_enabled = true
 turbulence_noise_scale = 5.0
 collision_mode = 1
-collision_friction = 0.5
+collision_friction = 0.35
 collision_bounce = 0.0
 
 [node name="Silt" type="Node2D"]
@@ -46,11 +46,15 @@ texture = ExtResource("1_2w3v0")
 position = Vector2(-9.53674e-07, 0)
 scale = Vector2(5, 5)
 emitting = false
+amount = 24
 texture = ExtResource("1_o53bi")
 lifetime = 30.0
 one_shot = true
 explosiveness = 1.0
 randomness = 0.1
 process_material = SubResource("ParticleProcessMaterial_u7m6u")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
