@@ -57,10 +57,11 @@ var death_fade = 1.0
 # shades the sprite by multiplying the RGB values of each pixel by the given factors
 # used for both the death shader and camoflauge
 func shade(red_factor=1, green_factor=1, blue_factor=1, alpha=1):
-	sprite.material.set_shader_parameter("red_factor", red_factor)
-	sprite.material.set_shader_parameter("green_factor", green_factor)
-	sprite.material.set_shader_parameter("blue_factor", blue_factor)
-	sprite.material.set_shader_parameter("alpha", alpha)
+	# note: made it so the sprite uses its parents material (Mob node)
+	material.set_shader_parameter("red_factor", red_factor)
+	material.set_shader_parameter("green_factor", green_factor)
+	material.set_shader_parameter("blue_factor", blue_factor)
+	material.set_shader_parameter("alpha", alpha)
 
 func die():
 	alive = false

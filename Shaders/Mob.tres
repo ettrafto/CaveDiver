@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://8o2yodwffd3x"]
+
+[ext_resource type="Shader" path="res://Shaders/Mob.gdshader" id="1_lo08i"]
+
+[resource]
+shader = ExtResource("1_lo08i")
+shader_parameter/IN_GAME = false
+shader_parameter/red_factor = 1.0
+shader_parameter/green_factor = 1.0
+shader_parameter/blue_factor = 1.0
+shader_parameter/alpha = 1.0
+shader_parameter/max_distance = 200.0
+shader_parameter/player_pos = Vector2(0, 0)

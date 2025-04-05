@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bdw7j3m7ekmuh"]
+
+[ext_resource type="Shader" path="res://Shaders/Map.gdshader" id="1_exn87"]
+
+[resource]
+shader = ExtResource("1_exn87")
+shader_parameter/IN_GAME = false
+shader_parameter/max_distance = 200.0
+shader_parameter/player_pos = Vector2(0, 0)
