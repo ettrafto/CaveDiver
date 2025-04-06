@@ -13,6 +13,7 @@ uniform float alpha : hint_range(0.0, 1.0) = 1.0;
 
 uniform float max_distance = 200.0;
 uniform vec2 player_pos = vec2(0, 0);
+uniform vec2 mouse_pos = vec2(0, 0);
 
 void fragment() {
 	// COLOR.a > 0.0001 makes it so we don't modify transparent pixels
