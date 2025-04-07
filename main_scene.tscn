@@ -1920,12 +1920,14 @@ visible = false
 navigation_polygon = SubResource("NavigationPolygon_0diyu")
 
 [node name="Player" type="Node2D" parent="."]
+material = ExtResource("1_rgmf6")
 scale = Vector2(2, 2)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(223.329, 174.476)
 
 [node name="PlayerBody" type="CharacterBody2D" parent="Player"]
+use_parent_material = true
 position = Vector2(350, 150)
 collision_layer = 2
 collision_mask = 7
@@ -1938,6 +1940,7 @@ position = Vector2(0, -62)
 polygon = PackedVector2Array(30, 81, 20, 76, 9, 75, 1, 70, -5, 69, -10, 69, -17, 70, -20, 66, -23, 58, -18, 49, -10, 49, -4, 54, 8, 59, 8, 66, 16, 68, 23, 68, 31, 75)
 
 [node name="Sprite2D" type="Sprite2D" parent="Player/PlayerBody"]
+use_parent_material = true
 position = Vector2(5, 3)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("3_mpcjb")

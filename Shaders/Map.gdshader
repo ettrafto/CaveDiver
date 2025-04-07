@@ -38,6 +38,14 @@ float get_visibility_modifier(vec2 frag_coord) {
 	}
 }
 
+void vertex() {
+	if (in_game) {
+		// Creates underwater effect
+		VERTEX.x += sin(VERTEX.y + TIME * 2.0) * 3.0;
+		//COLOR.r += sin(TIME);
+	}
+}
+
 void fragment() {
 	if (in_game) {
 		float visibility = get_visibility_modifier(FRAGCOORD.xy);
