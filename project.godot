@@ -81,3 +81,18 @@ tilt_down={
 [rendering]
 
 renderer/rendering_method="mobile"
+
+[shader_globals]
+
+player_pos={
+"type": "vec2",
+"value": Vector2(0, 0)
+}
+mouse_pos={
+"type": "vec2",
+"value": Vector2(0, 0)
+}
+in_game={
+"type": "bool",
+"value": false
+}

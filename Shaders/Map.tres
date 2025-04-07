@@ -5,7 +5,5 @@
 [resource]
 shader = ExtResource("1_exn87")
 shader_parameter/IN_GAME = false
-shader_parameter/max_radius = 200.0
-shader_parameter/max_sight_distance = 500.0
 shader_parameter/player_pos = Vector2(0, 0)
 shader_parameter/mouse_pos = Vector2(0, 0)

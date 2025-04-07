@@ -6,16 +6,14 @@ extends Node2D
 @onready var mob_material: ShaderMaterial = ResourceLoader.load("res://Shaders/Mob.tres")
 
 func _ready():
-	map_material.set_shader_parameter("IN_GAME", true)
-	mob_material.set_shader_parameter("IN_GAME", true)
+	RenderingServer.global_shader_parameter_set("in_game", true);
 
 func _process(_delta):
+	# gets player's position relative to the screen
 	var screen_position = get_global_transform_with_canvas() * player.global_position
-	map_material.set_shader_parameter("player_pos", screen_position)
-	mob_material.set_shader_parameter("player_pos", screen_position)
+	RenderingServer.global_shader_parameter_set("player_pos", screen_position);
 
 func _input(event):
 	if event is InputEventMouseMotion:
 		var mouse_position = event.position
-		map_material.set_shader_parameter("mouse_pos", mouse_position)
-		mob_material.set_shader_parameter("mouse_pos", mouse_position)
+		RenderingServer.global_shader_parameter_set("mouse_pos", mouse_position)

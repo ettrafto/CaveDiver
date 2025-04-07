@@ -1,7 +1,9 @@
 shader_type canvas_item;
 
 // Prevents shader from being previewed out of game
-uniform bool IN_GAME = false;
+global uniform bool in_game = false;
+global uniform vec2 player_pos = vec2(0, 0);
+global uniform vec2 mouse_pos = vec2(0, 0);
 
 // hint_range() restricts values to a range (with min/max/step).
 uniform float red_factor : hint_range(0.0, 1.0) = 1.0;
@@ -13,9 +15,6 @@ uniform float alpha : hint_range(0.0, 1.0) = 1.0;
 const float MAX_SIGHT_ANGLE = radians(7.2)/PI;
 const float MAX_RADIUS = 200.0;
 const float MAX_SIGHT_DISTANCE = 750.0; 
-
-uniform vec2 player_pos = vec2(0, 0);
-uniform vec2 mouse_pos = vec2(0, 0);
 
 float get_visibility_modifier(vec2 frag_coord) {
 	// Returns visibility of a frag based on distance from player and mouse position
@@ -47,7 +46,7 @@ float get_visibility_modifier(vec2 frag_coord) {
 
 void fragment() {
 	// COLOR.a > 0.0001 makes it so we don't modify transparent pixels
-	if (IN_GAME && COLOR.a > 0.0001) {
+	if (in_game && COLOR.a > 0.0001) {
 		// modifies rgba values by uniforms
 		COLOR.rgb = vec3(COLOR.r * red_factor, COLOR.g * green_factor, COLOR.b * blue_factor);
 		COLOR.a = alpha;
