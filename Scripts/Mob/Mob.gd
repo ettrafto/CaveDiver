@@ -164,7 +164,7 @@ func _integrate_forces(state) -> void:
 	
 	if alive:
 		approach_player(state)
-    # var new_position = NavigationServer2D.region_get_random_point(region, 1, false)
+	# var new_position = NavigationServer2D.region_get_random_point(region, 1, false)
 	  # print(position, global_position)
 	  # position = new_position
 	# otherwise, fade out corpse and have it sink to cave floor
