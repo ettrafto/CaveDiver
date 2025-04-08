@@ -1934,7 +1934,7 @@ scale = Vector2(2, 2)
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(223.329, 174.476)
 
-[node name="RigidBody2D" type="RigidBody2D" parent="Player"]
+[node name="playerBody" type="RigidBody2D" parent="Player"]
 position = Vector2(5.36848, -73.5484)
 gravity_scale = 0.0
 use_parent_material = true
@@ -1948,6 +1948,7 @@ angular_damp = 1.0
 script = ExtResource("4_pwyh5")
 metadata/_edit_group_ = true
 
+<<<<<<< HEAD
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/PlayerBody"]
 position = Vector2(0, -62)
 scale = Vector2(1.5, 1.5)
@@ -1955,6 +1956,14 @@ polygon = PackedVector2Array(30, 81, 20, 76, 9, 75, 1, 70, -5, 69, -10, 69, -17,
 
 [node name="Sprite2D" type="Sprite2D" parent="Player/PlayerBody"]
 use_parent_material = true
+=======
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/playerBody"]
+position = Vector2(-4.29478, -95.5591)
+scale = Vector2(1.5, 1.5)
+polygon = PackedVector2Array(30, 81, 20, 76, 9, 75, 1, 70, -5, 69, -10, 69, -17, 70, -20, 66, -23, 58, -18, 49, -10, 49, -4, 54, 8, 59, 8, 66, 16, 68, 23, 68, 31, 75)
+
+[node name="Sprite2D" type="Sprite2D" parent="Player/playerBody"]
+>>>>>>> d3f270f (rope spawning and player connection(WIP) with few bugs seen atm)
 position = Vector2(5, 3)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_mpcjb")
@@ -2035,5 +2044,9 @@ position = Vector2(-71.401, -53.1481)
 [node name="Silt" parent="." instance=ExtResource("3_nfk4m")]
 position = Vector2(-45.0953, 125.623)
 
+<<<<<<< HEAD
 [connection signal="bcd_change" from="Player/RigidBody2D" to="HUD" method="_on_rigid_body_2d_bcd_change"]
 
+=======
+[connection signal="bcd_change" from="Player/playerBody" to="HUD" method="_on_rigid_body_2d_bcd_change"]
+>>>>>>> d3f270f (rope spawning and player connection(WIP) with few bugs seen atm)

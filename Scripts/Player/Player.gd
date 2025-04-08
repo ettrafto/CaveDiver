@@ -14,6 +14,7 @@ signal place_rope
 var move_input: float
 var rotate_input: float
 var buoyancy_input: float
+var attached_to_rope: bool = false
 
 
 @onready var hud = get_tree().get_first_node_in_group("HUD")
@@ -65,6 +66,12 @@ func _rotate():
 		
 func _misc_input():
 	return Input.get_action_strength("rope")
+	
+func set_rope_attachment(boolean):
+	attached_to_rope = boolean
+	
+func is_attached_to_rope():
+	return attached_to_rope
 	
 	
 	
