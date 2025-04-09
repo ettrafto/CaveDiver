@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dhafxmdd71i72" path="res://Mob/Hurtbox.tscn" id="6_nebgd"]
 [ext_resource type="PackedScene" uid="uid://c8i7a05824we3" path="res://Mob/Mob.tscn" id="8_xcfsc"]
 [ext_resource type="Material" uid="uid://8o2yodwffd3x" path="res://Shaders/Mob.tres" id="10_6xdyb"]
-[ext_resource type="Script" path="res://Shaders/ShaderContext.gd" id="10_sg8do"]
+[ext_resource type="Script" uid="uid://nlpb4fatxvju" path="res://Shaders/ShaderContext.gd" id="10_sg8do"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mydmx"]
 texture = ExtResource("4_x3thl")
@@ -2001,6 +2001,12 @@ awareness = 0.5
 [node name="ShaderContext" type="Node2D" parent="Scripts"]
 script = ExtResource("10_sg8do")
 
+[node name="Mob2" parent="." instance=ExtResource("8_xcfsc")]
+editor_description = " Default Mob Template "
+material = ExtResource("10_6xdyb")
+position = Vector2(700, 600)
+awareness = 0.5
+
 [connection signal="bcd_change" from="Player/PlayerBody" to="HUD" method="_on_character_body_2d_bcd_change"]
 
 [editable path="Player/PlayerBody/Hitbox"]
@@ -2008,3 +2014,6 @@ script = ExtResource("10_sg8do")
 [editable path="Mob"]
 [editable path="Mob/Hurtbox"]
 [editable path="Mob/Hitbox"]
+[editable path="Mob2"]
+[editable path="Mob2/Hurtbox"]
+[editable path="Mob2/Hitbox"]

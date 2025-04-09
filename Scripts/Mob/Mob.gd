@@ -51,17 +51,18 @@ var max_detection = 500
 var detection_range = max_detection * awareness
 
 # variables for managing the sprite fadeout on death
-var MAX_FADE = 0.5
+var MAX_FADE = 0.4
 var death_fade = 1.0
 
 # shades the sprite by multiplying the RGB values of each pixel by the given factors
 # used for both the death shader and camoflauge
-func shade(red_factor=1, green_factor=1, blue_factor=1, alpha=1):
+func shade(red_factor: float = 1.0, green_factor: float = 1.0,
+		   blue_factor: float = 1.0, alpha: float = 1.0):
 	# note: made it so the sprite uses its parents material (Mob node)
-	material.set_shader_parameter("red_factor", red_factor)
-	material.set_shader_parameter("green_factor", green_factor)
-	material.set_shader_parameter("blue_factor", blue_factor)
-	material.set_shader_parameter("alpha", alpha)
+	sprite.set_instance_shader_parameter("red_factor", red_factor)
+	sprite.set_instance_shader_parameter("green_factor", green_factor)
+	sprite.set_instance_shader_parameter("blue_factor", blue_factor)
+	sprite.set_instance_shader_parameter("alpha", alpha)
 
 func die():
 	alive = false
@@ -170,7 +171,7 @@ func _integrate_forces(state) -> void:
 	  # position = new_position
 	# otherwise, fade out corpse and have it sink to cave floor
 	else:
-		# makes sprite's color slowly fade to 50% of its normal color
+		# makes sprite's color slowly fade to MAX_FADE
 		if death_fade > MAX_FADE:
 			death_fade = lerp(death_fade, MAX_FADE, state.step/5)
 			shade(death_fade, death_fade, death_fade)

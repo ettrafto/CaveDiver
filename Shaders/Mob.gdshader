@@ -6,10 +6,10 @@ global uniform vec2 player_pos = vec2(0, 0);
 global uniform vec2 mouse_pos = vec2(0, 0);
 
 // hint_range() restricts values to a range (with min/max/step).
-uniform float red_factor : hint_range(0.0, 1.0) = 1.0;
-uniform float green_factor : hint_range(0.0, 1.0) = 1.0;
-uniform float blue_factor : hint_range(0.0, 1.0) = 1.0;
-uniform float alpha : hint_range(0.0, 1.0) = 1.0;
+instance uniform float red_factor : hint_range(0.0, 1.0) = 1.0;
+instance uniform float green_factor : hint_range(0.0, 1.0) = 1.0;
+instance uniform float blue_factor : hint_range(0.0, 1.0) = 1.0;
+instance uniform float alpha : hint_range(0.0, 1.0) = 1.0;
 
 // Used by get_visibility_modifier
 const float MAX_SIGHT_ANGLE = radians(7.2)/PI;
