@@ -15,6 +15,7 @@ var move_input: float
 var rotate_input: float
 var buoyancy_input: float
 var attached_to_rope: bool = false
+var has_speargun: bool = true
 
 
 @onready var hud = get_tree().get_first_node_in_group("HUD")
@@ -40,7 +41,6 @@ func _buoyancy():
 		GameManager.bcd_inflation = clamp(GameManager.bcd_inflation + buoyancy_input * 0.01,0,100)
 		set_constant_force(Vector2(0,-1 * GameManager.bcd_inflation * 100))
 		
-
 func _move(state):
 	var input = _get_move_dir()
 	if !input:
@@ -63,6 +63,11 @@ func _rotate():
 			rotation += input
 		elif rotation <= -1 and input > 0:
 			rotation += input
+			
+func _speargun(state):
+	var input: int = Input.get_action_strength("inflate_bcd")# TODO change the input type crashing preventing atm
+	if input and has_speargun:
+		pass
 		
 func _misc_input():
 	return Input.get_action_strength("rope")
