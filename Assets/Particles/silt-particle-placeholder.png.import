@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1j0lkr48gjau"
-path="res://.godot/imported/Asset 1.png-547d99103131889992b2e4e2fa069844.ctex"
+uid="uid://buiapjgdoom1l"
+path="res://.godot/imported/silt-particle-placeholder.png-a8f4a2659341061559bbabea035b9bb3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/DumbTiles/Asset 1.png"
-dest_files=["res://.godot/imported/Asset 1.png-547d99103131889992b2e4e2fa069844.ctex"]
+source_file="res://Assets/Particles/silt-particle-placeholder.png"
+dest_files=["res://.godot/imported/silt-particle-placeholder.png-a8f4a2659341061559bbabea035b9bb3.ctex"]
 
 [params]
 

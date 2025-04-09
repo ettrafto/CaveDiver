@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tqmrqxf2wq40"
-path="res://.godot/imported/Asset 2.png-ee8b8fc1759ab34d861f78e5cdd9b4d6.ctex"
+uid="uid://duoy7rsq8ne23"
+path="res://.godot/imported/rope_segment.png-4c364d3e967dd4f3696813ac91f3521c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/DumbTiles/Asset 2.png"
-dest_files=["res://.godot/imported/Asset 2.png-ee8b8fc1759ab34d861f78e5cdd9b4d6.ctex"]
+source_file="res://Assets/Art/rope_segment.png"
+dest_files=["res://.godot/imported/rope_segment.png-4c364d3e967dd4f3696813ac91f3521c.ctex"]
 
 [params]
 

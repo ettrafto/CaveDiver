@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8bsvqcd8cg7m"
-path="res://.godot/imported/diver1.png-b1ed8f0d5e7a7dffe95d115e52034998.ctex"
+uid="uid://cdwd5jieywghy"
+path="res://.godot/imported/silt-pile.png-a61a07a15f925ef41accc76c051a9dcf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/diver/diver1.png"
-dest_files=["res://.godot/imported/diver1.png-b1ed8f0d5e7a7dffe95d115e52034998.ctex"]
+source_file="res://Assets/Art/silt-pile.png"
+dest_files=["res://.godot/imported/silt-pile.png-a61a07a15f925ef41accc76c051a9dcf.ctex"]
 
 [params]
 

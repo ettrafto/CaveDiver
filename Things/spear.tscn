@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://v54svjph8knq"]
+
+[ext_resource type="Texture2D" uid="uid://cimkfoe3rjek0" path="res://Assets/Art/spear.png" id="1_vqt7i"]
+
+[node name="Spear" type="RigidBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(4.375, 2.1875)
+texture = ExtResource("1_vqt7i")
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+build_mode = 1
+polygon = PackedVector2Array(62, -1, 22, -9, 22, -6, 26, -4, -67, -4, -70, -1, -67, 2, 26, 2, 22, 5, 22, 7)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
