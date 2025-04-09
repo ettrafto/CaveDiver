@@ -10,8 +10,8 @@ func test_one():
 	
 	var inventory = Inventory.new(4, 6)
 	
-	var wrench = Item.new("tool", "wrench", 3)
-	var axe = Item.new("tool", "axe", 5)
+	var wrench = Item.new(-1, "wrench", "", 3, 1, 1, "")
+	var axe = Item.new(-1, "axe", "", 5, 1, 1, "")
 	
 	inventory.add_item(wrench)
 	inventory.add_item(axe)
@@ -34,9 +34,9 @@ func test_two():
 	
 	var inventory = Inventory.new(4, 6)
 	
-	var wrench = Item.new("tool", "wrench", 3)
-	var flashlight = Item.new("tool", "flashlight", 2)
-	var axe = Item.new("tool", "axe", 5)
+	var wrench = Item.new(-1, "wrench", "", 3, 1, 1, "")
+	var flashlight = Item.new(-1, "flashlight", "", 2, 1, 1, "")
+	var axe = Item.new(-1, "axe", "", 5, 1, 1, "")
 	
 	inventory.add_item(wrench)
 	# add it to position (3, 0) in inventory
@@ -60,7 +60,7 @@ func test_three():
 	
 	var inventory = Inventory.new(4, 6)
 	
-	var wrench = Item.new("tool", "wrench", 3)
+	var wrench = Item.new(-1, "wrench", "", 3, 1, 1, "")
 	
 	var res1 = inventory.add_item(wrench, Vector2(100, 100))
 	var res2 = inventory.set_item(wrench, Vector2(100, 100))
@@ -78,7 +78,7 @@ func test_four():
 	
 	var inventory = Inventory.new(4, 6)
 	
-	var wrench = Item.new("tool", "wrench", 3)
+	var wrench = Item.new(-1, "wrench", "", 3, 1, 1, "")
 	
 	if inventory.get_total_weight() != 0:
 		passed = false
@@ -99,8 +99,8 @@ func test_five():
 	
 	var inventory = Inventory.new(4, 6)
 	
-	var wrench = Item.new("tool", "wrench", 3)
-	var axe = Item.new("tool", "axe", 5)
+	var wrench = Item.new(-1, "wrench", "", 3, 1, 1, "")
+	var axe = Item.new(-1, "axe", "", 5, 1, 1, "")
 	
 	inventory.set_item(wrench, Vector2(0, 0))
 	
@@ -127,7 +127,7 @@ func test_six():
 	
 	var inventory = Inventory.new(4, 6)
 	
-	var axe = Item.new("tool", "axe", 5)
+	var axe = Item.new(-1, "axe", "", 5, 1, 1, "")
 	
 	inventory.set_item(axe, Vector2(0, 0))
 	
@@ -147,7 +147,7 @@ func test_seven():
 	
 	var inventory = Inventory.new(4, 6)
 	
-	var axe = Item.new("tool", "axe", 5)
+	var axe = Item.new(-1, "axe", "", 5, 1, 1, "")
 	
 	inventory.set_item(axe, Vector2(0, 0))
 	inventory.move_item(Vector2(0, 0), Vector2(2, 3))
@@ -173,8 +173,8 @@ func test_eight():
 	
 	var inventory = Inventory.new(4, 6)
 	
-	var wrench = Item.new("tool", "wrench", 3)
-	var axe = Item.new("tool", "axe", 5)
+	var wrench = Item.new(-1, "wrench", "", 3, 1, 1, "")
+	var axe = Item.new(-1, "axe", "", 5, 1, 1, "")
 	
 	var pos1 = Vector2(2, 3)
 	var pos2 = Vector2(5, 2)
