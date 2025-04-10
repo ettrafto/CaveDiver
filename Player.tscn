@@ -31,7 +31,7 @@ polygon = PackedVector2Array(30, 81, 20, 76, 9, 75, 1, 70, -5, 69, -10, 69, -17,
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 use_parent_material = true
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.39, 0.39)
 texture = ExtResource("2_cxr5p")
 
 [node name="Hitbox" parent="." instance=ExtResource("3_tdg3f")]

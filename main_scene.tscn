@@ -1914,13 +1914,6 @@ tile_set = SubResource("TileSet_54ow2")
 visible = false
 navigation_polygon = SubResource("NavigationPolygon_0diyu")
 
-[node name="Player" type="Node2D" parent="."]
-material = ExtResource("1_rgmf6")
-scale = Vector2(2, 2)
-
-[node name="playerBody" parent="Player" instance=ExtResource("5_wr18j")]
-position = Vector2(5.36848, -73.5484)
-
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -1966,6 +1959,9 @@ awareness = 0.5
 
 [node name="rope_anchor" parent="." instance=ExtResource("6_hq1ik")]
 position = Vector2(-71.401, -53.1481)
+
+[node name="Player" parent="rope_anchor" instance=ExtResource("5_wr18j")]
+position = Vector2(720.401, 367.148)
 
 [node name="Silt" parent="." instance=ExtResource("3_nfk4m")]
 position = Vector2(-45.0953, 125.623)
