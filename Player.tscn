@@ -1,9 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://dim5as52t6iqc"]
+[gd_scene load_steps=7 format=3 uid="uid://dim5as52t6iqc"]
 
 [ext_resource type="Script" uid="uid://wacxpn3t4p0l" path="res://Scripts/Player/Player.gd" id="1_e80uo"]
 [ext_resource type="Texture2D" uid="uid://ddhuat6wttwu5" path="res://Assets/Art/diver/diver1.png" id="2_cxr5p"]
 [ext_resource type="PackedScene" uid="uid://c8btmt1p1c5oi" path="res://Mob/Hitbox.tscn" id="3_tdg3f"]
 [ext_resource type="PackedScene" uid="uid://dhafxmdd71i72" path="res://Mob/Hurtbox.tscn" id="4_dtqjt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e80uo"]
+radius = 22.0907
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cxr5p"]
+radius = 16.1061
+height = 93.6311
 
 [node name="Player" type="RigidBody2D"]
 use_parent_material = true
@@ -15,31 +22,39 @@ lock_rotation = true
 linear_damp = 2.5
 angular_damp = 1.0
 script = ExtResource("1_e80uo")
-metadata/_edit_group_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(217.961, 248.024)
 
-[node name="Player_PlayerBody#CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2(-5.36848, 42.5484)
-scale = Vector2(0.75, 0.75)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(-6, -66)
 polygon = PackedVector2Array(30, 81, 20, 76, 9, 75, 1, 70, -5, 69, -10, 69, -17, 70, -20, 66, -23, 58, -18, 49, -10, 49, -4, 54, 8, 59, 8, 66, 16, 68, 23, 68, 31, 75)
 
-[node name="Player_PlayerBody#Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 use_parent_material = true
-position = Vector2(-2.86848, 75.0484)
-scale = Vector2(0.15, 0.15)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_cxr5p")
 
-[node name="Player_PlayerBody#Hitbox" parent="." instance=ExtResource("3_tdg3f")]
-position = Vector2(-14.4949, 71.9379)
-rotation = 1.61277
+[node name="Hitbox" parent="." instance=ExtResource("3_tdg3f")]
+visible = false
+position = Vector2(-18, -4)
 scale = Vector2(0.5, 0.5)
 collision_layer = 8
 collision_mask = 64
 
-[node name="Player_PlayerBody#Hurtbox" parent="." instance=ExtResource("4_dtqjt")]
-position = Vector2(-3.75793, 75.159)
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2(1.27344, -3.79188)
+shape = SubResource("CircleShape2D_e80uo")
+
+[node name="Hurtbox" parent="." instance=ExtResource("4_dtqjt")]
+visible = false
 scale = Vector2(0.5, 0.5)
 collision_layer = 32
 collision_mask = 16
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(-4, 0)
+rotation = -1.19624
+shape = SubResource("CapsuleShape2D_cxr5p")
+
+[editable path="Hitbox"]
+[editable path="Hurtbox"]
