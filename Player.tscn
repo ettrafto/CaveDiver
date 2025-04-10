@@ -26,8 +26,7 @@ script = ExtResource("1_e80uo")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2(-6, -66)
-polygon = PackedVector2Array(30, 81, 20, 76, 9, 75, 1, 70, -5, 69, -10, 69, -17, 70, -20, 66, -23, 58, -18, 49, -10, 49, -4, 54, 8, 59, 8, 66, 16, 68, 23, 68, 31, 75)
+polygon = PackedVector2Array(46, 28, 26, 20, 7, 19, -10, 8, -27, 5, -46, 9, -53, 0, -55, -17, -50, -26, -42, -32, -30, -32, -24, -25, 3, -15, 4, -1, 14, 1, 33, 4, 48, 13)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 use_parent_material = true
