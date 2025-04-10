@@ -1,15 +1,12 @@
-[gd_scene load_steps=18 format=4 uid="uid://bw61hcrsu2ee5"]
+[gd_scene load_steps=15 format=4 uid="uid://bw61hcrsu2ee5"]
 
 [ext_resource type="Material" uid="uid://bdw7j3m7ekmuh" path="res://Shaders/Map.tres" id="1_rgmf6"]
 [ext_resource type="Texture2D" uid="uid://bh8gbmxhd3es" path="res://Assets/Art/CaveTiles1/CaveBG.png" id="3_debib"]
-[ext_resource type="Texture2D" uid="uid://ddhuat6wttwu5" path="res://Assets/Art/diver/diver1.png" id="3_mpcjb"]
 [ext_resource type="PackedScene" uid="uid://dc7pd2nhl2ows" path="res://Things/silt.tscn" id="3_nfk4m"]
-[ext_resource type="Script" uid="uid://wacxpn3t4p0l" path="res://Scripts/Player/Player.gd" id="4_pwyh5"]
 [ext_resource type="Texture2D" uid="uid://w4s0ri4v4mjo" path="res://Assets/Art/CaveTiles1/CaveG.png" id="4_x3thl"]
 [ext_resource type="Script" uid="uid://cgbjcuwu7kt4x" path="res://Scripts/HUD/HUD.gd" id="5_6w5lm"]
-[ext_resource type="PackedScene" uid="uid://c8btmt1p1c5oi" path="res://Mob/Hitbox.tscn" id="5_drt5h"]
+[ext_resource type="PackedScene" uid="uid://dim5as52t6iqc" path="res://Player.tscn" id="5_wr18j"]
 [ext_resource type="PackedScene" uid="uid://cyo2yviksowvg" path="res://Things/rope_anchor.tscn" id="6_hq1ik"]
-[ext_resource type="PackedScene" uid="uid://dhafxmdd71i72" path="res://Mob/Hurtbox.tscn" id="6_nebgd"]
 [ext_resource type="PackedScene" uid="uid://c8i7a05824we3" path="res://Mob/Mob.tscn" id="8_xcfsc"]
 [ext_resource type="Material" uid="uid://8o2yodwffd3x" path="res://Shaders/Mob.tres" id="10_6xdyb"]
 [ext_resource type="Script" uid="uid://nlpb4fatxvju" path="res://Shaders/ShaderContext.gd" id="10_sg8do"]
@@ -1921,43 +1918,8 @@ navigation_polygon = SubResource("NavigationPolygon_0diyu")
 material = ExtResource("1_rgmf6")
 scale = Vector2(2, 2)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(223.329, 174.476)
-
-[node name="playerBody" type="RigidBody2D" parent="Player"]
-use_parent_material = true
+[node name="playerBody" parent="Player" instance=ExtResource("5_wr18j")]
 position = Vector2(5.36848, -73.5484)
-collision_layer = 2
-collision_mask = 7
-gravity_scale = 0.0
-center_of_mass_mode = 1
-lock_rotation = true
-linear_damp = 2.5
-angular_damp = 1.0
-script = ExtResource("4_pwyh5")
-metadata/_edit_group_ = true
-
-[node name="Player_PlayerBody#CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2(0, -62)
-scale = Vector2(1.5, 1.5)
-polygon = PackedVector2Array(30, 81, 20, 76, 9, 75, 1, 70, -5, 69, -10, 69, -17, 70, -20, 66, -23, 58, -18, 49, -10, 49, -4, 54, 8, 59, 8, 66, 16, 68, 23, 68, 31, 75)
-
-[node name="Player_PlayerBody#Sprite2D" type="Sprite2D" parent="."]
-use_parent_material = true
-position = Vector2(5, 3)
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("3_mpcjb")
-
-[node name="Player_PlayerBody#Hitbox" parent="." instance=ExtResource("5_drt5h")]
-position = Vector2(-18.2529, -3.22106)
-rotation = 1.61277
-collision_layer = 8
-collision_mask = 64
-
-[node name="Player_PlayerBody#Hurtbox" parent="." instance=ExtResource("6_nebgd")]
-position = Vector2(3.22111, 3.22114)
-collision_layer = 32
-collision_mask = 16
 
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3
