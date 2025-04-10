@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameManager="*res://Scripts/Systems/GameManager.gd"
-Global="*res://Scripts/Systems/Global.gd"
 
 [dotnet]
 
