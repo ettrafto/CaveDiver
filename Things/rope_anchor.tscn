@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cyo2yviksowvg"]
 
-[ext_resource type="Script" uid="uid://cppsxwdjjvsb6" path="res://Scripts/Map/rope_anchor.gd" id="1_vmdxm"]
+[ext_resource type="Script" uid="uid://dw6b8pnj2ohsa" path="res://Scripts/Map/rope_anchor.gd" id="1_vmdxm"]
 [ext_resource type="Texture2D" uid="uid://bh21sp0isvf5o" path="res://Assets/Art/anchor-placeholder.png" id="2_de16p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d4tq8"]
