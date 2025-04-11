@@ -6,11 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://dhafxmdd71i72" path="res://Mob/Hurtbox.tscn" id="4_dtqjt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e80uo"]
-radius = 22.0907
+radius = 44.727
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cxr5p"]
-radius = 16.1061
-height = 93.6311
+radius = 33.2065
+height = 224.312
 
 [node name="Player" type="RigidBody2D"]
 use_parent_material = true
@@ -34,8 +34,7 @@ scale = Vector2(0.39, 0.39)
 texture = ExtResource("2_cxr5p")
 
 [node name="Hitbox" parent="." instance=ExtResource("3_tdg3f")]
-visible = false
-position = Vector2(-18, -4)
+position = Vector2(-48, -10)
 scale = Vector2(0.5, 0.5)
 collision_layer = 8
 collision_mask = 64
@@ -45,14 +44,15 @@ position = Vector2(1.27344, -3.79188)
 shape = SubResource("CircleShape2D_e80uo")
 
 [node name="Hurtbox" parent="." instance=ExtResource("4_dtqjt")]
-visible = false
+position = Vector2(-1, 0)
+rotation = 0.0349569
 scale = Vector2(0.5, 0.5)
 collision_layer = 32
 collision_mask = 16
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 position = Vector2(-4, 0)
-rotation = -1.19624
+rotation = -1.15992
 shape = SubResource("CapsuleShape2D_cxr5p")
 
 [editable path="Hitbox"]
