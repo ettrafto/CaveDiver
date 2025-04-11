@@ -1,7 +1,7 @@
 # This script provides player position to shader files.
 extends Node2D
 
-@onready var player: CharacterBody2D = get_node("/root/MainScene/Player/PlayerBody")
+@onready var player: RigidBody2D = get_node("/root/MainScene/Player")
 @onready var map_material: ShaderMaterial = ResourceLoader.load("res://Shaders/Map.tres")
 @onready var mob_material: ShaderMaterial = ResourceLoader.load("res://Shaders/Mob.tres")
 
