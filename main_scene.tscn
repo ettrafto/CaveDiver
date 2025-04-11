@@ -1958,7 +1958,7 @@ position = Vector2(700, 600)
 awareness = 0.5
 
 [node name="rope_anchor" parent="." instance=ExtResource("6_hq1ik")]
-position = Vector2(-71.401, -53.1481)
+position = Vector2(438, 237)
 
 [node name="Silt" parent="." instance=ExtResource("3_nfk4m")]
 position = Vector2(613, 236)

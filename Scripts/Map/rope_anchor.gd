@@ -37,7 +37,7 @@ func set_can_start(boolean):
 	can_start_rope = boolean
 
 func _on_area_2d_body_entered(body: RigidBody2D):
-	if body.name == "playerBody":
+	if body.name == "Player":
 		can_start_rope = true
 		self.start_rope(body)
 
