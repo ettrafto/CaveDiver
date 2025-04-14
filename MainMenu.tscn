@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=3 uid="uid://byf4pvtyiu8e6"]
+
+[ext_resource type="Script" uid="uid://cd656wnhqpfcs" path="res://MainMenu.gd" id="1_i26rj"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_i26rj")
+
+[node name="MainMenuPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CaveDiver" type="Label" parent="MainMenuPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Start" type="Button" parent="MainMenuPanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Options" type="Button" parent="MainMenuPanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Quit" type="Button" parent="MainMenuPanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="SaveMenuPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DemoMenuPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PreDiveMenuPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 44.0
+offset_bottom = 44.0
+
+[connection signal="pressed" from="MainMenuPanel/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="MainMenuPanel/Options" to="." method="_on_Options_pressed"]
+[connection signal="pressed" from="MainMenuPanel/Quit" to="." method="_on_Quit_pressed"]
