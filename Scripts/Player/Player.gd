@@ -38,7 +38,7 @@ func _buoyancy():
 	buoyancy_input = Input.get_action_strength("inflate_bcd") - Input.get_action_strength("deflate_bcd")
 	if buoyancy_input:
 		bcd_change.emit()
-		GameManager.bcd_inflation = clamp(GameManager.bcd_inflation + buoyancy_input * 0.01,0,100)
+		GameManager.bcd_inflation = clamp(GameManager.bcd_inflation + buoyancy_input * 0.01,0,1)
 		set_constant_force(Vector2(0,-1 * GameManager.bcd_inflation * 100))
 		
 func _move(state):
