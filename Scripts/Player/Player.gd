@@ -39,7 +39,7 @@ func _buoyancy():
 	if buoyancy_input:
 		bcd_change.emit()
 		GameManager.bcd_inflation = clamp(GameManager.bcd_inflation + buoyancy_input * 0.01,0,1)
-		set_constant_force(Vector2(0,-1 * GameManager.bcd_inflation * 100))
+		set_constant_force(Vector2(0,-1 * (GameManager.bcd_inflation * 100) - 50) * 2)
 		
 func _move(state):
 	var input = _get_move_dir()
