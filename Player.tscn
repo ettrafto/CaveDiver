@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dim5as52t6iqc"]
+[gd_scene load_steps=8 format=3 uid="uid://dim5as52t6iqc"]
 
 [ext_resource type="Script" uid="uid://wacxpn3t4p0l" path="res://Scripts/Player/Player.gd" id="1_e80uo"]
 [ext_resource type="Texture2D" uid="uid://bu21un2aoysxj" path="res://Assets/Art/diver/diver1.png" id="2_cxr5p"]
@@ -11,6 +11,19 @@ radius = 44.727
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cxr5p"]
 radius = 33.2065
 height = 224.312
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_e80uo"]
+particle_flag_disable_z = true
+gravity = Vector3(0, -30, 0)
+radial_accel_min = -10.0
+radial_accel_max = 10.0
+damping_min = 2.0
+damping_max = 2.0
+turbulence_enabled = true
+turbulence_noise_strength = 7.07
+turbulence_noise_speed = Vector3(0, -2, 0)
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.2
 
 [node name="Player" type="RigidBody2D"]
 use_parent_material = true
@@ -54,6 +67,23 @@ collision_mask = 16
 position = Vector2(-4, 0)
 rotation = -1.15992
 shape = SubResource("CapsuleShape2D_cxr5p")
+
+[node name="bubbleTimer" type="Timer" parent="."]
+wait_time = 10.0
+
+[node name="resparator" type="Node2D" parent="."]
+position = Vector2(-41, -13)
+
+[node name="bubbleParticles" type="GPUParticles2D" parent="."]
+position = Vector2(-41, -13)
+emitting = false
+amount = 100
+lifetime = 5.0
+one_shot = true
+explosiveness = 0.5
+process_material = SubResource("ParticleProcessMaterial_e80uo")
+
+[connection signal="timeout" from="bubbleTimer" to="." method="_on_main_bubble_timer_timeout"]
 
 [editable path="Hitbox"]
 [editable path="Hurtbox"]

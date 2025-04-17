@@ -8,6 +8,7 @@ signal place_rope
 @export var drag: float = 10  # Water resistance (slows movement)
 @export var bcd_capacity: float = 50
 @onready var move_force = Vector2(200,0)
+var bubble_scene = preload("res://Things/player_bubble.tscn")
 
 # Buoyancy-related stats
 # velocity input & momentum
@@ -16,6 +17,7 @@ var rotate_input: float
 var buoyancy_input: float
 var attached_to_rope: bool = false
 var has_speargun: bool = true
+var bubble_count: int = 0
 
 
 @onready var hud = get_tree().get_first_node_in_group("HUD")
@@ -23,6 +25,7 @@ var has_speargun: bool = true
 func _ready() -> void:
 	set_inertia(1)
 	set_constant_force(Vector2(0,25))
+	$bubbleTimer.start(10)
 #changes the velocity and rotation of the player
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	_move(state)
@@ -78,6 +81,18 @@ func set_rope_attachment(boolean):
 func is_attached_to_rope():
 	return attached_to_rope
 	
-	
-	
+func emit_bubble():
+	var bubble = bubble_scene.instantiate()
+	add_child(bubble)
+	bubble.global_position = $resparator.global_position
+	if bubble_count < 5:
+		bubble_count += 1
+		$bubbleTimer.start(.5)
+	elif bubble_count >= 5:
+		bubble_count = 0
+		$bubbleTimer.start(10)
+
+
+func _on_main_bubble_timer_timeout() -> void:
+	emit_bubble()
 	

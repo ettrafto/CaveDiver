@@ -14,6 +14,5 @@ func _physics_process(delta):
 	t += delta
 	
 	var noise_x = noise_magnitude * sin(t * noise_frequency) + (sin(t) * rng.randf_range(-noise_magnitude,noise_magnitude))
-	print(noise_x)
 	var noise_vector = Vector2(noise_x, 0)
 	self.constant_force = noise_vector
