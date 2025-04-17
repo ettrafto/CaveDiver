@@ -1,0 +1,38 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3 uid="uid://ca6k5px5pt6ak"]
+
+[sub_resource type="Curve" id="Curve_p7y5c"]
+_data = [Vector2(0.162162, 0.123596), 0.0, 0.0, 0, 0, Vector2(0.472973, 0.483146), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_tjres"]
+curve = SubResource("Curve_p7y5c")
+
+[resource]
+resource_local_to_scene = true
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 5.0
+emission_ring_radius = 5.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+angular_velocity_min = -150.0
+angular_velocity_max = 150.0
+radial_velocity_min = -5.00002
+radial_velocity_max = 4.99998
+gravity = Vector3(0, 0.1, 0)
+linear_accel_min = -2.23517e-06
+linear_accel_max = -2.23517e-06
+radial_accel_min = -2.23517e-06
+radial_accel_max = -2.23517e-06
+tangential_accel_min = -2.23517e-06
+tangential_accel_max = -2.23517e-06
+turbulence_enabled = true
+turbulence_noise_strength = 17.58
+turbulence_noise_scale = 5.0
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.155
+turbulence_initial_displacement_min = -10.0
+turbulence_initial_displacement_max = 10.0
+turbulence_influence_over_life = SubResource("CurveTexture_tjres")
