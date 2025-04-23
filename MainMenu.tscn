@@ -2,55 +2,59 @@
 
 [ext_resource type="Script" uid="uid://cd656wnhqpfcs" path="res://MainMenu.gd" id="1_i26rj"]
 
-[node name="MainMenu" type="Control"]
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="MainMenu" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_i26rj")
 
-[node name="MainMenuPanel" type="Panel" parent="."]
+[node name="MainMenuPanel" type="Panel" parent="MainMenu"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="CaveDiver" type="Label" parent="MainMenuPanel"]
+[node name="CaveDiver" type="Label" parent="MainMenu/MainMenuPanel"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="Start" type="Button" parent="MainMenuPanel"]
+[node name="Start" type="Button" parent="MainMenu/MainMenuPanel"]
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
 
-[node name="Options" type="Button" parent="MainMenuPanel"]
+[node name="Options" type="Button" parent="MainMenu/MainMenuPanel"]
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
 
-[node name="Quit" type="Button" parent="MainMenuPanel"]
+[node name="Quit" type="Button" parent="MainMenu/MainMenuPanel"]
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
 
-[node name="SaveMenuPanel" type="Panel" parent="."]
+[node name="SaveMenuPanel" type="Panel" parent="MainMenu"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="DemoMenuPanel" type="Panel" parent="."]
+[node name="DemoMenuPanel" type="Panel" parent="MainMenu"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="PreDiveMenuPanel" type="Panel" parent="."]
+[node name="PreDiveMenuPanel" type="Panel" parent="MainMenu"]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 4.0
 offset_right = 44.0
 offset_bottom = 44.0
 
-[connection signal="pressed" from="MainMenuPanel/Start" to="." method="_on_Start_pressed"]
-[connection signal="pressed" from="MainMenuPanel/Options" to="." method="_on_Options_pressed"]
-[connection signal="pressed" from="MainMenuPanel/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="pressed" from="MainMenu/MainMenuPanel/Start" to="MainMenu" method="_on_Start_pressed"]
+[connection signal="pressed" from="MainMenu/MainMenuPanel/Options" to="MainMenu" method="_on_Options_pressed"]
+[connection signal="pressed" from="MainMenu/MainMenuPanel/Quit" to="MainMenu" method="_on_Quit_pressed"]
