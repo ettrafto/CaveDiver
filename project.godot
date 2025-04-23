@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="CaveDiver"
-run/main_scene="uid://byf4pvtyiu8e6"
+run/main_scene="uid://bw61hcrsu2ee5"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
