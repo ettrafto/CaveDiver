@@ -33,6 +33,16 @@ signal game_over_triggered
 # Called when the game starts
 func _ready():
 	print("GameManager initialized")
+	show_menu()
+	
+func show_menu():
+	# load the .tscn with your CanvasLayer→Control root
+	var menu_scene := preload("res://MainMenu.tscn")
+	var menu := menu_scene.instantiate()
+	# stick it straight under the root viewport
+	get_tree().root.add_child(menu)
+	# pause the rest of the world
+	get_tree().paused = true
 	
 # Decrease player's health
 func decrease_health(amount: int):

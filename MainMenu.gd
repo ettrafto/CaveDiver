@@ -22,15 +22,12 @@ func _on_Options_pressed() -> void:
 func _on_Quit_pressed() -> void:
 	get_tree().quit()
 
-# Save Menu callbacks
-func _on_NewGame1_pressed() -> void:
-	show_screen("DemoMenu")
-
-func _on_NewGame2_pressed() -> void:
-	show_screen("DemoMenu")
-
-func _on_NewGame3_pressed() -> void:
-	show_screen("DemoMenu")
+func _on_NewGame_pressed():
+	# tear down the menu
+	queue_free()
+	# un-pause and swap scenes
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://main_scene.tscn")
 
 # Demo Menu callbacks
 func _on_DemoLevel_pressed() -> void:
