@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://byf4pvtyiu8e6"]
+[gd_scene load_steps=3 format=3 uid="uid://byf4pvtyiu8e6"]
 
 [ext_resource type="Script" uid="uid://cd656wnhqpfcs" path="res://MainMenu.gd" id="1_i26rj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i26rj"]
+bg_color = Color(1, 1, 1, 1)
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
@@ -14,6 +17,7 @@ grow_vertical = 2
 script = ExtResource("1_i26rj")
 
 [node name="MainMenuPanel" type="Panel" parent="MainMenu"]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -25,8 +29,9 @@ offset_bottom = 23.0
 
 [node name="Start" type="Button" parent="MainMenu/MainMenuPanel"]
 layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+offset_right = 136.0
+offset_bottom = 136.0
+scale = Vector2(0.1, 0.1)
 
 [node name="Options" type="Button" parent="MainMenu/MainMenuPanel"]
 layout_mode = 0
@@ -39,21 +44,128 @@ offset_right = 8.0
 offset_bottom = 8.0
 
 [node name="SaveMenuPanel" type="Panel" parent="MainMenu"]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="DemoMenuPanel" type="Panel" parent="MainMenu"]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="PreDiveMenuPanel" type="Panel" parent="MainMenu"]
+visible = false
 layout_mode = 0
 offset_left = 4.0
 offset_top = 4.0
 offset_right = 44.0
 offset_bottom = 44.0
+
+[node name="HorizontalMenu" type="MarginContainer" parent="MainMenu"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainMenu/HorizontalMenu"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+
+[node name="Column1" type="Panel" parent="MainMenu/HorizontalMenu/HBoxContainer"]
+custom_minimum_size = Vector2(200, 400)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MainMenu/HorizontalMenu/HBoxContainer/Column1"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/HorizontalMenu/HBoxContainer/Column1/MarginContainer"]
+layout_mode = 2
+
+[node name="MenuLabel" type="Label" parent="MainMenu/HorizontalMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Predive Menu"
+
+[node name="Underline" type="Panel" parent="MainMenu/HorizontalMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/MenuLabel"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_i26rj")
+
+[node name="EquipmentLabel" type="Label" parent="MainMenu/HorizontalMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 16
+text = "Equipment"
+
+[node name="Underline" type="Panel" parent="MainMenu/HorizontalMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/EquipmentLabel"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -2.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_i26rj")
+
+[node name="Panel" type="Panel" parent="MainMenu/HorizontalMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/HorizontalMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GogglesCheckBox" type="CheckBox" parent="MainMenu/HorizontalMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/Panel/VBoxContainer"]
+layout_direction = 3
+layout_mode = 2
+theme_override_colors/icon_disabled_color = Color(0.886275, 0, 0, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.886275, 0, 0, 1)
+theme_override_colors/icon_hover_color = Color(0.886275, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0.886275, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0.886275, 0, 0, 1)
+theme_override_colors/icon_normal_color = Color(0.884314, 3.20069e-06, 1.15514e-06, 1)
+text = "Goggles"
+
+[node name="BCDCheckBox" type="CheckBox" parent="MainMenu/HorizontalMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/Panel/VBoxContainer"]
+layout_direction = 3
+layout_mode = 2
+text = "BCD"
+
+[node name="SuitCheckBox" type="CheckBox" parent="MainMenu/HorizontalMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/Panel/VBoxContainer"]
+layout_direction = 3
+layout_mode = 2
+text = "Suit"
+
+[node name="FinsCheckBox" type="CheckBox" parent="MainMenu/HorizontalMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/Panel/VBoxContainer"]
+layout_direction = 3
+layout_mode = 2
+text = "Fins"
+
+[node name="RespCheckBox" type="CheckBox" parent="MainMenu/HorizontalMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/Panel/VBoxContainer"]
+layout_direction = 3
+layout_mode = 2
+text = "Resp"
+
+[node name="Column2" type="Panel" parent="MainMenu/HorizontalMenu/HBoxContainer"]
+custom_minimum_size = Vector2(200, 400)
+layout_mode = 2
 
 [connection signal="pressed" from="MainMenu/MainMenuPanel/Start" to="MainMenu" method="_on_Start_pressed"]
 [connection signal="pressed" from="MainMenu/MainMenuPanel/Options" to="MainMenu" method="_on_Options_pressed"]
