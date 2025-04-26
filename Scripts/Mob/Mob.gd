@@ -30,13 +30,14 @@ extends RigidBody2D
 
 # aliases for commonly referenced nodes
 @onready var player = $"../Player"
-@onready var nav = $NavigationAgent2D
+@onready var nav_agent = $NavigationAgent2D
 @onready var sprite = $Sprite2D
 @onready var anim_player = $AnimationPlayer
 @onready var hurtbox = $Hurtbox/CollisionShape2D
 @onready var hitbox = $Hitbox/CollisionShape2D
 @onready var corpse_box = $CorpseCollisionShape2D
 
+# maybe update this to more explicity reference the correct nav region
 @onready var nav_region = $"../Map/NavigationRegion2D"
 
 # variables for map and region used for getting random points 
@@ -49,7 +50,8 @@ func setup_nav_server():
 	NavigationServer2D.region_set_transform(region, Transform2D())
 	NavigationServer2D.region_set_map(region, map)
 	NavigationServer2D.region_set_navigation_polygon(region, nav_region.navigation_polygon)
-
+	
+	
 func _ready():
 	setup_nav_server()
 	# for some reason,the hurtbox is always instantiated disabled
@@ -63,6 +65,11 @@ var alive: bool = true
 # stores the direction to the next pathfinding location
 # setting this as a global so that methods called from AnimationPlayer keys can access it
 var movement_direction: Vector2 = Vector2.ZERO
+
+# enum of possible behavoirs
+enum Behaviors {CHASE, FLEE, WANDER, PATROL, IDLE}
+
+var current_behavior = Behaviors.IDLE
 
 # maximum range at which the mob can detect the player
 var max_detection = 500
@@ -82,6 +89,7 @@ func shade(red_factor: float = 1.0, green_factor: float = 1.0,
 	sprite.set_instance_shader_parameter("green_factor", green_factor)
 	sprite.set_instance_shader_parameter("blue_factor", blue_factor)
 	sprite.set_instance_shader_parameter("alpha", alpha)
+
 
 func die():
 	alive = false
@@ -104,10 +112,22 @@ func die():
 	anim_player.play("Die")
 	# here you can define additional behavior after death (i.e. explodes)
 
-func approach_player(state):	
-	# get player's position
-	nav.target_position = player.global_position
-	
+
+func get_random_nav_position(min_distance: float, max_radius: float):
+	var angle := randf_range(0, 2*PI)
+	var distance := randf_range(min_distance, max_radius)
+	var target_position = Vector2(0,0)
+	target_position.x = cos(angle) *  distance
+	target_position.y = sin(angle) * distance
+	# the random position is generated relative to the mob, so add the mob's position
+	# to the target position to make it relative to the scene
+	target_position += get_position()
+	# get the closest point in the nav region to the chosen point (prevents mob trying top path out of map)
+	return NavigationServer2D.map_get_closest_point(map, target_position)
+
+
+# this function rotates the sprite icon to match the actual heading of the mob
+func update_sprite_rotation() -> void:
 	# flip sprite only on vertical axis bc rotation takes care of the horizontal flip
 	if rotation > PI/2 or rotation < -PI/2:
 		sprite.flip_v = true
@@ -118,21 +138,53 @@ func approach_player(state):
 		sprite.flip_v = false
 		$Hitbox.position.y = -abs($Hitbox.position.y)
 		corpse_box.position.y = abs(corpse_box.position.y)
+
+
+func move_to_point(target_point: Vector2):
+	# get player's position
+	nav_agent.target_position = target_point
+	update_sprite_rotation()
 	
+	# create a vector of length 1 pointing towards the next pathfinding point
+	movement_direction = nav_agent.get_next_path_position() - global_position
+	movement_direction = movement_direction.normalized()
+	anim_player.play("Swim")
+
+
+func wander(state):
+	move_to_point(get_random_nav_position(10, 100))
+
+func approach_player(state):
 	# prevent the mob from transitioning into another animation until the current one has finished
 	if anim_player.is_playing() == true and anim_player.current_animation != "Idle":
 		return
 	
 	# persue if within aggro range
-	if nav.distance_to_target() <= detection_range:
-		# create a vector of length 1 pointing towards the next pathfinding point
-		movement_direction = nav.get_next_path_position() - global_position
-		movement_direction = movement_direction.normalized()
-		anim_player.play("Swim")
+	nav_agent.target_position = player.global_position
+	if nav_agent.distance_to_target() <= detection_range:
+		move_to_point(player.global_position)
 		
 	# return to idle
 	elif state.linear_velocity.length() != 0:
 		anim_player.queue("Idle")
+
+func choose_behavior():
+	# prevent the mob from transitioning into another animation until the current one has finished
+	if anim_player.is_playing() == true and anim_player.current_animation != "Idle":
+		return
+	
+	if current_behavior == Behaviors.CHASE:
+		pass
+	
+	# if the mob is currently doing an animation, let it finish
+	# otherwise:
+	#	if the mob is currently chasing the player, continue to do so
+	#	else if the mob is fleeing the player, continue to do
+	#	else if the mob is wandering towards a point, continue to do so
+	#		the mob will interrupt this behavior if it starts chasing or fleeing
+	#	else the mob must have finished its current behavior, so start up its idle/wander/patrol loop
+	
+
 
 
 # Function to run every time the mob is injured
@@ -171,7 +223,7 @@ func apply_swim_impulse() -> void:
 	apply_central_impulse(movement_direction * impulse)
 	var angle = calc_shortest_rotation(movement_direction.angle(), rotation)
 	apply_torque_impulse(calc_impulse_for_rotation(angle))
-	
+
 
 func apply_idle_impulse() -> void:
 	print("0: ", Vector2(1, 0).angle(), ", pi: ", Vector2(-1, 0).angle(), ", rot: ", rotation)
@@ -183,16 +235,14 @@ func apply_idle_impulse() -> void:
 	apply_torque_impulse(calc_impulse_for_rotation(angle))
 
 
-func _integrate_forces(state) -> void:
+func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	# kills mob if health is 0
 	if health <= 0 and alive:
 		die()
 		
 	if alive:
 		approach_player(state)
-	# var new_position = NavigationServer2D.region_get_random_point(region, 1, false)
-	  # print(position, global_position)
-	  # position = new_position
+
 	# otherwise, fade out corpse and have it sink to cave floor
 	else:
 		# makes sprite's color slowly fade to MAX_FADE
