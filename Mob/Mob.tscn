@@ -240,9 +240,15 @@ rotation = -1.5708
 shape = SubResource("CapsuleShape2D_7eo5j")
 disabled = true
 
+[node name="IdleTimer" type="Timer" parent="."]
+wait_time = 2.4
+one_shot = true
+autostart = true
+
 [connection signal="navigation_finished" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_navigation_finished"]
 [connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]
 
 [editable path="Hurtbox"]
 [editable path="Hitbox"]

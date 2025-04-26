@@ -3,7 +3,7 @@ extends RigidBody2D
 # variables defining the basic attributes of the mob
 # these can be customized per-type or per-instance to change behavior
 @export var health: float = 1
-@export var awareness: float = 0.1
+@export var awareness: float = 0.5
 @export var aggression = 0
 @export var fear = 0
 @export var impulse = 200
@@ -50,7 +50,7 @@ func setup_nav_server():
 	NavigationServer2D.region_set_transform(region, Transform2D())
 	NavigationServer2D.region_set_map(region, map)
 	NavigationServer2D.region_set_navigation_polygon(region, nav_region.navigation_polygon)
-	nav_agent.target_desired_distance = 25
+	nav_agent.target_desired_distance = 35
 	
 	
 func _ready():
@@ -163,12 +163,16 @@ func player_in_range() -> bool:
 	return return_val
 
 
-func wander() -> void:
+func begin_wander() -> void:
+	current_behavior = Behaviors.WANDER
 	print('wandering towards ', nav_agent.target_position, ", currently at ", position)
-	if reached_nav_target:
-		nav_agent.target_position = get_random_nav_position(80, 300)
-		reached_nav_target = false
-	move_towards_nav_target()
+	nav_agent.target_position = get_random_nav_position(80, 300)
+	reached_nav_target = false
+
+func begin_chase() -> void:
+	current_behavior = Behaviors.CHASE
+	nav_agent.target_position = player.global_position
+	reached_nav_target = false
 
 func chase():
 	# persue if within aggro range
@@ -179,29 +183,34 @@ func chase():
 	#elif state.linear_velocity.length() != 0:
 	#	anim_player.queue("Idle")
 
+func begin_idle() -> void:
+	current_behavior = Behaviors.IDLE
+	$IdleTimer.start()
+	reached_nav_target = false
+	anim_player.play("Idle")
+	
+
 func choose_behavior():
 	# prevent the mob from transitioning into another animation until the current one has finished
-	if anim_player.is_playing() == true and anim_player.current_animation != "Idle":
+	if anim_player.is_playing() and anim_player.current_animation != "Idle":
 		return
 	
 	if current_behavior == Behaviors.CHASE:
 		if not player_in_range():
-			current_behavior = Behaviors.IDLE
-			reached_nav_target = true # this is to force mob to choose new wander target
+			begin_idle()
 		else:
 			chase()
-			
 	elif current_behavior == Behaviors.FLEE:
 		pass
+	elif player_in_range():
+		begin_chase()
 	elif current_behavior == Behaviors.WANDER:
-		if player_in_range():
-			current_behavior = Behaviors.CHASE
-			nav_agent.target_position = player.global_position
+		if reached_nav_target:
+			begin_idle()
 		else:
-			wander()
+			move_towards_nav_target()
 	elif current_behavior == Behaviors.IDLE:
-		reached_nav_target = true
-		current_behavior = Behaviors.WANDER
+		pass
 			
 		
 	# if the mob is currently doing an animation, let it finish
@@ -299,3 +308,8 @@ func _on_navigation_agent_2d_target_reached() -> void:
 func _on_navigation_agent_2d_navigation_finished() -> void:
 	reached_nav_target = true
 	print("nav finished")
+
+
+func _on_idle_timer_timeout() -> void:
+	if current_behavior == Behaviors.IDLE:
+		begin_wander()
