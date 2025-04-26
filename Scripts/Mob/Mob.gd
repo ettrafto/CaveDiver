@@ -10,7 +10,7 @@ extends RigidBody2D
 @export var accel = 7
 
 # aliases for commonly referenced nodes
-@onready var player = $"../Player/PlayerBody"
+@onready var player = $"../Player"
 @onready var nav = $NavigationAgent2D
 @onready var sprite = $Sprite2D
 @onready var anim_player = $AnimationPlayer

@@ -1,7 +1,9 @@
 extends Node2D
 
+@onready var particle_fx = $Sprite2D/GPUParticles2D
+
 func _ready() -> void:
-	$sprite/GPUParticles2D.lifetime = 0
+	particle_fx.lifetime = 0
 	
 func _on_area_2d_body_entered(body: RigidBody2D) -> void:
-	$sprite/GPUParticles2D.emitting = true
+	particle_fx.emitting = true

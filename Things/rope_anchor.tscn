@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cyo2yviksowvg"]
 
-[ext_resource type="Script" uid="uid://cppsxwdjjvsb6" path="res://Scripts/Map/rope_anchor.gd" id="1_vmdxm"]
+[ext_resource type="Script" uid="uid://dw6b8pnj2ohsa" path="res://Scripts/Map/rope_anchor.gd" id="1_vmdxm"]
 [ext_resource type="Texture2D" uid="uid://bh21sp0isvf5o" path="res://Assets/Art/anchor-placeholder.png" id="2_de16p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d4tq8"]
@@ -19,6 +19,8 @@ texture = ExtResource("2_de16p")
 shape = SubResource("RectangleShape2D_d4tq8")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_2tisg")
