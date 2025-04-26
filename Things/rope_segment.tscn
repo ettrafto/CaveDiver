@@ -11,6 +11,7 @@ height = 24.0
 script = ExtResource("1_jykfr")
 
 [node name="PinJoint2D" type="PinJoint2D" parent="."]
+rotation = 0.00437858
 scale = Vector2(2.5, 2.5)
 node_b = NodePath("../RigidBody2D")
 
@@ -26,7 +27,7 @@ scale = Vector2(2.1205, 2.9)
 texture = ExtResource("1_vv2so")
 
 [node name="bottom_pos" type="Node2D" parent="RigidBody2D"]
-position = Vector2(0, 25)
+position = Vector2(0, 24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
 position = Vector2(0, 12)
