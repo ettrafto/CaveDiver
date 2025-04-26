@@ -3,7 +3,7 @@ extends RigidBody2D
 # variables defining the basic attributes of the mob
 # these can be customized per-type or per-instance to change behavior
 @export var health: float = 1
-@export var awareness: float = 0.6
+@export var awareness: float = 0.1
 @export var aggression = 0
 @export var fear = 0
 @export var impulse = 200
@@ -50,6 +50,7 @@ func setup_nav_server():
 	NavigationServer2D.region_set_transform(region, Transform2D())
 	NavigationServer2D.region_set_map(region, map)
 	NavigationServer2D.region_set_navigation_polygon(region, nav_region.navigation_polygon)
+	nav_agent.target_desired_distance = 25
 	
 	
 func _ready():
@@ -70,6 +71,9 @@ var movement_direction: Vector2 = Vector2.ZERO
 enum Behaviors {CHASE, FLEE, WANDER, PATROL, IDLE}
 
 var current_behavior = Behaviors.IDLE
+
+# keeps track of whether the mob has reached its current navigation target
+var reached_nav_target: bool = false
 
 # maximum range at which the mob can detect the player
 var max_detection = 500
@@ -140,33 +144,42 @@ func update_sprite_rotation() -> void:
 		corpse_box.position.y = abs(corpse_box.position.y)
 
 
-func move_to_point(target_point: Vector2):
-	# get player's position
-	nav_agent.target_position = target_point
-	update_sprite_rotation()
+func move_towards_nav_target():
 	
 	# create a vector of length 1 pointing towards the next pathfinding point
 	movement_direction = nav_agent.get_next_path_position() - global_position
 	movement_direction = movement_direction.normalized()
 	anim_player.play("Swim")
+	update_sprite_rotation()
+
+# checks if there is a target available to chase
+# this will in the future take into account the creature's fear, perception, and aggression
+func player_in_range() -> bool:
+	# save the previous target to restore later
+	var prev_target = nav_agent.target_position
+	nav_agent.target_position = player.global_position
+	var return_val: bool = false
+	if nav_agent.distance_to_target() <= detection_range:
+		return_val = true
+	nav_agent.target_position = prev_target
+	return return_val
 
 
-func wander(state):
-	move_to_point(get_random_nav_position(10, 100))
+func wander() -> void:
+	print('wandering towards ', nav_agent.target_position, ", currently at ", position)
+	if reached_nav_target:
+		nav_agent.target_position = get_random_nav_position(80, 300)
+		reached_nav_target = false
+	move_towards_nav_target()
 
-func approach_player(state):
-	# prevent the mob from transitioning into another animation until the current one has finished
-	if anim_player.is_playing() == true and anim_player.current_animation != "Idle":
-		return
-	
+func chase():
 	# persue if within aggro range
 	nav_agent.target_position = player.global_position
-	if nav_agent.distance_to_target() <= detection_range:
-		move_to_point(player.global_position)
+	move_towards_nav_target()
 		
 	# return to idle
-	elif state.linear_velocity.length() != 0:
-		anim_player.queue("Idle")
+	#elif state.linear_velocity.length() != 0:
+	#	anim_player.queue("Idle")
 
 func choose_behavior():
 	# prevent the mob from transitioning into another animation until the current one has finished
@@ -174,8 +187,25 @@ func choose_behavior():
 		return
 	
 	if current_behavior == Behaviors.CHASE:
+		if not player_in_range():
+			current_behavior = Behaviors.IDLE
+			reached_nav_target = true # this is to force mob to choose new wander target
+		else:
+			chase()
+			
+	elif current_behavior == Behaviors.FLEE:
 		pass
-	
+	elif current_behavior == Behaviors.WANDER:
+		if player_in_range():
+			current_behavior = Behaviors.CHASE
+			nav_agent.target_position = player.global_position
+		else:
+			wander()
+	elif current_behavior == Behaviors.IDLE:
+		reached_nav_target = true
+		current_behavior = Behaviors.WANDER
+			
+		
 	# if the mob is currently doing an animation, let it finish
 	# otherwise:
 	#	if the mob is currently chasing the player, continue to do so
@@ -241,7 +271,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		die()
 		
 	if alive:
-		approach_player(state)
+		choose_behavior()
 
 	# otherwise, fade out corpse and have it sink to cave floor
 	else:
@@ -259,3 +289,13 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	print("mob hurtbox entered")
 	hurt(1)
+
+
+func _on_navigation_agent_2d_target_reached() -> void:
+	#reached_nav_target = true
+	pass
+
+
+func _on_navigation_agent_2d_navigation_finished() -> void:
+	reached_nav_target = true
+	print("nav finished")

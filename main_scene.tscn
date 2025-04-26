@@ -2846,6 +2846,11 @@ polygon = PackedVector2Array(64, 0, 64, 64, 0, 64, 0, 0)
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_671wp"]
 polygon = PackedVector2Array(0, -1, 71, -30, 124, 37, 46, 182, -68, 240, -58, 45)
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_0diyu"]
+vertices = PackedVector2Array(872, 84.9609, 872, 614.969, 92.9063, 613.023, 88.0938, 82.0313)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(78, 72, 882, 75, 882, 625, 83, 623)])
+
 [node name="MainScene" type="Node2D"]
 
 [node name="Map" type="Node2D" parent="."]
