@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c8i7a05824we3"]
+[gd_scene load_steps=17 format=3 uid="uid://c8i7a05824we3"]
 
 [ext_resource type="Script" uid="uid://c1u63nykolw0w" path="res://Scripts/Mob/Mob.gd" id="1_pjnhb"]
 [ext_resource type="Texture2D" uid="uid://bicp35bmrvm3h" path="res://Assets/Art/Mob/octopus/octopus.png" id="3_86loi"]
@@ -182,6 +182,10 @@ height = 71.7403
 radius = 23.0
 height = 58.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7eo5j"]
+radius = 14.0
+height = 66.0
+
 [node name="Mob" type="RigidBody2D"]
 editor_description = "Default Mob Template"
 collision_layer = 4
@@ -228,6 +232,12 @@ collision_mask = 32
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
 shape = SubResource("CapsuleShape2D_f0g3t")
+disabled = true
+
+[node name="CorpseCollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-12, 37)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_7eo5j")
 disabled = true
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

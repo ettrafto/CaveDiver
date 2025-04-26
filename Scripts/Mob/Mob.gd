@@ -35,6 +35,7 @@ extends RigidBody2D
 @onready var anim_player = $AnimationPlayer
 @onready var hurtbox = $Hurtbox/CollisionShape2D
 @onready var hitbox = $Hitbox/CollisionShape2D
+@onready var corpse_box = $CorpseCollisionShape2D
 
 @onready var nav_region = $"../Map/NavigationRegion2D"
 
@@ -85,12 +86,15 @@ func shade(red_factor: float = 1.0, green_factor: float = 1.0,
 func die():
 	alive = false
 	# disable hurt/hitboxes
-	hurtbox.set("disabled", true)
-	hitbox.set("disabled", true)
-	$Hurtbox.set("monitoring", false)
-	$Hurtbox.set("monitorable", false)
-	$Hitbox.set("monitoring", false)
-	$Hitbox.set("monitorable", false)
+	hurtbox.set_deferred("disabled", true)
+	hitbox.set_deferred("disabled", true)
+	$Hurtbox.set_deferred("monitoring", false)
+	$Hurtbox.set_deferred("monitorable", false)
+	$Hitbox.set_deferred("monitoring", false)
+	$Hitbox.set_deferred("monitorable", false)
+	# disable regular collision shape & replace with collision shape that matches corpes
+	$CollisionShape2D.set_deferred('disabled', true)
+	corpse_box.set_deferred('disabled', false)
 	# disable collision with the player and other mobs
 	set_collision_mask_value(2, false) # player
 	set_collision_mask_value(3, false) # mob
@@ -107,11 +111,13 @@ func approach_player(state):
 	# flip sprite only on vertical axis bc rotation takes care of the horizontal flip
 	if rotation > PI/2 or rotation < -PI/2:
 		sprite.flip_v = true
-		print("y: ", $Hitbox.position.x)
 		$Hitbox.position.y = abs($Hitbox.position.y)
+		corpse_box.position.y = -abs(corpse_box.position.y)
+		
 	else:
 		sprite.flip_v = false
 		$Hitbox.position.y = -abs($Hitbox.position.y)
+		corpse_box.position.y = abs(corpse_box.position.y)
 	
 	# prevent the mob from transitioning into another animation until the current one has finished
 	if anim_player.is_playing() == true and anim_player.current_animation != "Idle":
