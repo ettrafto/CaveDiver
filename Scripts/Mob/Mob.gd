@@ -145,12 +145,10 @@ func update_sprite_rotation() -> void:
 
 
 func move_towards_nav_target():
-	
 	# create a vector of length 1 pointing towards the next pathfinding point
 	movement_direction = nav_agent.get_next_path_position() - global_position
 	movement_direction = movement_direction.normalized()
 	anim_player.play("Swim")
-	update_sprite_rotation()
 
 # checks if there is a target available to chase
 # this will in the future take into account the creature's fear, perception, and aggression
@@ -283,7 +281,9 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		if abs(rotation) > 0.001:
 			rotation = clampf(rotation - rotation * accel/2 * state.step, min(0, rotation), max(0, rotation))
 		else:
-			rotation = 0	
+			rotation = 0
+	
+	update_sprite_rotation()
 	
 
 func _on_hurtbox_area_entered(_area: Area2D) -> void:
