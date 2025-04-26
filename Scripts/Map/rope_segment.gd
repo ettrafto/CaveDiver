@@ -42,7 +42,6 @@ func remove_bottom_pin_joint():
 func add_pin_joint(player):
 	has_two_joints = true
 	var new_joint = PinJoint2D.new()
-	new_joint.disable_collision = true
 	self.add_child(new_joint)
 	new_joint.name = "SecondJoint"
 	new_joint.position = get_bottom_node().position
