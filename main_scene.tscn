@@ -2923,19 +2923,20 @@ position = Vector2(927, 44)
 script = ExtResource("11_qwutr")
 radius = 500.0
 intensity = 0.05
-metadata/_custom_type_script = "uid://c77uck4vbimcc"
+frequency = 30
 
 [node name="CustomPointLight2D2" type="Node2D" parent="Lights"]
 position = Vector2(264, 389)
 script = ExtResource("11_qwutr")
 intensity = 0.1
-metadata/_custom_type_script = "uid://c77uck4vbimcc"
 
 [node name="CustomPointLight2D3" type="Node2D" parent="Lights"]
 position = Vector2(29, 671)
 script = ExtResource("11_qwutr")
 radius = 350.0
 intensity = 1.5
-metadata/_custom_type_script = "uid://c77uck4vbimcc"
+oscillates = true
+frequency = 10
+offset = 180
 
 [connection signal="bcd_change" from="Player" to="HUD" method="_on_player_bcd_change"]
