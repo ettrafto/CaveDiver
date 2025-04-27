@@ -1,6 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://byf4pvtyiu8e6"]
-
-[ext_resource type="Script" uid="uid://cd656wnhqpfcs" path="res://MainMenu.gd" id="1_i26rj"]
+[gd_scene load_steps=3 format=3 uid="uid://byf4pvtyiu8e6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i26rj"]
 bg_color = Color(1, 1, 1, 1)
@@ -10,96 +8,118 @@ draw_center = false
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
-[node name="MainMenu" type="Control" parent="."]
-layout_mode = 3
+[node name="MainMenu" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_i26rj")
 
-[node name="MainMenuPanel" type="Panel" parent="MainMenu"]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="SaveMenu" type="VBoxContainer" parent="MainMenu"]
+layout_mode = 2
 
-[node name="CaveDiver" type="Label" parent="MainMenu/MainMenuPanel"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="CaveDiver" type="Label" parent="MainMenu/SaveMenu"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "CaveDiver"
 
-[node name="Start" type="Button" parent="MainMenu/MainMenuPanel"]
-layout_mode = 0
-offset_right = 136.0
-offset_bottom = 136.0
-scale = Vector2(0.1, 0.1)
+[node name="Save1" type="Button" parent="MainMenu/SaveMenu"]
+layout_mode = 2
+text = "Save 1
+"
 
-[node name="Options" type="Button" parent="MainMenu/MainMenuPanel"]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="Save2" type="Button" parent="MainMenu/SaveMenu"]
+layout_mode = 2
+text = "New Game
+"
 
-[node name="Quit" type="Button" parent="MainMenu/MainMenuPanel"]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="Save3" type="Button" parent="MainMenu/SaveMenu"]
+layout_mode = 2
+text = "New Game
+"
 
-[node name="SaveMenuPanel" type="Panel" parent="MainMenu"]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Back" type="Button" parent="MainMenu/SaveMenu"]
+layout_mode = 2
+text = "Back
+"
 
-[node name="DemoMenuPanel" type="Panel" parent="MainMenu"]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ShopStorage" type="VBoxContainer" parent="MainMenu"]
+layout_mode = 2
 
-[node name="PreDiveMenuPanel" type="Panel" parent="MainMenu"]
-visible = false
-layout_mode = 0
-offset_left = 4.0
-offset_top = 4.0
-offset_right = 44.0
-offset_bottom = 44.0
+[node name="CaveDiver" type="Label" parent="MainMenu/ShopStorage"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "CaveDiver"
 
-[node name="PrediveMenu" type="MarginContainer" parent="MainMenu"]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Save1" type="Button" parent="MainMenu/ShopStorage"]
+layout_mode = 2
+text = "Demo Level"
+
+[node name="Save2" type="Button" parent="MainMenu/ShopStorage"]
+layout_mode = 2
+text = "Shop"
+
+[node name="Save3" type="Button" parent="MainMenu/ShopStorage"]
+layout_mode = 2
+text = "Storage"
+
+[node name="Back" type="Button" parent="MainMenu/ShopStorage"]
+layout_mode = 2
+text = "Back
+"
+
+[node name="StartMenu" type="VBoxContainer" parent="MainMenu"]
+layout_mode = 2
+
+[node name="CaveDiver" type="Label" parent="MainMenu/StartMenu"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "CaveDiver"
+
+[node name="Start" type="Button" parent="MainMenu/StartMenu"]
+layout_mode = 2
+text = "Start"
+
+[node name="Options" type="Button" parent="MainMenu/StartMenu"]
+layout_mode = 2
+text = "Options"
+
+[node name="Quit" type="Button" parent="MainMenu/StartMenu"]
+layout_mode = 2
+text = "Quit"
+
+[node name="PrediveMenu" type="MarginContainer" parent="."]
+offset_right = 424.0
+offset_bottom = 445.0
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MainMenu/PrediveMenu"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PrediveMenu"]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 
-[node name="Column1" type="Panel" parent="MainMenu/PrediveMenu/HBoxContainer"]
+[node name="Column1" type="Panel" parent="PrediveMenu/HBoxContainer"]
 custom_minimum_size = Vector2(200, 425)
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MainMenu/PrediveMenu/HBoxContainer/Column1"]
+[node name="MarginContainer" type="MarginContainer" parent="PrediveMenu/HBoxContainer/Column1"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme_override_constants/margin_left = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer"]
 layout_mode = 2
 
-[node name="MenuLabel" type="Label" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer"]
+[node name="MenuLabel" type="Label" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 20
 text = "Predive Menu"
 
-[node name="Underline" type="Panel" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/MenuLabel"]
+[node name="Underline" type="Panel" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/MenuLabel"]
 custom_minimum_size = Vector2(0, 2)
 layout_mode = 1
 anchors_preset = 12
@@ -110,13 +130,13 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_i26rj")
 
-[node name="EquipmentLabel" type="Label" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer"]
+[node name="EquipmentLabel" type="Label" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 16
 text = "Equipment"
 
-[node name="Underline" type="Panel" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/EquipmentLabel"]
+[node name="Underline" type="Panel" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/EquipmentLabel"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 1
@@ -129,17 +149,17 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_i26rj")
 
-[node name="EquipmentChecklist" type="Panel" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer"]
+[node name="EquipmentChecklist" type="Panel" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 170)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_eiy7p")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/EquipmentChecklist"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/EquipmentChecklist"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="GogglesCheckBox" type="CheckBox" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/EquipmentChecklist/VBoxContainer"]
+[node name="GogglesCheckBox" type="CheckBox" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/EquipmentChecklist/VBoxContainer"]
 layout_direction = 3
 layout_mode = 2
 theme_override_colors/icon_disabled_color = Color(0.886275, 0, 0, 1)
@@ -150,33 +170,33 @@ theme_override_colors/icon_focus_color = Color(0.886275, 0, 0, 1)
 theme_override_colors/icon_normal_color = Color(0.884314, 3.20069e-06, 1.15514e-06, 1)
 text = "Goggles"
 
-[node name="BCDCheckBox" type="CheckBox" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/EquipmentChecklist/VBoxContainer"]
+[node name="BCDCheckBox" type="CheckBox" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/EquipmentChecklist/VBoxContainer"]
 layout_direction = 3
 layout_mode = 2
 text = "BCD"
 
-[node name="SuitCheckBox" type="CheckBox" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/EquipmentChecklist/VBoxContainer"]
+[node name="SuitCheckBox" type="CheckBox" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/EquipmentChecklist/VBoxContainer"]
 layout_direction = 3
 layout_mode = 2
 text = "Suit"
 
-[node name="FinsCheckBox" type="CheckBox" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/EquipmentChecklist/VBoxContainer"]
+[node name="FinsCheckBox" type="CheckBox" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/EquipmentChecklist/VBoxContainer"]
 layout_direction = 3
 layout_mode = 2
 text = "Fins"
 
-[node name="RespCheckBox" type="CheckBox" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/EquipmentChecklist/VBoxContainer"]
+[node name="RespCheckBox" type="CheckBox" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/EquipmentChecklist/VBoxContainer"]
 layout_direction = 3
 layout_mode = 2
 text = "Resp"
 
-[node name="TanksLabel" type="Label" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer"]
+[node name="TanksLabel" type="Label" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 16
 text = "Tanks"
 
-[node name="Underline" type="Panel" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/TanksLabel"]
+[node name="Underline" type="Panel" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/TanksLabel"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 1
@@ -189,32 +209,32 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_i26rj")
 
-[node name="TankContainer" type="HBoxContainer" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer"]
+[node name="TankContainer" type="HBoxContainer" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Tank1" type="Panel" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/TankContainer"]
+[node name="Tank1" type="Panel" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/TankContainer"]
 custom_minimum_size = Vector2(40, 80)
 layout_mode = 2
 
-[node name="Tank2" type="Panel" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/TankContainer"]
+[node name="Tank2" type="Panel" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/TankContainer"]
 custom_minimum_size = Vector2(40, 80)
 layout_mode = 2
 
-[node name="Tank3" type="Panel" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/TankContainer"]
+[node name="Tank3" type="Panel" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/TankContainer"]
 custom_minimum_size = Vector2(40, 80)
 layout_mode = 2
 
-[node name="Tank4" type="Panel" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/TankContainer"]
+[node name="Tank4" type="Panel" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/TankContainer"]
 custom_minimum_size = Vector2(40, 80)
 layout_mode = 2
 
-[node name="ToolsLabel" type="Label" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer"]
+[node name="ToolsLabel" type="Label" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 16
 text = "Tools"
 
-[node name="Underline" type="Panel" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/ToolsLabel"]
+[node name="Underline" type="Panel" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/ToolsLabel"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 1
@@ -227,42 +247,42 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_i26rj")
 
-[node name="ToolContainer" type="HBoxContainer" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer"]
+[node name="ToolContainer" type="HBoxContainer" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Slot1" type="Panel" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/ToolContainer"]
+[node name="Slot1" type="Panel" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/ToolContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Slot2" type="Panel" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/ToolContainer"]
+[node name="Slot2" type="Panel" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/ToolContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Slot3" type="Panel" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/ToolContainer"]
+[node name="Slot3" type="Panel" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/ToolContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Slot4" type="Panel" parent="MainMenu/PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/ToolContainer"]
+[node name="Slot4" type="Panel" parent="PrediveMenu/HBoxContainer/Column1/MarginContainer/VBoxContainer/ToolContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Column2" type="Panel" parent="MainMenu/PrediveMenu/HBoxContainer"]
+[node name="Column2" type="Panel" parent="PrediveMenu/HBoxContainer"]
 custom_minimum_size = Vector2(200, 425)
 layout_mode = 2
 
-[node name="InventoryMenu" type="MarginContainer" parent="MainMenu"]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="InventoryMenu" type="MarginContainer" parent="."]
+offset_right = 290.0
+offset_bottom = 322.0
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Panel" type="Panel" parent="MainMenu/InventoryMenu"]
+[node name="Panel" type="Panel" parent="InventoryMenu"]
 custom_minimum_size = Vector2(270, 302)
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MainMenu/InventoryMenu/Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="InventoryMenu/Panel"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -271,17 +291,17 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/InventoryMenu/Panel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="InventoryMenu/Panel/MarginContainer"]
 custom_minimum_size = Vector2(100, 300)
 layout_mode = 2
 
-[node name="ToolbarLabel" type="Label" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer"]
+[node name="ToolbarLabel" type="Label" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 24
 text = "Toolbar"
 
-[node name="Underline" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/ToolbarLabel"]
+[node name="Underline" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/ToolbarLabel"]
 custom_minimum_size = Vector2(0, 2)
 layout_mode = 1
 anchors_preset = 12
@@ -292,33 +312,33 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_i26rj")
 
-[node name="ToolbarGrid" type="GridContainer" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer"]
+[node name="ToolbarGrid" type="GridContainer" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 columns = 6
 
-[node name="Panel" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/ToolbarGrid"]
+[node name="Panel" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/ToolbarGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel2" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/ToolbarGrid"]
+[node name="Panel2" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/ToolbarGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel3" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/ToolbarGrid"]
+[node name="Panel3" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/ToolbarGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel4" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/ToolbarGrid"]
+[node name="Panel4" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/ToolbarGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="InventoryLabel" type="Label" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer"]
+[node name="InventoryLabel" type="Label" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 24
 text = "Inventory"
 
-[node name="Underline" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryLabel"]
+[node name="Underline" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryLabel"]
 custom_minimum_size = Vector2(0, 2)
 layout_mode = 1
 anchors_preset = 12
@@ -329,106 +349,102 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_i26rj")
 
-[node name="InventoryGrid" type="GridContainer" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer"]
+[node name="InventoryGrid" type="GridContainer" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 columns = 6
 
-[node name="Panel" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel2" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel2" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel3" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel3" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel4" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel4" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel5" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel5" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel6" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel6" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel7" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel7" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel8" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel8" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel9" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel9" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel10" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel10" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel11" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel11" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel12" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel12" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel13" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel13" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel14" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel14" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel15" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel15" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel16" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel16" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel17" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel17" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel18" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel18" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel19" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel19" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel20" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel20" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel21" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel21" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel22" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel22" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel23" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel23" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="Panel24" type="Panel" parent="MainMenu/InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
+[node name="Panel24" type="Panel" parent="InventoryMenu/Panel/MarginContainer/VBoxContainer/InventoryGrid"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-
-[connection signal="pressed" from="MainMenu/MainMenuPanel/Start" to="MainMenu" method="_on_Start_pressed"]
-[connection signal="pressed" from="MainMenu/MainMenuPanel/Options" to="MainMenu" method="_on_Options_pressed"]
-[connection signal="pressed" from="MainMenu/MainMenuPanel/Quit" to="MainMenu" method="_on_Quit_pressed"]
