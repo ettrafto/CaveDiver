@@ -1,15 +1,16 @@
-[gd_scene load_steps=15 format=4 uid="uid://bw61hcrsu2ee5"]
+[gd_scene load_steps=16 format=4 uid="uid://bw61hcrsu2ee5"]
 
 [ext_resource type="Material" uid="uid://bdw7j3m7ekmuh" path="res://Shaders/Map.tres" id="1_rgmf6"]
-[ext_resource type="Texture2D" uid="uid://bh8gbmxhd3es" path="res://Assets/Art/CaveTiles1/CaveBG.png" id="3_debib"]
+[ext_resource type="Texture2D" uid="uid://cfqhiqfygc5ec" path="res://Assets/Art/CaveTiles1/CaveBG.png" id="3_debib"]
 [ext_resource type="PackedScene" uid="uid://dc7pd2nhl2ows" path="res://Things/silt.tscn" id="3_nfk4m"]
-[ext_resource type="Texture2D" uid="uid://w4s0ri4v4mjo" path="res://Assets/Art/CaveTiles1/CaveG.png" id="4_x3thl"]
+[ext_resource type="Texture2D" uid="uid://c8iew3gpl8na8" path="res://Assets/Art/CaveTiles1/CaveG.png" id="4_x3thl"]
 [ext_resource type="Script" uid="uid://cgbjcuwu7kt4x" path="res://Scripts/HUD/HUD.gd" id="5_6w5lm"]
 [ext_resource type="PackedScene" uid="uid://dim5as52t6iqc" path="res://Player.tscn" id="5_wr18j"]
 [ext_resource type="PackedScene" uid="uid://cyo2yviksowvg" path="res://Things/rope_anchor.tscn" id="6_hq1ik"]
 [ext_resource type="PackedScene" uid="uid://c8i7a05824we3" path="res://Mob/Mob.tscn" id="8_xcfsc"]
 [ext_resource type="Material" uid="uid://8o2yodwffd3x" path="res://Shaders/Mob.tres" id="10_6xdyb"]
 [ext_resource type="Script" uid="uid://nlpb4fatxvju" path="res://Shaders/ShaderContext.gd" id="10_sg8do"]
+[ext_resource type="Script" uid="uid://c77uck4vbimcc" path="res://Shaders/CustomPointLight2D.gd" id="11_qwutr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mydmx"]
 texture = ExtResource("4_x3thl")
@@ -1893,15 +1894,19 @@ material = ExtResource("1_rgmf6")
 [node name="EnviornmentalObjects" type="Node2D" parent="Map"]
 
 [node name="Silt3" parent="Map/EnviornmentalObjects" instance=ExtResource("3_nfk4m")]
+material = ExtResource("1_rgmf6")
 position = Vector2(225, 631)
 
 [node name="Silt2" parent="Map/EnviornmentalObjects" instance=ExtResource("3_nfk4m")]
+material = ExtResource("1_rgmf6")
 position = Vector2(273, 631)
 
 [node name="Silt4" parent="Map/EnviornmentalObjects" instance=ExtResource("3_nfk4m")]
+material = ExtResource("1_rgmf6")
 position = Vector2(179, 631)
 
 [node name="Silt" parent="Map/EnviornmentalObjects" instance=ExtResource("3_nfk4m")]
+material = ExtResource("1_rgmf6")
 position = Vector2(321, 631)
 
 [node name="Background" type="TileMapLayer" parent="Map"]
@@ -1974,6 +1979,28 @@ position = Vector2(438, 237)
 
 [node name="Player" parent="." instance=ExtResource("5_wr18j")]
 position = Vector2(638, 402)
+
+[node name="Lights" type="Node2D" parent="."]
+
+[node name="CustomPointLight2D" type="Node2D" parent="Lights"]
+position = Vector2(927, 44)
+script = ExtResource("11_qwutr")
+radius = 500.0
+intensity = 0.05
+metadata/_custom_type_script = "uid://c77uck4vbimcc"
+
+[node name="CustomPointLight2D2" type="Node2D" parent="Lights"]
+position = Vector2(264, 389)
+script = ExtResource("11_qwutr")
+intensity = 0.1
+metadata/_custom_type_script = "uid://c77uck4vbimcc"
+
+[node name="CustomPointLight2D3" type="Node2D" parent="Lights"]
+position = Vector2(29, 671)
+script = ExtResource("11_qwutr")
+radius = 350.0
+intensity = 1.5
+metadata/_custom_type_script = "uid://c77uck4vbimcc"
 
 [connection signal="bcd_change" from="Player" to="HUD" method="_on_player_bcd_change"]
 
