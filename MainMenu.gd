@@ -2,8 +2,12 @@
 extends Control
 
 func _ready():
-	mouse_filter = MOUSE_FILTER_PASS
-	print("🔥 MainMenu.gd loaded, Start node is: ", $StartMenu/Start)
+	# let clicks fall through all menus to their Buttons
+	mouse_filter = MOUSE_FILTER_IGNORE
+	for panel in get_children():
+		if panel is Control:
+			panel.mouse_filter = MOUSE_FILTER_IGNORE
+
 	show_screen("StartMenu")
 
 func show_screen(screen_name: String) -> void:
