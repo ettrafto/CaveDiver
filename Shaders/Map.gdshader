@@ -2,13 +2,38 @@ shader_type canvas_item;
 
 // Prevents shader from being previewed out of game
 global uniform bool in_game;
+
 global uniform vec2 player_pos;
 global uniform vec2 mouse_pos;
+
+uniform vec4 point_light_info[100];
+uniform int num_point_lights = 0;
 
 // Used by get_visibility_modifier
 const float MAX_SIGHT_ANGLE = radians(7.2)/PI;
 const float MAX_RADIUS = 200.0;
-const float MAX_SIGHT_DISTANCE = 750.0; 
+const float MAX_SIGHT_DISTANCE = 750.0;
+
+float get_greatest_point_light_visibility(vec2 frag_position) {
+	float greatest_brightness = 0.0;
+	
+	for (int i = 0; i < num_point_lights; i++) {
+		vec4 point_light = point_light_info[i];
+		vec2 light_position = point_light.xy;
+		float light_radius = point_light.z;
+		float light_intensity = point_light.a;
+		
+		float frag_to_light = distance(light_position, frag_position);
+		float radius_dropoff = length(frag_to_light) / (light_radius / light_intensity);
+		float light_brightness = light_intensity - radius_dropoff;
+		
+		if (light_brightness > greatest_brightness) {
+			greatest_brightness = light_brightness;
+		}
+	}
+	
+	return greatest_brightness;
+}
 
 float get_visibility_modifier(vec2 frag_coord) {
 	// Returns visibility of a frag based on distance from player and mouse position
@@ -48,7 +73,9 @@ void vertex() {
 
 void fragment() {
 	if (in_game) {
-		float visibility = get_visibility_modifier(FRAGCOORD.xy);
+		float player_visibility = get_visibility_modifier(FRAGCOORD.xy);
+		float light_visibility = get_greatest_point_light_visibility(FRAGCOORD.xy);
+		float visibility = max(player_visibility, light_visibility);
 		COLOR = vec4(COLOR.rgb * visibility, COLOR.a);
 	}
 }
