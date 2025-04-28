@@ -66,7 +66,10 @@ float get_visibility_modifier(vec2 frag_coord) {
 void vertex() {
 	if (in_game) {
 		// Creates underwater effect
-		VERTEX.x += sin(VERTEX.y + TIME * 2.0) * 3.0;
+		// This fixes a weird bug where VERTICES.y > 100 are 
+		// a phase offset of 1 off. Assuming bug recurs per 100.
+		float offset = float(int(VERTEX.y)/100);
+		VERTEX.x += sin(VERTEX.y + offset + TIME * 2.0) * 3.0;
 		//COLOR.r += sin(TIME);
 	}
 }
