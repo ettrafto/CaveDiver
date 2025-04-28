@@ -11,6 +11,7 @@ draw_center = false
 [node name="CanvasLayer" type="CanvasLayer"]
 
 [node name="MainMenu" type="Control" parent="."]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,6 +22,7 @@ mouse_filter = 1
 script = ExtResource("1_i26rj")
 
 [node name="SaveMenu" type="VBoxContainer" parent="MainMenu"]
+visible = false
 layout_mode = 2
 offset_right = 1152.0
 offset_bottom = 648.0
@@ -32,8 +34,7 @@ text = "CaveDiver"
 
 [node name="Save1" type="Button" parent="MainMenu/SaveMenu"]
 layout_mode = 2
-text = "Save 1
-"
+text = "New Game"
 
 [node name="Save2" type="Button" parent="MainMenu/SaveMenu"]
 layout_mode = 2
@@ -50,34 +51,75 @@ layout_mode = 2
 text = "Back
 "
 
-[node name="ShopStorageMenu" type="VBoxContainer" parent="MainMenu"]
+[node name="ShopMenu" type="VBoxContainer" parent="MainMenu"]
 layout_mode = 2
 offset_right = 1152.0
 offset_bottom = 648.0
 
-[node name="CaveDiver" type="Label" parent="MainMenu/ShopStorageMenu"]
+[node name="CaveDiver" type="Label" parent="MainMenu/ShopMenu"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "CaveDiver"
 
-[node name="Save1" type="Button" parent="MainMenu/ShopStorageMenu"]
+[node name="Shop" type="Label" parent="MainMenu/ShopMenu"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Shop"
+
+[node name="Back" type="Button" parent="MainMenu/ShopMenu"]
+layout_mode = 2
+text = "Back
+"
+
+[node name="StorageMenu" type="VBoxContainer" parent="MainMenu"]
+layout_mode = 2
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="CaveDiver" type="Label" parent="MainMenu/StorageMenu"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "CaveDiver"
+
+[node name="Storage" type="Label" parent="MainMenu/StorageMenu"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Storage"
+
+[node name="Back" type="Button" parent="MainMenu/StorageMenu"]
+layout_mode = 2
+text = "Back
+"
+
+[node name="Menu3" type="VBoxContainer" parent="MainMenu"]
+layout_mode = 2
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="CaveDiver" type="Label" parent="MainMenu/Menu3"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "CaveDiver"
+
+[node name="Demo" type="Button" parent="MainMenu/Menu3"]
 layout_mode = 2
 text = "Demo Level"
 
-[node name="Save2" type="Button" parent="MainMenu/ShopStorageMenu"]
+[node name="Shop" type="Button" parent="MainMenu/Menu3"]
 layout_mode = 2
 text = "Shop"
 
-[node name="Save3" type="Button" parent="MainMenu/ShopStorageMenu"]
+[node name="Storage" type="Button" parent="MainMenu/Menu3"]
 layout_mode = 2
 text = "Storage"
 
-[node name="Back" type="Button" parent="MainMenu/ShopStorageMenu"]
+[node name="Back" type="Button" parent="MainMenu/Menu3"]
 layout_mode = 2
 text = "Back
 "
 
 [node name="StartMenu" type="VBoxContainer" parent="MainMenu"]
+visible = false
 layout_mode = 2
 offset_right = 1152.0
 offset_bottom = 648.0
@@ -106,6 +148,7 @@ mouse_default_cursor_shape = 2
 text = "Quit"
 
 [node name="PrediveMenu" type="MarginContainer" parent="MainMenu"]
+visible = false
 layout_mode = 0
 offset_right = 424.0
 offset_bottom = 445.0
@@ -289,6 +332,7 @@ custom_minimum_size = Vector2(200, 425)
 layout_mode = 2
 
 [node name="InventoryMenu" type="MarginContainer" parent="MainMenu"]
+visible = false
 layout_mode = 0
 offset_right = 290.0
 offset_bottom = 322.0
@@ -468,6 +512,16 @@ layout_mode = 2
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
+[connection signal="pressed" from="MainMenu/SaveMenu/Save1" to="MainMenu" method="_on_Save1_pressed"]
+[connection signal="pressed" from="MainMenu/SaveMenu/Save2" to="MainMenu" method="_on_Save2_pressed"]
+[connection signal="pressed" from="MainMenu/SaveMenu/Save3" to="MainMenu" method="_on_Save3_pressed"]
+[connection signal="pressed" from="MainMenu/SaveMenu/Back" to="MainMenu" method="_on_Back_pressed"]
+[connection signal="pressed" from="MainMenu/ShopMenu/Back" to="MainMenu" method="_on_Back3_pressed"]
+[connection signal="pressed" from="MainMenu/StorageMenu/Back" to="MainMenu" method="_on_Back4_pressed"]
+[connection signal="pressed" from="MainMenu/Menu3/Demo" to="MainMenu" method="_on_Play_pressed"]
+[connection signal="pressed" from="MainMenu/Menu3/Shop" to="MainMenu" method="_on_Shop_pressed"]
+[connection signal="pressed" from="MainMenu/Menu3/Storage" to="MainMenu" method="_on_Storage_pressed"]
+[connection signal="pressed" from="MainMenu/Menu3/Back" to="MainMenu" method="_on_Back2_pressed"]
 [connection signal="pressed" from="MainMenu/StartMenu/Start" to="MainMenu" method="_on_Start_pressed"]
 [connection signal="pressed" from="MainMenu/StartMenu/Options" to="MainMenu" method="_on_Options_pressed"]
 [connection signal="pressed" from="MainMenu/StartMenu/Quit" to="MainMenu" method="_on_Quit_pressed"]
