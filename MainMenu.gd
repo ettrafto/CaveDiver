@@ -18,7 +18,7 @@ func _on_Start_pressed() -> void:
 	show_screen("SaveMenu")
 
 func _on_Options_pressed() -> void:
-	print("Options pressed!")
+	show_screen("OptionsMenu")
 
 func _on_Quit_pressed() -> void:
 	get_tree().quit()
@@ -57,3 +57,7 @@ func _on_Back3_pressed() -> void:
 # StorageMenu
 func _on_Back4_pressed() -> void:
 	show_screen("Menu3")
+	
+# OptionsMenu
+func _on_Back5_pressed() -> void:
+	show_screen("StartMenu")
