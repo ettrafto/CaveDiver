@@ -118,6 +118,26 @@ layout_mode = 2
 text = "Back
 "
 
+[node name="OptionsMenu" type="VBoxContainer" parent="MainMenu"]
+layout_mode = 2
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="CaveDiver" type="Label" parent="MainMenu/OptionsMenu"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "CaveDiver"
+
+[node name="Options" type="Label" parent="MainMenu/OptionsMenu"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Options"
+
+[node name="Back" type="Button" parent="MainMenu/OptionsMenu"]
+layout_mode = 2
+text = "Back
+"
+
 [node name="StartMenu" type="VBoxContainer" parent="MainMenu"]
 visible = false
 layout_mode = 2
@@ -522,6 +542,7 @@ layout_mode = 2
 [connection signal="pressed" from="MainMenu/Menu3/Shop" to="MainMenu" method="_on_Shop_pressed"]
 [connection signal="pressed" from="MainMenu/Menu3/Storage" to="MainMenu" method="_on_Storage_pressed"]
 [connection signal="pressed" from="MainMenu/Menu3/Back" to="MainMenu" method="_on_Back2_pressed"]
+[connection signal="pressed" from="MainMenu/OptionsMenu/Back" to="MainMenu" method="_on_Back5_pressed"]
 [connection signal="pressed" from="MainMenu/StartMenu/Start" to="MainMenu" method="_on_Start_pressed"]
 [connection signal="pressed" from="MainMenu/StartMenu/Options" to="MainMenu" method="_on_Options_pressed"]
 [connection signal="pressed" from="MainMenu/StartMenu/Quit" to="MainMenu" method="_on_Quit_pressed"]
