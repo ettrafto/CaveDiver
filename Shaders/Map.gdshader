@@ -83,9 +83,12 @@ void vertex() {
 void fragment() {
 	if (in_game) {
 		float player_visibility = get_visibility_modifier(FRAGCOORD.xy);
+		
 		vec4 light_influence = get_point_light_influence(FRAGCOORD.xy);
 		vec3 light_colors = light_influence.rgb;
-		float visibility = max(player_visibility, light_influence.a);
+		float light_brightness = light_influence.a;
+
+		float visibility = max(player_visibility, light_brightness);
 		COLOR = vec4((COLOR.rgb + light_colors) * visibility, COLOR.a);
 	}
 }
