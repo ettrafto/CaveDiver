@@ -1,9 +1,9 @@
 [gd_scene load_steps=16 format=4 uid="uid://bw61hcrsu2ee5"]
 
 [ext_resource type="Material" uid="uid://bdw7j3m7ekmuh" path="res://Shaders/Map.tres" id="1_rgmf6"]
-[ext_resource type="Texture2D" uid="uid://cfqhiqfygc5ec" path="res://Assets/Art/CaveTiles1/CaveBG.png" id="3_debib"]
+[ext_resource type="Texture2D" uid="uid://c28uue3vpnqs8" path="res://Assets/Art/CaveTiles1/CaveBG.png" id="3_debib"]
 [ext_resource type="PackedScene" uid="uid://dc7pd2nhl2ows" path="res://Things/silt.tscn" id="3_nfk4m"]
-[ext_resource type="Texture2D" uid="uid://c8iew3gpl8na8" path="res://Assets/Art/CaveTiles1/CaveG.png" id="4_x3thl"]
+[ext_resource type="Texture2D" uid="uid://lhlthrylr8ot" path="res://Assets/Art/CaveTiles1/CaveG.png" id="4_x3thl"]
 [ext_resource type="Script" uid="uid://cgbjcuwu7kt4x" path="res://Scripts/HUD/HUD.gd" id="5_6w5lm"]
 [ext_resource type="PackedScene" uid="uid://dim5as52t6iqc" path="res://Player.tscn" id="5_wr18j"]
 [ext_resource type="PackedScene" uid="uid://cyo2yviksowvg" path="res://Things/rope_anchor.tscn" id="6_hq1ik"]
@@ -1992,7 +1992,8 @@ frequency = 30
 [node name="CustomPointLight2D2" type="Node2D" parent="Lights"]
 position = Vector2(264, 389)
 script = ExtResource("11_qwutr")
-intensity = 0.1
+radius = 200.0
+green = 0.2
 
 [node name="CustomPointLight2D3" type="Node2D" parent="Lights"]
 position = Vector2(29, 671)
