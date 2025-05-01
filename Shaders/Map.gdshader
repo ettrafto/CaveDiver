@@ -41,7 +41,7 @@ vec4 get_point_light_influence(vec2 frag_position) {
 	return vec4(color_influence.r, color_influence.g, color_influence.b, greatest_brightness);
 }
 
-float get_visibility_modifier(vec2 frag_coord) {
+float get_flashlight_influence(vec2 frag_coord) {
 	// Returns visibility of a frag based on distance from player and mouse position
 	vec2 player_to_mouse = mouse_pos - player_pos;
 	vec2 player_to_frag = frag_coord.xy - player_pos;
@@ -54,17 +54,13 @@ float get_visibility_modifier(vec2 frag_coord) {
 	// Makes it so we're dealing with a range of {0, 1} where 0 is 0 and 1 represents pi.
 	float angle = (product * -1.0 + 1.0) / 2.0;
 	bool in_look_direction = angle <= MAX_SIGHT_ANGLE;
-
-	float radius_dropoff = length(player_to_frag) / MAX_RADIUS;
-	float radius_visibility = 0.8 - radius_dropoff;
+	
 	float sight_dropoff = length(player_to_frag) / MAX_SIGHT_DISTANCE;
 	float sight_angular_dropoff = angle / MAX_SIGHT_ANGLE;
 	float sight_visibility = 1.0 - sight_dropoff - sight_angular_dropoff;
-
-	if (in_look_direction && sight_visibility >= radius_visibility) {
+	
+	if (in_look_direction) {
 		return sight_visibility;
-	} else {
-		return radius_visibility;
 	}
 }
 
@@ -81,13 +77,13 @@ void vertex() {
 
 void fragment() {
 	if (in_game) {
-		float player_visibility = get_visibility_modifier(FRAGCOORD.xy);
+		float flashlight_visibility = get_flashlight_influence(FRAGCOORD.xy);
 		
 		vec4 light_influence = get_point_light_influence(FRAGCOORD.xy);
 		vec3 light_colors = light_influence.rgb;
-		float light_brightness = light_influence.a;
+		float light_visibility = light_influence.a;
 
-		float visibility = max(player_visibility, light_brightness);
+		float visibility = max(flashlight_visibility, light_visibility);
 		COLOR = vec4((COLOR.rgb + light_colors) * visibility, COLOR.a);
 	}
 }
