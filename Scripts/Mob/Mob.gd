@@ -8,6 +8,7 @@ extends RigidBody2D
 @export var fear = 0
 @export var impulse = 200
 @export var accel = 7
+@export var attack_range = 100
 
 @export_category("Illumination")
 ## The illumination mask is used to determine 
@@ -175,13 +176,15 @@ func begin_chase() -> void:
 	reached_nav_target = false
 
 func chase():
-	# persue if within aggro range
-	nav_agent.target_position = player.global_position
-	move_towards_nav_target()
-		
-	# return to idle
-	#elif state.linear_velocity.length() != 0:
-	#	anim_player.queue("Idle")
+	# attack player if in range
+	if ((player.global_position - global_position).length() < attack_range 
+		and $AttackCooldown.time_left == 0):
+		anim_player.play("Attack")
+		$AttackCooldown.start();
+	else:  # else continue chasing
+		nav_agent.target_position = player.global_position	
+		move_towards_nav_target()
+
 
 func begin_idle() -> void:
 	current_behavior = Behaviors.IDLE
@@ -234,6 +237,12 @@ func hurt(damage: float):
 	# otherwise, it doesn't start soon enough to disable the hurtbox
 	anim_player.advance(0)
 	health -= damage
+
+# plays attack animation 
+func attack():
+	pass
+	
+
 
 func calc_impulse_for_rotation(angle) -> float:
 	# to calculate the correct instantaneous torque to rotate r radians:

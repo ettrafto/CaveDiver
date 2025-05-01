@@ -3023,4 +3023,9 @@ occluder = SubResource("OccluderPolygon2D_qwutr")
 position = Vector2(196, 178)
 occluder = SubResource("OccluderPolygon2D_671wp")
 
+[node name="Mob2" parent="." instance=ExtResource("8_xcfsc")]
+editor_description = " Default Mob Template "
+material = ExtResource("10_6xdyb")
+position = Vector2(700, 600)
+
 [connection signal="bcd_change" from="Player" to="HUD" method="_on_player_bcd_change"]

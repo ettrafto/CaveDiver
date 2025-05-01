@@ -194,6 +194,7 @@ offset = Vector2(0, 0.6)
 metadata/_edit_lock_ = true
 
 [connection signal="timeout" from="bubbleTimer" to="." method="_on_bubble_timer_timeout"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 
 [editable path="Hitbox"]
 [editable path="Hurtbox"]

@@ -157,3 +157,6 @@ func emit_bubble():
 
 func _on_bubble_timer_timeout() -> void:
 	emit_bubble()
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	print("I don't have HP yet, but if I did I'd get hurt")
