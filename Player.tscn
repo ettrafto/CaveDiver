@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dim5as52t6iqc"]
+[gd_scene load_steps=8 format=3 uid="uid://dim5as52t6iqc"]
 
 [ext_resource type="Script" uid="uid://wacxpn3t4p0l" path="res://Scripts/Player/Player.gd" id="1_e80uo"]
-[ext_resource type="Texture2D" uid="uid://ddhuat6wttwu5" path="res://Assets/Art/diver/diver1.png" id="2_cxr5p"]
+[ext_resource type="Texture2D" uid="uid://bp13l6y4bejkg" path="res://Assets/Art/diver/diver1.png" id="2_cxr5p"]
 [ext_resource type="PackedScene" uid="uid://c8btmt1p1c5oi" path="res://Mob/Hitbox.tscn" id="3_tdg3f"]
 [ext_resource type="PackedScene" uid="uid://dhafxmdd71i72" path="res://Mob/Hurtbox.tscn" id="4_dtqjt"]
+[ext_resource type="Script" uid="uid://c77uck4vbimcc" path="res://Shaders/CustomPointLight2D.gd" id="5_cxr5p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e80uo"]
 radius = 44.727
@@ -54,6 +55,11 @@ collision_mask = 16
 position = Vector2(-4, 0)
 rotation = -1.15992
 shape = SubResource("CapsuleShape2D_cxr5p")
+
+[node name="CustomPointLight2D" type="Node2D" parent="."]
+script = ExtResource("5_cxr5p")
+radius = 150.0
+intensity = 0.8
 
 [editable path="Hitbox"]
 [editable path="Hurtbox"]
