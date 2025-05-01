@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://crhs03rqwvlo7" path="res://Assets/DiverAnimation/4.png" id="5_oudfo"]
 [ext_resource type="Texture2D" uid="uid://0klq6kgjkht" path="res://Assets/DiverAnimation/5.png" id="6_d6rpx"]
 [ext_resource type="Texture2D" uid="uid://d2088yplcq6n4" path="res://Assets/DiverAnimation/6.png" id="7_r3kul"]
+[ext_resource type="Script" uid="uid://c77uck4vbimcc" path="res://Shaders/CustomPointLight2D.gd" id="5_cxr5p"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jatw7"]
 animations = [{
@@ -150,6 +151,11 @@ position = Vector2(-45.7245, 2.28226)
 one_shot = true
 
 [connection signal="timeout" from="bubbleTimer" to="." method="_on_bubble_timer_timeout"]
+
+[node name="CustomPointLight2D" type="Node2D" parent="."]
+script = ExtResource("5_cxr5p")
+radius = 150.0
+intensity = 0.8
 
 [editable path="Hitbox"]
 [editable path="Hurtbox"]
