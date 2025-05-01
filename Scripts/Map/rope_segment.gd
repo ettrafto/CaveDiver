@@ -36,8 +36,13 @@ func remove_pin_joint():
 	
 func remove_bottom_pin_joint():
 	if has_two_joints:
-		remove_child($SeecondJoint)
+		remove_child($SecondJoint)
 		has_two_joints = false
+	
+func disable_collision(on):
+	$RigidBody2D/CollisionShape2D.set_deferred("disabled",on)
+	$RigidBody2D.mass = int(on) * 0.1
+	
 	
 func add_pin_joint(player):
 	has_two_joints = true

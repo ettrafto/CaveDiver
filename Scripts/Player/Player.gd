@@ -26,6 +26,10 @@ func _ready() -> void:
 	set_inertia(1)
 	set_constant_force(Vector2(0,25))
 	$bubbleTimer.start(10)
+	
+func get_resparator():
+	return $resparator
+	
 #changes the velocity and rotation of the player
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	_move(state)
@@ -94,5 +98,6 @@ func emit_bubble():
 
 
 func _on_main_bubble_timer_timeout() -> void:
-	emit_bubble()
+	#emit_bubble()
+	pass
 	
