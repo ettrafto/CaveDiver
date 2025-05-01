@@ -83,6 +83,12 @@ one_shot = true
 explosiveness = 0.5
 process_material = SubResource("ParticleProcessMaterial_e80uo")
 
+[node name="speargun" type="Node2D" parent="."]
+position = Vector2(-45.7245, 2.28226)
+
+[node name="spearTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="bubbleTimer" to="." method="_on_main_bubble_timer_timeout"]
 
 [editable path="Hitbox"]

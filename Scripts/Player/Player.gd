@@ -9,6 +9,7 @@ signal place_rope
 @export var bcd_capacity: float = 50
 @onready var move_force = Vector2(200,0)
 var bubble_scene = preload("res://Things/player_bubble.tscn")
+var spear_scene = preload("res://Things/spear.tscn")
 
 # Buoyancy-related stats
 # velocity input & momentum
@@ -16,7 +17,7 @@ var move_input: float
 var rotate_input: float
 var buoyancy_input: float
 var attached_to_rope: bool = false
-var has_speargun: bool = true
+var has_speargun: bool = true #set to false by default
 var bubble_count: int = 0
 
 
@@ -35,6 +36,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	_move(state)
 	_rotate()
 	_buoyancy()
+	_speargun(state)
 	
 func _get_move_dir():
 	return Input.get_action_strength("right") - Input.get_action_strength("left")
@@ -72,12 +74,17 @@ func _rotate():
 			rotation += input
 			
 func _speargun(state):
-	var input: int = Input.get_action_strength("inflate_bcd")# TODO change the input type crashing preventing atm
-	if input and has_speargun:
-		pass
+	print($spearTimer.time_left)
+	if Input.is_action_pressed("fire_spear") and has_speargun and $spearTimer.is_stopped():
+		print("firing")
+		$spearTimer.start(3)
+		var spear = spear_scene.instantiate()
+		add_sibling(spear)
+		spear.global_position = $speargun.global_position
+		spear.face_towards($speargun)
 		
-func _misc_input():
-	return Input.get_action_strength("rope")
+func interact():
+	pass
 	
 func set_rope_attachment(boolean):
 	attached_to_rope = boolean
@@ -95,9 +102,3 @@ func emit_bubble():
 	elif bubble_count >= 5:
 		bubble_count = 0
 		$bubbleTimer.start(10)
-
-
-func _on_main_bubble_timer_timeout() -> void:
-	#emit_bubble()
-	pass
-	
