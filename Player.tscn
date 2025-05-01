@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dim5as52t6iqc"]
+[gd_scene load_steps=17 format=3 uid="uid://dim5as52t6iqc"]
 
 [ext_resource type="Script" uid="uid://wacxpn3t4p0l" path="res://Scripts/Player/Player.gd" id="1_e80uo"]
 [ext_resource type="Texture2D" uid="uid://muf3kyvaoxe8" path="res://Assets/Art/diver/diver1.png" id="2_cxr5p"]
@@ -36,14 +36,6 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
-
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_e80uo"]
-radius = 44.727
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cxr5p"]
-radius = 18.2477
-height = 131.808
 
 [sub_resource type="Curve" id="Curve_cxr5p"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.898477, 0.898876), 0.0, 0.0, 0, 0, Vector2(1, 0.505618), 0.0, 0.0, 0, 0]
@@ -148,27 +140,12 @@ shape = SubResource("CapsuleShape2D_cxr5p")
 wait_time = 2.0
 autostart = true
 
-<<<<<<< HEAD
-=======
 [node name="resparator" type="Node2D" parent="."]
 position = Vector2(-41, -13)
-
-[node name="bubbleParticles" type="GPUParticles2D" parent="."]
-position = Vector2(-41, -13)
-emitting = false
-amount = 25
-texture = ExtResource("5_cxr5p")
-lifetime = 5.0
-one_shot = true
-explosiveness = 0.8
-randomness = 1.0
-visibility_rect = Rect2(-100, -195, 200, 200)
-process_material = SubResource("ParticleProcessMaterial_e80uo")
 
 [node name="speargun" type="Node2D" parent="."]
 position = Vector2(-45.7245, 2.28226)
 
->>>>>>> 1472bf7397197fe93e4fd6013fcdaa3a11fb5a0c
 [node name="spearTimer" type="Timer" parent="."]
 one_shot = true
 

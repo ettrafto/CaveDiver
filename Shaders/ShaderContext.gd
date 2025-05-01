@@ -1,4 +1,4 @@
-# This script provides player position to shader files.
+# This script provides player position and other data to shader files.
 extends Node2D
 
 @onready var player: RigidBody2D = get_node("/root/MainScene/Player")
@@ -13,13 +13,18 @@ func get_point_light_info():
 		point_light_info.append(point_light.get_vec4())
 	return point_light_info
 
+func get_point_light_colors():
+	var point_light_colors: Array[Vector3] = []
+	for point_light: CustomPointLight2D in point_lights:
+		point_light_colors.append(point_light.get_RGB())
+	return point_light_colors
+
 func _ready():
 	RenderingServer.global_shader_parameter_set("in_game", true)
 	var num_point_lights = len(point_lights)
 	
 	map_material.set_shader_parameter("num_point_lights", num_point_lights)
 	mob_material.set_shader_parameter("num_point_lights", num_point_lights)
-	
 
 func _process(_delta):
 	# gets player's position relative to the screen
@@ -29,6 +34,10 @@ func _process(_delta):
 	var point_light_info = get_point_light_info()
 	map_material.set_shader_parameter("point_light_info", point_light_info)
 	mob_material.set_shader_parameter("point_light_info", point_light_info)
+	
+	var point_Light_colors = get_point_light_colors()
+	map_material.set_shader_parameter("point_light_colors", point_Light_colors)
+	mob_material.set_shader_parameter("point_light_colors", point_Light_colors)
 
 func _input(event):
 	if event is InputEventMouseMotion:
