@@ -60,3 +60,6 @@ polygon = PackedVector2Array(62, -1, 22, -9, 22, -6, 26, -4, -67, -4, -70, -1, -
 position = Vector2(-0.399994, -0.5)
 emitting = false
 process_material = SubResource("ParticleProcessMaterial_7clw7")
+
+[node name="spearTip" type="Node2D" parent="."]
+position = Vector2(123.677, -0.469311)

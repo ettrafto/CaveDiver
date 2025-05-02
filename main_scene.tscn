@@ -1963,4 +1963,7 @@ scale = Vector2(0.996716, 1)
 position = Vector2(561, 252)
 gravity_scale = 0.2
 
+[node name="rope_anchor2" parent="." instance=ExtResource("6_hq1ik")]
+position = Vector2(221, 351)
+
 [connection signal="bcd_change" from="Player" to="HUD" method="_on_player_bcd_change"]

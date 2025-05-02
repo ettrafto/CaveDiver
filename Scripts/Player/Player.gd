@@ -4,6 +4,7 @@ signal bcd_change
 signal place_rope
 
 @export var max_speed: float = 200.0  # Max horizontal movement speed
+@export var sprint_multiplier: float = 10.0
 @export var acceleration: float = 500.0  # How fast the player speeds up
 @export var drag: float = 10  # Water resistance (slows movement)
 @export var bcd_capacity: float = 50
@@ -19,6 +20,7 @@ var buoyancy_input: float
 var attached_to_rope: bool = false
 var has_speargun: bool = true #set to false by default
 var bubble_count: int = 0
+var attached_to = null
 
 
 @onready var hud = get_tree().get_first_node_in_group("HUD")
@@ -56,7 +58,7 @@ func _move(state):
 		state.apply_force(Vector2())
 	else:
 		var direction: Vector2
-		direction.x = input * acceleration   
+		direction.x = input * acceleration * (int(Input.is_action_pressed("sprint")) *  sprint_multiplier + 1)
 		state.apply_force(direction.rotated(rotation))
 		
 	
@@ -74,23 +76,28 @@ func _rotate():
 			rotation += input
 			
 func _speargun(state):
-	print($spearTimer.time_left)
 	if Input.is_action_pressed("fire_spear") and has_speargun and $spearTimer.is_stopped():
 		print("firing")
 		$spearTimer.start(3)
 		var spear = spear_scene.instantiate()
 		add_sibling(spear)
 		spear.global_position = $speargun.global_position
-		spear.face_towards($speargun)
+		spear.face_towards_mouse()
 		
 func interact():
 	pass
 	
-func set_rope_attachment(boolean):
-	attached_to_rope = boolean
 	
-func is_attached_to_rope():
-	return attached_to_rope
+func is_attached_to():
+	if attached_to != null:
+		return true
+	return false
+	
+func set_attached_to(rope_anchor):
+	attached_to = rope_anchor
+	
+func get_attached_to():
+	return attached_to
 	
 func emit_bubble():
 	var bubble = bubble_scene.instantiate()
