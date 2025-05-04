@@ -2943,7 +2943,7 @@ frequency = 10
 offset = 180
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-position = Vector2(653, 151)
+position = Vector2(640, 64)
 occluder = SubResource("OccluderPolygon2D_qwutr")
 
 [node name="LightOccluder2D2" type="LightOccluder2D" parent="."]
