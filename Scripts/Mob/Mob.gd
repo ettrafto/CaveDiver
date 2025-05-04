@@ -181,9 +181,7 @@ func _integrate_forces(state) -> void:
 	# kills mob if health is 0
 	if health <= 0 and alive:
 		die()
-	
-	print(illumination_mask)
-	
+		
 	if alive:
 		approach_player(state)
 	# var new_position = NavigationServer2D.region_get_random_point(region, 1, false)
