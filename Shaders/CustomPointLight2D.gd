@@ -3,9 +3,9 @@ class_name CustomPointLight2D
 
 # Light influence
 ## point light's effective radius
-@export var radius: float = 100.0
+@export_range(1, 1000, 1) var radius: float = 100.0
 ## increases brightness of light
-@export var intensity: float = 1.0
+@export_range(0, 10, 0.01) var intensity: float = 1.0
 
 # Light oscillation 
 ## toggles whether the light's intensity will oscillate
