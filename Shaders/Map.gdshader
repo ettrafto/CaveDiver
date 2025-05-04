@@ -14,6 +14,26 @@ uniform int num_point_lights = 0;
 const float MAX_SIGHT_ANGLE = radians(7.2)/PI;
 const float MAX_SIGHT_DISTANCE = 750.0;
 
+bool within_shadow(vec2 frag_position) {
+	const int step_limit = 600;
+		
+	bool in_shadow = false;
+	vec2 curr_pos = frag_position;
+	float distance_from_player = distance(curr_pos, player_pos);
+	for (int i = 0; i < step_limit; i++) {
+		float sdf = texture_sdf(curr_pos);
+		if (sdf <= 0.0) {
+			in_shadow = true;
+			break;
+		}
+		vec2 step_distance = vec2(1, 1) / distance_from_player;
+		curr_pos = mix(curr_pos, player_pos, step_distance);
+		distance_from_player = distance(curr_pos, player_pos);
+	}
+		
+	return in_shadow;
+}
+
 vec4 get_point_light_influence(vec2 frag_position) {
 	float greatest_brightness = 0.0;
 	vec3 color_influence = vec3(0.0, 0.0, 0.0);
@@ -76,24 +96,7 @@ void vertex() {
 
 void fragment() {
 	if (in_game) {
-		const int step_limit = 600;
-		
-		bool shadowed = false;
-		vec2 curr_pos = FRAGCOORD.xy;
-		float distance_from_player = distance(FRAGCOORD.xy, player_pos);
-		for (int i = 0; i < step_limit; i++) {
-			float sdf = texture_sdf(curr_pos);
-			if (sdf <= 0.0) {
-				discard;
-				shadowed = true;
-				break;
-			}
-			vec2 step_distance = vec2(1, 1) / distance_from_player;
-			curr_pos = mix(curr_pos, player_pos, step_distance);
-			distance_from_player = distance(curr_pos, player_pos);
-		}
-		
-		if (shadowed) {
+		if (within_shadow(FRAGCOORD.xy)) {
 			COLOR = vec4(0, 0, 0, COLOR.a);
 		} else {
 			float flashlight_visibility = get_flashlight_influence(FRAGCOORD.xy);
