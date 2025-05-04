@@ -12,7 +12,6 @@ uniform int num_point_lights = 0;
 
 // Used by get_visibility_modifier
 const float MAX_SIGHT_ANGLE = radians(7.2)/PI;
-const float MAX_RADIUS = 200.0;
 const float MAX_SIGHT_DISTANCE = 750.0;
 
 vec4 get_point_light_influence(vec2 frag_position) {
@@ -70,20 +69,41 @@ void vertex() {
 		// This fixes a weird bug where VERTICES.y > 100 are 
 		// a phase offset of 1 off. Assuming bug recurs per 100.
 		float offset = float(int(VERTEX.y)/100);
-		VERTEX.x += sin(VERTEX.y + offset + TIME * 2.0) * 3.0;
+		//VERTEX.x += sin(VERTEX.y + offset + TIME * 2.0) * 3.0;
 		//COLOR.r += sin(TIME);
 	}
 }
 
 void fragment() {
 	if (in_game) {
-		float flashlight_visibility = get_flashlight_influence(FRAGCOORD.xy);
+		const int step_limit = 600;
 		
-		vec4 light_influence = get_point_light_influence(FRAGCOORD.xy);
-		vec3 light_colors = light_influence.rgb;
-		float light_visibility = light_influence.a;
+		bool shadowed = false;
+		vec2 curr_pos = FRAGCOORD.xy;
+		float distance_from_player = distance(FRAGCOORD.xy, player_pos);
+		for (int i = 0; i < step_limit; i++) {
+			float sdf = texture_sdf(curr_pos);
+			if (sdf <= 0.0) {
+				discard;
+				shadowed = true;
+				break;
+			}
+			vec2 step_distance = vec2(1, 1) / distance_from_player;
+			curr_pos = mix(curr_pos, player_pos, step_distance);
+			distance_from_player = distance(curr_pos, player_pos);
+		}
+		
+		if (shadowed) {
+			COLOR = vec4(0, 0, 0, COLOR.a);
+		} else {
+			float flashlight_visibility = get_flashlight_influence(FRAGCOORD.xy);
+			
+			vec4 light_influence = get_point_light_influence(FRAGCOORD.xy);
+			vec3 light_colors = light_influence.rgb;
+			float light_visibility = light_influence.a;
 
-		float visibility = max(flashlight_visibility, light_visibility);
-		COLOR = vec4((COLOR.rgb + light_colors) * visibility, COLOR.a);
+			float visibility = max(flashlight_visibility, light_visibility);
+			COLOR = vec4((COLOR.rgb + light_colors) * visibility, COLOR.a);
+		}
 	}
 }
