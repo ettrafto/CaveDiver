@@ -40,6 +40,7 @@ node_a = NodePath("..")
 disable_collision = false
 length = 10.0
 rest_length = 1.0
+damping = 0.75
 
 [node name="extensionTimer" type="Timer" parent="."]
 process_callback = 0
@@ -48,7 +49,7 @@ one_shot = true
 [node name="EndingJoint" type="DampedSpringJoint2D" parent="."]
 node_a = NodePath("..")
 disable_collision = false
-length = 10.0
+length = 2.0
 rest_length = 1.0
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

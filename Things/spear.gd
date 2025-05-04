@@ -12,6 +12,3 @@ func face_towards_mouse():
 	self.rotation += Vector2.RIGHT.angle_to(distance)#spear starts pointing right
 	self.linear_velocity = distance.normalized() * speed
 	$ProjectileBubbles.emitting = true
-
-func set_speed(n):
-	speed = n

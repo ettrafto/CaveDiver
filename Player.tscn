@@ -70,6 +70,7 @@ shape = SubResource("CapsuleShape2D_cxr5p")
 
 [node name="bubbleTimer" type="Timer" parent="."]
 wait_time = 10.0
+autostart = true
 
 [node name="resparator" type="Node2D" parent="."]
 position = Vector2(-41, -13)
@@ -89,7 +90,7 @@ position = Vector2(-45.7245, 2.28226)
 [node name="spearTimer" type="Timer" parent="."]
 one_shot = true
 
-[connection signal="timeout" from="bubbleTimer" to="." method="_on_main_bubble_timer_timeout"]
+[connection signal="timeout" from="bubbleTimer" to="." method="_on_bubble_timer_timeout"]
 
 [editable path="Hitbox"]
 [editable path="Hurtbox"]

@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 signal bcd_change
-signal place_rope
+signal start_rope
 
 @export var max_speed: float = 200.0  # Max horizontal movement speed
 @export var sprint_multiplier: float = 10.0
@@ -38,7 +38,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	_move(state)
 	_rotate()
 	_buoyancy()
-	_speargun(state)
+	_speargun()
 	
 func _get_move_dir():
 	return Input.get_action_strength("right") - Input.get_action_strength("left")
@@ -75,7 +75,7 @@ func _rotate():
 		elif rotation <= -1 and input > 0:
 			rotation += input
 			
-func _speargun(state):
+func _speargun():
 	if Input.is_action_pressed("fire_spear") and has_speargun and $spearTimer.is_stopped():
 		print("firing")
 		$spearTimer.start(3)
@@ -86,7 +86,6 @@ func _speargun(state):
 		
 func interact():
 	pass
-	
 	
 func is_attached_to():
 	if attached_to != null:
@@ -109,3 +108,7 @@ func emit_bubble():
 	elif bubble_count >= 5:
 		bubble_count = 0
 		$bubbleTimer.start(10)
+		
+
+func _on_bubble_timer_timeout() -> void:
+	emit_bubble()
