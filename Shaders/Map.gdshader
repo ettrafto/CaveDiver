@@ -69,7 +69,7 @@ void vertex() {
 		// This fixes a weird bug where VERTICES.y > 100 are 
 		// a phase offset of 1 off. Assuming bug recurs per 100.
 		float offset = float(int(VERTEX.y)/100);
-		//VERTEX.x += sin(VERTEX.y + offset + TIME * 2.0) * 3.0;
+		VERTEX.x += sin(VERTEX.y + offset + TIME * 2.0) * 3.0;
 		//COLOR.r += sin(TIME);
 	}
 }

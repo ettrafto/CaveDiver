@@ -148,6 +148,7 @@ one_shot = true
 script = ExtResource("5_cxr5p")
 radius = 150.0
 intensity = 0.8
+illumination_mask = 2
 
 [connection signal="timeout" from="bubbleTimer" to="." method="_on_bubble_timer_timeout"]
 
