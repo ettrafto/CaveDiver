@@ -1968,6 +1968,8 @@ editor_description = " Default Mob Template "
 material = ExtResource("10_6xdyb")
 position = Vector2(357, 390)
 awareness = 0.5
+illumination_mask = 2
+soft_illumination_cutoff = true
 
 [node name="Scripts" type="Node2D" parent="."]
 
@@ -1979,6 +1981,7 @@ editor_description = " Default Mob Template "
 material = ExtResource("10_6xdyb")
 position = Vector2(700, 600)
 awareness = 0.5
+illumination_mask = 3
 
 [node name="rope_anchor" parent="." instance=ExtResource("6_hq1ik")]
 position = Vector2(438, 237)
@@ -2013,7 +2016,7 @@ frequency = 10
 offset = 180
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-position = Vector2(653, 151)
+position = Vector2(640, 64)
 occluder = SubResource("OccluderPolygon2D_qwutr")
 
 [node name="LightOccluder2D2" type="LightOccluder2D" parent="."]
