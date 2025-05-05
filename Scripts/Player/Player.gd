@@ -70,10 +70,12 @@ func _speargun():
 		print("firing")
 		$spearTimer.start(3)
 		var spear = spear_scene.instantiate()
-		add_sibling(spear)
 		spear.global_position = $speargun.global_position
-		spear.face_towards_mouse()
+		add_sibling(spear)
 		
+		
+func get_speargun_pos():
+	return $speargun.global_position
 	
 func is_attached_to():
 	if attached_to != null:

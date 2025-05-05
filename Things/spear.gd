@@ -1,14 +1,19 @@
 extends RigidBody2D
-var speed = 1000 
+var speed = 1000
+var is_turning = true
 
-
-func _process(delta):
-	if self.linear_velocity.length() < 5:
-		$ProjectileBubbles.emitting = false
-
-#works the same as the one found in rope_segment.gd except adds a constant force and uses the mouse as the end point
-func face_towards_mouse():
-	var distance = get_viewport().get_mouse_position() - self.global_position #makes a vector and then aligns with it 
-	self.rotation += Vector2.RIGHT.angle_to(distance)#spear starts pointing right
-	self.linear_velocity = distance.normalized() * speed
+func _ready() -> void:
+	var direction = get_global_mouse_position() - self.global_position
+	rotation = direction.angle()
+	linear_velocity = direction.normalized() * speed
 	$ProjectileBubbles.emitting = true
+		
+func _physics_process(delta):
+		# Apply angular velocity to rotate toward the linear velocity vectors angle
+		angular_velocity = wrapf(linear_velocity.angle() - rotation, -PI, PI) * 10 * int(is_turning)
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	is_turning = false
+	linear_velocity = Vector2.ZERO
+	set_deferred("freeze",true)
+	$ProjectileBubbles.emitting = false
