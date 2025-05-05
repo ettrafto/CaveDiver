@@ -4,12 +4,14 @@ shader_type canvas_item;
 global uniform bool in_game = false;
 
 global uniform vec2 player_pos = vec2(0, 0);
-global uniform vec2 mouse_pos = vec2(0, 0);
 
-uniform vec4 point_light_info[100];
-uniform vec3 point_light_colors[100];
-uniform int point_light_illumination_masks[100];
+uniform vec4 general_light_info[100];
+uniform vec3 general_light_colors[100];
+uniform int light_illumination_masks[100];
 uniform int num_point_lights = 0;
+
+uniform vec3 directional_light_info[100];
+uniform int num_directional_lights = 0;
 
 // hint_range() restricts values to a range (with min/max/step).
 instance uniform float red_factor : hint_range(0.0, 1.0) = 1.0;
@@ -61,7 +63,7 @@ vec4 get_point_light_influence(vec2 frag_position) {
 	bool illumination_mask_arr[4] = get_mask_as_array(illumination_mask);
 
 	for (int i = 0; i < num_point_lights; i++) {
-		bool[4] light_illumination_mask_arr = get_mask_as_array(point_light_illumination_masks[i]);
+		bool[4] light_illumination_mask_arr = get_mask_as_array(light_illumination_masks[i]);
 		
 		bool illuminated = false;
 		for (int i = 0; i < 4; i++) {
@@ -74,50 +76,73 @@ vec4 get_point_light_influence(vec2 frag_position) {
 		if (!illuminated)
 			continue;
 		
-		vec4 point_light = point_light_info[i];
-		vec3 light_color = point_light_colors[i];
-		vec2 light_position = point_light.xy;
-		float light_radius = point_light.z;
-		float light_intensity = point_light.a;
+		vec4 light_info = general_light_info[i];
+		vec2 light_position = light_info.xy;
+		float light_radius = light_info.z;
+		float light_intensity = light_info.a;
+		
+		vec3 light_color = general_light_colors[i];
 
 		float frag_to_light = distance(light_position, frag_position);
 		float radius_dropoff = length(frag_to_light) / (light_radius / light_intensity);
 		float light_brightness = light_intensity - radius_dropoff;
 		
-		if (light_brightness <= 0.0)
-			continue;
-
-		color_influence += light_color * light_brightness;
-
-		if (light_brightness > greatest_brightness) {
-			greatest_brightness = light_brightness;
+		if (light_brightness > 0.0) {
+			color_influence += light_color * light_brightness;
+			if (light_brightness > greatest_brightness)
+				greatest_brightness = light_brightness;
 		}
 	}
 
 	return vec4(color_influence.r, color_influence.g, color_influence.b, greatest_brightness);
 }
 
-float get_flashlight_influence(vec2 frag_coord) {
-	// Returns visibility of a frag based on distance from player and mouse position
-	vec2 player_to_mouse = mouse_pos - player_pos;
-	vec2 player_to_frag = frag_coord.xy - player_pos;
+vec4 get_directional_light_influence(vec2 frag_position) {
+	float greatest_brightness = 0.0;
+	vec3 color_influence = vec3(0, 0, 0);
+	
+	for (int i = num_point_lights; i < num_point_lights + num_directional_lights; i++) {
+		vec4 light_info = general_light_info[i];
+		vec2 light_position = light_info.xy;
+		float light_distance = light_info.z;
+		float light_intensity = light_info.a;
+		
+		vec3 light_color = general_light_colors[i];
 
-	// This gets the the dot product of the unit vectors of vectors player_to_mouse and player_to_frag
-	// product ranges from {-1, 1} where -1 is pi and 1 is 0.
-	// We then determine if a fragment is within the player's look direction if it's
-	// between max_sight_angle and 0.
-	float product = dot(normalize(player_to_mouse), normalize(player_to_frag));
-	// Makes it so we're dealing with a range of {0, 1} where 0 is 0 and 1 represents pi.
-	float angle = (product * -1.0 + 1.0) / 2.0;
-	bool in_look_direction = angle <= MAX_SIGHT_ANGLE;
-
-	float sight_dropoff = length(player_to_frag) / MAX_SIGHT_DISTANCE;
-	float sight_angular_dropoff = angle / MAX_SIGHT_ANGLE;
-	float sight_visibility = 1.0 - sight_dropoff - sight_angular_dropoff;
-
-	if (in_look_direction) {
-		return sight_visibility;
+		vec3 directional_info = directional_light_info[i - num_point_lights];
+		vec2 direction = directional_info.xy;
+		float max_angle = radians(directional_info.z)/PI;
+		
+		vec2 light_to_frag = frag_position - light_position;
+		
+		// This gets the the dot product of the unit vectors
+		// product ranges from {-1, 1} where -1 is pi and 1 is 0.
+		// We then determine if a fragment is within the light's look direction if it's 
+		// between max_angle and 0.
+		float product = dot(normalize(light_to_frag), direction);
+		// Makes it so we're dealing with a range of {0, 1} where 0 is 0 and 1 represents pi.
+		float angle = (product * -1.0 + 1.0) / 2.0;
+		bool in_look_direction = angle <= max_angle;
+		
+		float distance_dropoff = length(light_to_frag) / (light_distance / light_intensity);
+		float angular_dropoff = angle / (max_angle / light_intensity);
+		float light_brightness = light_intensity - distance_dropoff - angular_dropoff;
+		
+		if (in_look_direction && light_brightness > 0.0) {
+			color_influence += light_color * light_brightness;
+			if (light_brightness > greatest_brightness)
+				greatest_brightness = light_brightness;
+		}
 	}
+	
+	return vec4(color_influence, greatest_brightness);
+}
+
+vec4 get_light_influence(vec2 frag_position) {
+	vec4 point_light_influence = get_point_light_influence(frag_position);
+	vec4 directional_light_influence = get_directional_light_influence(frag_position);
+	float greatest_brightness = max(point_light_influence.a, directional_light_influence.a);
+	return vec4(point_light_influence.xyz + directional_light_influence.xyz, greatest_brightness); 
 }
 
 void vertex() {
@@ -138,22 +163,19 @@ void fragment() {
 			COLOR.a = alpha;
 
 			// makes it so mob fades out as they get farther away from player_pos / gets out of player's sight
-			float flashlight_visibility = get_flashlight_influence(FRAGCOORD.xy);
-
-			vec4 light_influence = get_point_light_influence(FRAGCOORD.xy);
+			vec4 light_influence = get_light_influence(FRAGCOORD.xy);
 			vec3 light_colors = light_influence.rgb;
 			float light_brightness = light_influence.a;
-
-			float visibility = max(flashlight_visibility, light_brightness);
-			float invisibility = 1.0 - 3.0 * visibility;
-			vec4 final_color = vec4((COLOR.rgb + light_colors) * visibility, COLOR.a);
+			float invisibility = 1.0 - 3.0 * light_brightness;
+			
+			vec4 final_color = vec4((COLOR.rgb + light_colors) * light_brightness, COLOR.a);
 			if (final_color.rgb == vec3(0, 0, 0))
 				COLOR = vec4(0, 0, 0, 0);
 			else {
 				if (soft_illumination_cutoff)
-					COLOR = vec4((COLOR.rgb + light_colors) * visibility, COLOR.a - invisibility);
+					COLOR = vec4((COLOR.rgb + light_colors) * light_brightness, COLOR.a - invisibility);
 				else
-					COLOR = vec4((COLOR.rgb + light_colors) * visibility, COLOR.a);
+					COLOR = vec4((COLOR.rgb + light_colors) * light_brightness, COLOR.a);
 			}
 		}
 	}

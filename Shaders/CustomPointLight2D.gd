@@ -1,8 +1,8 @@
 extends Node2D
 class_name CustomPointLight2D
 
-## point light's effective radius
-@export_range(1, 1000, 1) var radius: float = 100.0
+## point light's effective distance (radially)
+@export_range(1, 1000, 1) var distance: float = 100.0
 ## increases brightness of light
 @export_range(0, 10, 0.01) var intensity: float = 1.0
 
@@ -33,9 +33,9 @@ func get_vec4():
 	if (oscillates):
 		var oscillation = (cos(time * deg_to_rad(frequency) + deg_to_rad(offset)) + 1) / 2
 		var new_intensity = intensity * oscillation
-		return Vector4(screen_position.x, screen_position.y, radius, new_intensity)
+		return Vector4(screen_position.x, screen_position.y, distance, new_intensity)
 	else:
-		return Vector4(screen_position.x, screen_position.y, radius, intensity)
+		return Vector4(screen_position.x, screen_position.y, distance, intensity)
 
 func get_RGB():
 	return Vector3(red, green, blue)
