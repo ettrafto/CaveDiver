@@ -58,7 +58,7 @@ shape = SubResource("CapsuleShape2D_cxr5p")
 
 [node name="CustomPointLight2D" type="Node2D" parent="."]
 script = ExtResource("5_cxr5p")
-radius = 150.0
+distance = 150.0
 intensity = 0.8
 illumination_mask = 2
 
