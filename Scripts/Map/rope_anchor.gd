@@ -9,7 +9,7 @@ var player_rope_index = 1
 
 func start_rope(player):
 	self.player = player
-	
+	can_start_rope = false
 	player.set_attached_to(self)
 	
 	rope_segments.append(rope_segment_scene.instantiate())
@@ -31,7 +31,7 @@ func start_rope(player):
 	rope_segments[0].get_rigidBody().name = "anchor_rope"# has to be done here for some reason will break the code above if not
 	
 	#creates the ropes that will be rolled out
-	for i in range(23):
+	for i in range(22):
 		rope_segments.append(rope_segment_scene.instantiate())
 		rope_segments[-1].active(false)
 		self.add_child(rope_segments[-1])
@@ -55,34 +55,35 @@ func extend():
 	
 #sets this anchor as inactive then connects a rope between the two and then attaches the player to next_anchor
 func switch_anchors(next_anchor):
+	if Vector2(player.global_position - next_anchor.global_position).length() > 80:
+		extend()
 	extend()
-	var ending_body_path = player_attached_rope.add_ending_connection_point().get_path()
-	player_attached_rope.set_second_joint_pin_b(ending_body_path)
-	next_anchor.get_ending_joint().node_b = ending_body_path
-	print(next_anchor.get_ending_joint().node_b)
-	for i in range(player_rope_index, len(rope_segments)):
+	player_attached_rope.remove_bottom_pin_joint()
+	next_anchor.get_ending_joint().node_b = player_attached_rope.get_rigidBody().get_path()
+	for i in range(player_rope_index + 1, len(rope_segments)):
 		rope_segments[i].queue_free()
 	player = null
-	self.can_start_rope = false
-	
-func set_can_start(boolean):
-	can_start_rope = boolean
-	
+
 #used to swap anchors
 func get_ending_joint():
 	return $EndingJoint
+
+func detach():
+	player_attached_rope.remove_bottom_pin_joint()
+	for i in range(player_rope_index + 1, len(rope_segments)):
+		rope_segments[i].queue_free()
+	player = null
+	
 
 func _on_area_2d_body_entered(body: Node2D):
 	if body.name == "Player" and player == null:
 		if not body.is_attached_to() and can_start_rope:
 			self.start_rope(body)
-		elif body.get_attached_to() != self:
-			print("swap")
+		elif body.get_attached_to() != self and can_start_rope:
 			body.get_attached_to().switch_anchors(self)
 			self.start_rope(body)
 
 #controls extension activates when rope_segments[0] exits the area becuase the player is pulling on the rope
 func _on_body_detection_area_body_exited(body: RigidBody2D):
-	print("attempting extension")
 	if body.name == "anchor_rope" and player != null:
 		extend()

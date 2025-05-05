@@ -1960,7 +1960,7 @@ position = Vector2(438, 237)
 scale = Vector2(0.996716, 1)
 
 [node name="Player" parent="." instance=ExtResource("5_wr18j")]
-position = Vector2(561, 252)
+position = Vector2(451, 569)
 gravity_scale = 0.2
 
 [node name="rope_anchor2" parent="." instance=ExtResource("6_hq1ik")]

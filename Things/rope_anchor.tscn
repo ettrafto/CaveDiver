@@ -42,16 +42,9 @@ length = 10.0
 rest_length = 1.0
 damping = 0.75
 
-[node name="extensionTimer" type="Timer" parent="."]
-process_callback = 0
-one_shot = true
-
-[node name="EndingJoint" type="DampedSpringJoint2D" parent="."]
+[node name="EndingJoint" type="PinJoint2D" parent="."]
 node_a = NodePath("..")
-disable_collision = false
-length = 2.0
-rest_length = 1.0
+bias = 0.9
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="BodyDetectionArea" to="." method="_on_body_detection_area_body_exited"]
-[connection signal="timeout" from="extensionTimer" to="." method="_on_extension_timer_timeout"]

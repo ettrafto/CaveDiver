@@ -5,9 +5,7 @@ var has_two_joints = false
 func set_pin_a(node_path):
 	$PinJoint2D.set_node_a(node_path)
 	
-func set_pin_b(node_path):
-	$PinJoint2D.set_node_b(node_path)
-
+	
 func get_rigidBody():
 	return $RigidBody2D
 	
@@ -22,9 +20,6 @@ func get_bottom_node():
 	
 func set_pos(new_position):
 	self.global_position = new_position
-	
-func set_second_joint_pin(node_path):
-		$SecondJoint.set_node_b(node_path)
 
 # sets the bottom node position by setting the rotation towards the destiantion node
 func face_towards(start, end):
@@ -56,13 +51,3 @@ func add_pin_joint(player):
 	new_joint.position = $RigidBody2D/BottomPos.position
 	new_joint.node_a = $RigidBody2D.get_path()
 	new_joint.node_b = player.get_path()
-
-func set_second_joint_pin_b(object_path):
-	$SecondJoint.node_b = object_path
-
-func add_ending_connection_point():
-	var new_rigid_body = RigidBody2D.new()
-	self.add_child(new_rigid_body)
-	new_rigid_body.global_position = $RigidBody2D/BottomPos.global_position
-	return new_rigid_body
-	

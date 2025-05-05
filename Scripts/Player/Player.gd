@@ -1,21 +1,16 @@
 extends RigidBody2D
 
 signal bcd_change
-signal start_rope
 
-@export var max_speed: float = 200.0  # Max horizontal movement speed
-@export var sprint_multiplier: float = 10.0
+@export var sprint_multiplier: float = 1.5
 @export var acceleration: float = 500.0  # How fast the player speeds up
-@export var drag: float = 10  # Water resistance (slows movement)
 @export var bcd_capacity: float = 50
-@onready var move_force = Vector2(200,0)
 var bubble_scene = preload("res://Things/player_bubble.tscn")
 var spear_scene = preload("res://Things/spear.tscn")
 
 # Buoyancy-related stats
 # velocity input & momentum
 var move_input: float
-var rotate_input: float
 var buoyancy_input: float
 var attached_to_rope: bool = false
 var has_speargun: bool = true #set to false by default
@@ -24,11 +19,6 @@ var attached_to = null
 
 
 @onready var hud = get_tree().get_first_node_in_group("HUD")
-
-func _ready() -> void:
-	set_inertia(1)
-	set_constant_force(Vector2(0,25))
-	$bubbleTimer.start(10)
 	
 func get_resparator():
 	return $resparator
@@ -41,7 +31,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	_speargun()
 	
 func _get_move_dir():
-	return Input.get_action_strength("right") - Input.get_action_strength("left")
+	move_input =  Input.get_action_strength("right") - Input.get_action_strength("left")
 
 #handles the buoyancy calculation using constant force
 func _buoyancy():
@@ -53,12 +43,12 @@ func _buoyancy():
 		set_constant_force(Vector2(0,-1 * (GameManager.bcd_inflation * 100) - 50) * 2)
 		
 func _move(state):
-	var input = _get_move_dir()
-	if !input:
+	_get_move_dir()
+	if !move_input:
 		state.apply_force(Vector2())
 	else:
 		var direction: Vector2
-		direction.x = input * acceleration * (int(Input.is_action_pressed("sprint")) *  sprint_multiplier + 1)
+		direction.x = move_input * acceleration * (int(Input.is_action_pressed("sprint")) *  sprint_multiplier + 1)
 		state.apply_force(direction.rotated(rotation))
 		
 	
@@ -84,8 +74,6 @@ func _speargun():
 		spear.global_position = $speargun.global_position
 		spear.face_towards_mouse()
 		
-func interact():
-	pass
 	
 func is_attached_to():
 	if attached_to != null:

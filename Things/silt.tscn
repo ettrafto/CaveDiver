@@ -27,6 +27,7 @@ collision_friction = 0.35
 collision_bounce = 0.0
 
 [node name="Silt" type="Node2D"]
+position = Vector2(570, 314)
 script = ExtResource("1_k4l6w")
 
 [node name="Area2D" type="Area2D" parent="."]
