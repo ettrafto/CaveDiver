@@ -2,6 +2,7 @@
 extends Node2D
 
 @onready var player: RigidBody2D = get_node("/root/MainScene/Player")
+@onready var flashlight: CustomDirectionalLight2D = get_node("/root/MainScene/Player/Flashlight")
 @onready var map_material: ShaderMaterial = ResourceLoader.load("res://Shaders/Map.tres")
 @onready var mob_material: ShaderMaterial = ResourceLoader.load("res://Shaders/Mob.tres")
 
@@ -57,6 +58,12 @@ func _process(_delta):
 	# gets player's position relative to the screen
 	var screen_position = get_global_transform_with_canvas() * player.global_position
 	RenderingServer.global_shader_parameter_set("player_pos", screen_position)
+	
+	# Rotates player's flashlight to point towards the mouse
+	var player_to_mouse = get_global_mouse_position() - player.global_position
+	var unit_vector = player_to_mouse.normalized()
+	var angle = atan2(unit_vector.y, unit_vector.x)
+	flashlight.rotation = angle
 	
 	var point_light_info = get_light_info(point_lights)
 	var directional_light_info = get_light_info(directional_lights)
