@@ -11,6 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://crhs03rqwvlo7" path="res://Assets/DiverAnimation/4.png" id="5_oudfo"]
 [ext_resource type="Texture2D" uid="uid://0klq6kgjkht" path="res://Assets/DiverAnimation/5.png" id="6_d6rpx"]
 [ext_resource type="Texture2D" uid="uid://d2088yplcq6n4" path="res://Assets/DiverAnimation/6.png" id="7_r3kul"]
+[ext_resource type="Script" uid="uid://br4n5fcavft5s" path="res://Shaders/CustomDirectionalLight2D.gd" id="6_tdg3f"]
+[ext_resource type="Texture2D" uid="uid://dhxeihy0jgch0" path="res://Assets/Art/spear.png" id="7_dtqjt"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jatw7"]
 animations = [{
@@ -64,6 +66,7 @@ turbulence_influence_min = 0.0
 turbulence_influence_max = 0.2
 turbulence_initial_displacement_min = 1.49012e-06
 turbulence_initial_displacement_max = 1.49012e-06
+
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e80uo"]
 radius = 44.727
@@ -137,18 +140,25 @@ position = Vector2(-4, 0)
 rotation = 1.4399
 shape = SubResource("CapsuleShape2D_cxr5p")
 
-[node name="bubbleTimer" type="Timer" parent="."]
-wait_time = 2.0
-autostart = true
-
-[node name="spearTimer" type="Timer" parent="."]
-one_shot = true
-
-[node name="CustomPointLight2D" type="Node2D" parent="."]
+[node name="RadialLight" type="Node2D" parent="."]
 script = ExtResource("5_cxr5p")
 distance = 150.0
 intensity = 0.8
 illumination_mask = 2
+
+[node name="Flashlight" type="Node2D" parent="."]
+script = ExtResource("6_tdg3f")
+upper_angle = 7.2
+distance = 500.0
+illumination_mask = 2
+metadata/_custom_type_script = "uid://br4n5fcavft5s"
+
+[node name="DirectionArrow" type="Sprite2D" parent="Flashlight"]
+modulate = Color(100, 100, 100, 1)
+scale = Vector2(2, 2)
+texture = ExtResource("7_dtqjt")
+offset = Vector2(0, 0.6)
+metadata/_edit_lock_ = true
 
 [connection signal="timeout" from="bubbleTimer" to="." method="_on_bubble_timer_timeout"]
 

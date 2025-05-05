@@ -2952,13 +2952,11 @@ position = Vector2(895, 66.0001)
 rotation = 2.31613
 script = ExtResource("12_671wp")
 distance = 500.0
-illumination_mask = 3
 red = 0.4
 metadata/_custom_type_script = "uid://br4n5fcavft5s"
 
 [node name="DirectionArrow" type="Sprite2D" parent="Lights/CustomDirectionalLight2D"]
 modulate = Color(100, 100, 100, 1)
-rotation = 0.0450544
 scale = Vector2(2, 2)
 texture = ExtResource("13_mo76n")
 offset = Vector2(0, 0.6)
@@ -2974,7 +2972,25 @@ metadata/_custom_type_script = "uid://br4n5fcavft5s"
 
 [node name="DirectionArrow" type="Sprite2D" parent="Lights/CustomDirectionalLight2D2"]
 modulate = Color(100, 100, 100, 1)
-rotation = 0.0450544
+scale = Vector2(2, 2)
+texture = ExtResource("13_mo76n")
+offset = Vector2(0, 0.6)
+metadata/_edit_lock_ = true
+
+[node name="CustomDirectionalLight2D3" type="Node2D" parent="Lights"]
+position = Vector2(326, 81)
+rotation = 0.435671
+script = ExtResource("12_671wp")
+distance = 500.0
+intensity = 0.5
+green = 0.4
+blue = 0.4
+oscillates = true
+frequency = 30
+metadata/_custom_type_script = "uid://br4n5fcavft5s"
+
+[node name="DirectionArrow" type="Sprite2D" parent="Lights/CustomDirectionalLight2D3"]
+modulate = Color(100, 100, 100, 1)
 scale = Vector2(2, 2)
 texture = ExtResource("13_mo76n")
 offset = Vector2(0, 0.6)

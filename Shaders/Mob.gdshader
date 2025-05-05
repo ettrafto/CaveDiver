@@ -22,10 +22,6 @@ instance uniform float alpha : hint_range(0.0, 1.0) = 1.0;
 instance uniform int illumination_mask = 1;
 instance uniform bool soft_illumination_cutoff = false;
 
-// Used by get_visibility_modifier
-const float MAX_SIGHT_ANGLE = radians(7.2)/PI;
-const float MAX_SIGHT_DISTANCE = 750.0;
-
 bool within_shadow(vec2 frag_position) {
 	const int step_limit = 600;
 		
