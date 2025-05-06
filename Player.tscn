@@ -9,8 +9,8 @@
 radius = 44.727
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cxr5p"]
-radius = 33.2065
-height = 224.312
+radius = 16.8961
+height = 116.055
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_e80uo"]
 particle_flag_disable_z = true
@@ -39,14 +39,15 @@ script = ExtResource("1_e80uo")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(46, 28, 26, 20, 7, 19, -10, 8, -27, 5, -46, 9, -53, 0, -55, -17, -50, -26, -42, -32, -30, -32, -24, -25, 3, -15, 4, -1, 14, 1, 33, 4, 48, 13)
+polygon = PackedVector2Array(-15, -16, -11, -12, -4, -10, 2, -7, 2, 0, 17, 2, 23, 6, 25, 9, 24, 14, 16, 13, 12, 10, 0, 8, -13, 2, -20, 4, -27, -1, -28, -8, -22, -17)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 use_parent_material = true
-scale = Vector2(0.39, 0.39)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_cxr5p")
 
 [node name="Hitbox" parent="." instance=ExtResource("3_tdg3f")]
+visible = false
 position = Vector2(-48, -10)
 scale = Vector2(0.5, 0.5)
 collision_layer = 8
@@ -57,7 +58,7 @@ position = Vector2(1.27344, -3.79188)
 shape = SubResource("CircleShape2D_e80uo")
 
 [node name="Hurtbox" parent="." instance=ExtResource("4_dtqjt")]
-position = Vector2(-1, 0)
+position = Vector2(2, 1.19209e-07)
 rotation = 0.0349569
 scale = Vector2(0.5, 0.5)
 collision_layer = 32
