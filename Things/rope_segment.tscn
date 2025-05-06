@@ -11,7 +11,6 @@ height = 24.0
 script = ExtResource("1_jykfr")
 
 [node name="PinJoint2D" type="PinJoint2D" parent="."]
-rotation = 0.00437858
 scale = Vector2(2.5, 2.5)
 node_b = NodePath("../RigidBody2D")
 
