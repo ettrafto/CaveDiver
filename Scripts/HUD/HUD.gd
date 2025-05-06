@@ -21,7 +21,6 @@ func update_bars():
 	if GameManager:
 		#oxygen_bar.value = GameManager.oxygen
 		#weight_bar.value = GameManager.weight
-		print(GameManager.bcd_inflation)
 		bcd_bar.set_value(GameManager.bcd_inflation * 100)
 		
 

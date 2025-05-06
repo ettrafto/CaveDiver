@@ -1,15 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://cyo2yviksowvg"]
+[gd_scene load_steps=6 format=3 uid="uid://cyo2yviksowvg"]
 
-[ext_resource type="Script" uid="uid://dw6b8pnj2ohsa" path="res://Scripts/Map/rope_anchor.gd" id="1_vmdxm"]
+[ext_resource type="Script" uid="uid://dw6b8pnj2ohsa" path="res://Scripts/Map/RopeAnchor.gd" id="1_vmdxm"]
 [ext_resource type="Texture2D" uid="uid://bh21sp0isvf5o" path="res://Assets/Art/anchor-placeholder.png" id="2_de16p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d4tq8"]
 size = Vector2(8, 8)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2tisg"]
-size = Vector2(14, 14)
+[sub_resource type="CircleShape2D" id="CircleShape2D_2tisg"]
+radius = 24.3311
 
-[node name="rope_anchor" type="StaticBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_d4tq8"]
+radius = 5.0
+
+[node name="RopeAnchor" type="StaticBody2D"]
 script = ExtResource("1_vmdxm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -23,7 +26,25 @@ collision_layer = 128
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_2tisg")
+shape = SubResource("CircleShape2D_2tisg")
+
+[node name="BodyDetectionArea" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BodyDetectionArea"]
+shape = SubResource("CircleShape2D_d4tq8")
+
+[node name="StartingJoint" type="DampedSpringJoint2D" parent="."]
+node_a = NodePath("..")
+disable_collision = false
+length = 10.0
+rest_length = 1.0
+damping = 0.75
+
+[node name="EndingJoint" type="PinJoint2D" parent="."]
+node_a = NodePath("..")
+bias = 0.9
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="body_exited" from="BodyDetectionArea" to="." method="_on_body_detection_area_body_exited"]
