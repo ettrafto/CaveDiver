@@ -1,13 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://6h5y87iow3xe"]
 
-[ext_resource type="Script" uid="uid://bogisrdtaryw" path="res://Scripts/Map/rope_segment.gd" id="1_jykfr"]
+[ext_resource type="Script" uid="uid://bogisrdtaryw" path="res://Scripts/Map/RopeSegment.gd" id="1_jykfr"]
 [ext_resource type="Texture2D" uid="uid://duoy7rsq8ne23" path="res://Assets/Art/rope_segment.png" id="1_vv2so"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jykfr"]
 radius = 3.0
 height = 24.0
 
-[node name="Rope_segment" type="Node2D"]
+[node name="RopeSegment" type="Node2D"]
 script = ExtResource("1_jykfr")
 
 [node name="PinJoint2D" type="PinJoint2D" parent="."]

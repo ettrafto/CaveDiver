@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://v54svjph8knq"]
 
-[ext_resource type="Script" uid="uid://cby0llta4l1wn" path="res://Scripts/Player/spear.gd" id="1_7clw7"]
+[ext_resource type="Script" uid="uid://cby0llta4l1wn" path="res://Scripts/Player/Spear.gd" id="1_7clw7"]
 [ext_resource type="Texture2D" uid="uid://d1r17jhdnmimf" path="res://Assets/Art/spear.png" id="1_vqt7i"]
 [ext_resource type="PackedScene" uid="uid://0veqi5gcgddy" path="res://Things/projectile_bubbles.tscn" id="2_1rx1k"]
 
@@ -42,7 +42,7 @@ turbulence_initial_displacement_max = 10.0
 turbulence_influence_over_life = SubResource("CurveTexture_tjres")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7clw7"]
-radius = 7.0
+radius = 4.00001
 
 [node name="Spear" type="RigidBody2D"]
 collision_layer = 16
@@ -53,12 +53,13 @@ center_of_mass = Vector2(100, 0)
 script = ExtResource("1_7clw7")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(65.6, 0.5)
-scale = Vector2(4.375, 2.1875)
+position = Vector2(36.8317, -0.286901)
+scale = Vector2(2.42827, 1.21414)
 texture = ExtResource("1_vqt7i")
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
-position = Vector2(65.6, 0.5)
+position = Vector2(36.8317, -0.286901)
+scale = Vector2(0.555034, 0.555034)
 build_mode = 1
 polygon = PackedVector2Array(62, -1, 22, -9, 22, -6, 26, -4, -67, -4, -70, -1, -67, 2, 26, 2, 22, 5, 22, 7)
 
@@ -68,7 +69,7 @@ emitting = false
 process_material = SubResource("ParticleProcessMaterial_7clw7")
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(120, -1)
+position = Vector2(68, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_7clw7")

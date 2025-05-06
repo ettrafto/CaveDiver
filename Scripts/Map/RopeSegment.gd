@@ -1,10 +1,16 @@
 extends Node2D
 
 var has_two_joints = false
+var ending_anchor = null
+
+func _ready() -> void:
+	set_physics_process(false)
+	
+func _physics_process(delta):
+	$RigidBody2D.linear_velocity = lerp(self.global_position, ending_anchor.global_position, delta * 5)
 
 func set_pin_a(node_path):
 	$PinJoint2D.set_node_a(node_path)
-	
 	
 func get_rigidBody():
 	return $RigidBody2D
@@ -51,3 +57,7 @@ func add_pin_joint(player):
 	new_joint.position = $RigidBody2D/BottomPos.position
 	new_joint.node_a = $RigidBody2D.get_path()
 	new_joint.node_b = player.get_path()
+
+func gravitate_towards(rope_anchor):
+	set_physics_process(true)
+	

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://3p7dib4vg3ma"]
 
 [ext_resource type="Texture2D" uid="uid://cxs5d1h4l32tc" path="res://Assets/Particles/20250417_1323_Pixel Art Bubble_simple_compose_01js2ccdbyf44vhh3emqts0jtb.png" id="1_18bqt"]
-[ext_resource type="Script" uid="uid://6dvxm782am42" path="res://Scripts/Player/player_bubble.gd" id="1_xxnts"]
+[ext_resource type="Script" uid="uid://6dvxm782am42" path="res://Scripts/Player/PlayerBubble.gd" id="1_xxnts"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2ha5o"]
 radius = 11.0
