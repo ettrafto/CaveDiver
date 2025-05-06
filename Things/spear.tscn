@@ -1,17 +1,77 @@
-[gd_scene load_steps=2 format=3 uid="uid://v54svjph8knq"]
+[gd_scene load_steps=8 format=3 uid="uid://v54svjph8knq"]
 
-[ext_resource type="Texture2D" uid="uid://cimkfoe3rjek0" path="res://Assets/Art/spear.png" id="1_vqt7i"]
+[ext_resource type="Script" uid="uid://cby0llta4l1wn" path="res://Scripts/Player/Spear.gd" id="1_7clw7"]
+[ext_resource type="Texture2D" uid="uid://d1r17jhdnmimf" path="res://Assets/Art/spear.png" id="1_vqt7i"]
+[ext_resource type="PackedScene" uid="uid://0veqi5gcgddy" path="res://Things/projectile_bubbles.tscn" id="2_1rx1k"]
+
+[sub_resource type="Curve" id="Curve_p7y5c"]
+_data = [Vector2(0.162162, 0.123596), 0.0, 0.0, 0, 0, Vector2(0.472973, 0.483146), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_tjres"]
+curve = SubResource("Curve_p7y5c")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7clw7"]
+resource_local_to_scene = true
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 5.0
+emission_ring_radius = 5.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+angular_velocity_min = -150.0
+angular_velocity_max = 150.0
+radial_velocity_min = -5.00002
+radial_velocity_max = 4.99998
+gravity = Vector3(0, 0.1, 0)
+linear_accel_min = -2.23517e-06
+linear_accel_max = -2.23517e-06
+radial_accel_min = -2.23517e-06
+radial_accel_max = -2.23517e-06
+tangential_accel_min = -2.23517e-06
+tangential_accel_max = -2.23517e-06
+turbulence_enabled = true
+turbulence_noise_strength = 17.58
+turbulence_noise_scale = 10.0
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.5
+turbulence_initial_displacement_min = -10.0
+turbulence_initial_displacement_max = 10.0
+turbulence_influence_over_life = SubResource("CurveTexture_tjres")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7clw7"]
+radius = 4.00001
 
 [node name="Spear" type="RigidBody2D"]
+collision_layer = 16
+mass = 0.5
+gravity_scale = 0.3
+center_of_mass_mode = 1
+center_of_mass = Vector2(100, 0)
+script = ExtResource("1_7clw7")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(4.375, 2.1875)
+position = Vector2(36.8317, -0.286901)
+scale = Vector2(2.42827, 1.21414)
 texture = ExtResource("1_vqt7i")
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(36.8317, -0.286901)
+scale = Vector2(0.555034, 0.555034)
 build_mode = 1
 polygon = PackedVector2Array(62, -1, 22, -9, 22, -6, 26, -4, -67, -4, -70, -1, -67, 2, 26, 2, 22, 5, 22, 7)
 
+[node name="ProjectileBubbles" parent="." instance=ExtResource("2_1rx1k")]
+position = Vector2(-0.399994, -0.5)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_7clw7")
+
 [node name="Area2D" type="Area2D" parent="."]
+position = Vector2(68, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_7clw7")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
