@@ -25,8 +25,9 @@ var attached_to = null
 	#TODO
 	
 func _process(delta):
-	_update_depth()
-	_update_hud()
+	pass
+	#_update_depth()
+	#_update_hud()
 
 	
 func _update_depth():
@@ -40,10 +41,6 @@ func _update_hud():
 
 	hud.get_node("HealthBar").value = health
 	hud.get_node("OxygenBar").value = oxygen
-
-	
-func get_resparator():
-	return $resparator
 	
 #changes the velocity and rotation of the player
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
@@ -112,12 +109,18 @@ func _speargun():
 		print("firing")
 		$spearTimer.start(3)
 		var spear = spear_scene.instantiate()
-		spear.global_position = $speargun.global_position
+		spear.global_position = $AnimatedSprite2D/speargun.global_position
 		add_sibling(spear)
 		
 		
 func get_speargun_pos():
-	return $speargun.global_position
+	return $AnimatedSprite2D/speargun.global_position
+	
+func get_resparator():
+	return $AnimatedSprite2D/resparator
+	
+func get_attached_to():
+	return attached_to
 	
 func is_attached_to():
 	if attached_to != null:
@@ -127,13 +130,11 @@ func is_attached_to():
 func set_attached_to(rope_anchor):
 	attached_to = rope_anchor
 	
-func get_attached_to():
-	return attached_to
 	
 func emit_bubble():
 	var bubble = bubble_scene.instantiate()
-	add_child(bubble)
-	bubble.global_position = $resparator.global_position
+	add_sibling(bubble)
+	bubble.global_position = $AnimatedSprite2D/resparator.global_position
 	if bubble_count < 5:
 		bubble_count += 1
 		$bubbleTimer.start(.5)

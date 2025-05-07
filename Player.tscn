@@ -37,13 +37,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_e80uo"]
-radius = 44.727
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cxr5p"]
-radius = 18.2477
-height = 131.808
-
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_e80uo"]
 particle_flag_disable_z = true
 gravity = Vector3(0, -30, 0)
@@ -56,6 +49,13 @@ turbulence_noise_strength = 7.07
 turbulence_noise_speed = Vector3(0, -2, 0)
 turbulence_influence_min = 0.0
 turbulence_influence_max = 0.2
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e80uo"]
+radius = 44.727
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cxr5p"]
+radius = 18.2477
+height = 131.808
 
 [node name="Player" type="RigidBody2D"]
 use_parent_material = true
@@ -71,10 +71,26 @@ script = ExtResource("1_e80uo")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
 polygon = PackedVector2Array(-1, -7, 2, -7, 4, -8, 7, -11, 19, -18, 29, -13, 32, -9, 28, 3, 14, 2, 4, 7, -4, 9, -31, 10, -19, -12, -8, -11)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_jatw7")
+
+[node name="resparator" type="Node2D" parent="AnimatedSprite2D"]
+position = Vector2(28, -8)
+
+[node name="bubbleParticles" type="GPUParticles2D" parent="AnimatedSprite2D"]
+position = Vector2(28, -8)
+emitting = false
+amount = 100
+lifetime = 5.0
+one_shot = true
+explosiveness = 0.5
+process_material = SubResource("ParticleProcessMaterial_e80uo")
+
+[node name="speargun" type="Node2D" parent="AnimatedSprite2D"]
+position = Vector2(26, 2)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
@@ -94,6 +110,7 @@ position = Vector2(1.27344, -3.79188)
 shape = SubResource("CircleShape2D_e80uo")
 
 [node name="Hurtbox" parent="." instance=ExtResource("4_dtqjt")]
+visible = false
 position = Vector2(4, -2)
 rotation = 0.0349569
 scale = Vector2(0.5, 0.5)
@@ -108,21 +125,6 @@ shape = SubResource("CapsuleShape2D_cxr5p")
 [node name="bubbleTimer" type="Timer" parent="."]
 wait_time = 10.0
 autostart = true
-
-[node name="resparator" type="Node2D" parent="."]
-position = Vector2(-41, -13)
-
-[node name="bubbleParticles" type="GPUParticles2D" parent="."]
-position = Vector2(-41, -13)
-emitting = false
-amount = 100
-lifetime = 5.0
-one_shot = true
-explosiveness = 0.5
-process_material = SubResource("ParticleProcessMaterial_e80uo")
-
-[node name="speargun" type="Node2D" parent="."]
-position = Vector2(-45.7245, 2.28226)
 
 [node name="spearTimer" type="Timer" parent="."]
 one_shot = true
