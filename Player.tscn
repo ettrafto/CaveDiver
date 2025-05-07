@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dim5as52t6iqc"]
+[gd_scene load_steps=24 format=3 uid="uid://dim5as52t6iqc"]
 
 [ext_resource type="Script" uid="uid://wacxpn3t4p0l" path="res://Scripts/Player/Player.gd" id="1_e80uo"]
 [ext_resource type="Texture2D" uid="uid://muf3kyvaoxe8" path="res://Assets/Art/diver/diver1.png" id="2_cxr5p"]
@@ -177,14 +177,15 @@ autostart = true
 
 [node name="RadialLight" type="Node2D" parent="."]
 script = ExtResource("5_cxr5p")
-distance = 150.0
-intensity = 0.8
+distance = 225.0
+intensity = 1.5
 illumination_mask = 2
 
 [node name="Flashlight" type="Node2D" parent="."]
 script = ExtResource("6_tdg3f")
 upper_angle = 7.2
-distance = 500.0
+distance = 990.0
+intensity = 1.6
 illumination_mask = 2
 metadata/_custom_type_script = "uid://br4n5fcavft5s"
 
