@@ -18,6 +18,8 @@ var bubble_count: int = 0
 var attached_to = null
 
 @onready var anim_sprite = $AnimatedSprite2D
+@onready var anim_sprite_child_pos = [$AnimatedSprite2D/resparator.position, 
+									  $AnimatedSprite2D/speargun.position]
 
 
 @onready var hud = get_tree().get_first_node_in_group("HUD")
@@ -82,9 +84,17 @@ func _move(state):
 		# Flip sprite based on movement direction
 		if move_input > 0:
 			anim_sprite.flip_h = false
+			$AnimatedSprite2D/resparator.position = anim_sprite_child_pos[0]
+			$AnimatedSprite2D/ExhaleBubbleParticles.position = anim_sprite_child_pos[0]
+			$AnimatedSprite2D/ConstantBubbleParticles.position = anim_sprite_child_pos[0]
+			$AnimatedSprite2D/speargun.position = anim_sprite_child_pos[1]
 		elif move_input < 0:
 			anim_sprite.flip_h = true
-
+			$AnimatedSprite2D/resparator.position = anim_sprite_child_pos[0] * -1
+			$AnimatedSprite2D/ExhaleBubbleParticles.position = anim_sprite_child_pos[0] * -1
+			$AnimatedSprite2D/ConstantBubbleParticles.position = anim_sprite_child_pos[0] * -1
+			$AnimatedSprite2D/speargun.position = anim_sprite_child_pos[1] * -1
+			
 		# Optional: make sure animation is playing
 		if !anim_sprite.is_playing():
 			anim_sprite.play()
@@ -136,7 +146,7 @@ func emit_bubble():
 	add_sibling(bubble)
 	bubble.global_position = $AnimatedSprite2D/resparator.global_position
 	if bubble_count == 0:
-		$AnimatedSprite2D/bubbleParticles.emitting = true
+		$AnimatedSprite2D/ExhaleBubbleParticles.emitting = true
 	if bubble_count < 5:
 		bubble_count += 1
 		$bubbleTimer.start(.25)

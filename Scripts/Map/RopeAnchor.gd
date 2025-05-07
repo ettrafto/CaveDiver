@@ -24,15 +24,15 @@ func start_rope(player):
 	
 	#set up the rope that will stay attached to the player
 	self.add_child(player_attached_rope)
-	player_attached_rope.set_pos(rope_segments[0].get_bottom_pos())
-	player_attached_rope.set_pin_a(rope_segments[0].get_rigidBody().get_path())
-	player_attached_rope.face_towards(rope_segments[0].get_bottom_node(), player)
+	player_attached_rope.set_pos(rope_segments[-1].get_bottom_pos())
+	player_attached_rope.set_pin_a(rope_segments[-1].get_rigidBody().get_path())
+	player_attached_rope.face_towards(rope_segments[-1].get_bottom_node(), player)
 	player_attached_rope.add_pin_joint(player)
 	rope_segments.append(player_attached_rope)
 	rope_segments[0].get_rigidBody().name = "anchor_rope"# has to be done here for some reason will break the code above if not
 	
 	#creates the ropes that will be rolled out
-	for i in range(22):
+	for i in range(44):
 		rope_segments.append(rope_segment_scene.instantiate())
 		rope_segments[-1].active(false)
 		self.add_child(rope_segments[-1])
