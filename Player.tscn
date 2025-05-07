@@ -1,5 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://dim5as52t6iqc"]
 
+[ext_resource type="Script" uid="uid://c77uck4vbimcc" path="res://Shaders/CustomPointLight2D.gd" id="5_cxr5p"]
+[ext_resource type="Script" uid="uid://br4n5fcavft5s" path="res://Shaders/CustomDirectionalLight2D.gd" id="6_tdg3f"]
 [ext_resource type="Script" uid="uid://wacxpn3t4p0l" path="res://Scripts/Player/Player.gd" id="1_e80uo"]
 [ext_resource type="Texture2D" uid="uid://muf3kyvaoxe8" path="res://Assets/Art/diver/diver1.png" id="2_cxr5p"]
 [ext_resource type="Texture2D" uid="uid://j0u8e6g6hoxg" path="res://Assets/DiverAnimation/1.png" id="2_hp6x6"]
@@ -144,12 +146,23 @@ position = Vector2(-4, 0)
 rotation = 1.4399
 shape = SubResource("CapsuleShape2D_cxr5p")
 
+[node name="RadialLight" type="Node2D" parent="."]
+script = ExtResource("5_cxr5p")
+distance = 150.0
+intensity = 0.8
+illumination_mask = 2
+
+[node name="Flashlight" type="Node2D" parent="."]
+script = ExtResource("6_tdg3f")
+upper_angle = 7.2
+distance = 500.0
+illumination_mask = 2
+metadata/_custom_type_script = "uid://br4n5fcavft5s"
+
 [node name="bubbleTimer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
 
-<<<<<<< HEAD
-=======
 [node name="resparator" type="Node2D" parent="."]
 position = Vector2(-41, -13)
 
@@ -168,7 +181,6 @@ process_material = SubResource("ParticleProcessMaterial_e80uo")
 [node name="speargun" type="Node2D" parent="."]
 position = Vector2(-45.7245, 2.28226)
 
->>>>>>> 1472bf7397197fe93e4fd6013fcdaa3a11fb5a0c
 [node name="spearTimer" type="Timer" parent="."]
 one_shot = true
 
