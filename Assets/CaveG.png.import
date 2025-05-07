@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://00d600jg5xut"
-path="res://.godot/imported/bubble_particle.png-d9e28f2b3c75c3d406d6cf4aeeb847f8.ctex"
+uid="uid://0og3er72xkdo"
+path="res://.godot/imported/CaveG.png-ad806357d65bb02336a8cfbfded57a16.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Particles/bubble_particle.png"
-dest_files=["res://.godot/imported/bubble_particle.png-d9e28f2b3c75c3d406d6cf4aeeb847f8.ctex"]
+source_file="res://Assets/CaveG.png"
+dest_files=["res://.godot/imported/CaveG.png-ad806357d65bb02336a8cfbfded57a16.ctex"]
 
 [params]
 
