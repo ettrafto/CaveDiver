@@ -134,8 +134,6 @@ func _rotate():
 			rotation += input
 		elif rotation <= lower_bound and input > 0:
 			rotation += input
-	
-	print("player rotation", rotation, ", ", lower_bound, ", ", upper_bound)
 			
 func _speargun():
 	if Input.is_action_pressed("fire_spear") and has_speargun and $spearTimer.is_stopped():

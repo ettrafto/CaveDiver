@@ -2,13 +2,16 @@ extends RigidBody2D
 
 # variables defining the basic attributes of the mob
 # these can be customized per-type or per-instance to change behavior
-@export var health: float = 1
+@export var health: float = 3
 @export var awareness: float = 0.5
 @export var aggression = 0
 @export var fear = 0
 @export var impulse = 200
 @export var accel = 7
 @export var attack_range = 100
+# maybe update this to more explicity reference the correct nav region
+@export var nav_region_path = "../Map/NavigationRegion2D"
+@onready var nav_region = get_node(nav_region_path)
 
 @export_category("Illumination")
 ## The illumination mask is used to determine 
@@ -38,9 +41,6 @@ extends RigidBody2D
 @onready var hitbox = $Hitbox/CollisionShape2D
 @onready var corpse_box = $CorpseCollisionShape2D
 
-# maybe update this to more explicity reference the correct nav region
-@onready var nav_region = $"../Map/NavigationRegion2D"
-
 # variables for map and region used for getting random points 
 # in a NavigationRegion
 var map: RID = NavigationServer2D.map_create()
@@ -48,6 +48,7 @@ var region: RID = NavigationServer2D.region_create()
 
 func setup_nav_server():
 	NavigationServer2D.map_set_active(map, true)
+	NavigationServer2D.map_set_cell_size(map, 1.0)
 	NavigationServer2D.region_set_transform(region, Transform2D())
 	NavigationServer2D.region_set_map(region, map)
 	NavigationServer2D.region_set_navigation_polygon(region, nav_region.navigation_polygon)
@@ -167,7 +168,7 @@ func player_in_range() -> bool:
 func begin_wander() -> void:
 	current_behavior = Behaviors.WANDER
 	print('wandering towards ', nav_agent.target_position, ", currently at ", position)
-	nav_agent.target_position = get_random_nav_position(80, 300)
+	nav_agent.target_position = get_random_nav_position(150, 500)
 	reached_nav_target = false
 
 func begin_chase() -> void:
