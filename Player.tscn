@@ -1,9 +1,14 @@
+<<<<<<< Updated upstream
 [gd_scene load_steps=11 format=3 uid="uid://dim5as52t6iqc"]
+=======
+[gd_scene load_steps=18 format=3 uid="uid://dim5as52t6iqc"]
+>>>>>>> Stashed changes
 
 [ext_resource type="Script" uid="uid://wacxpn3t4p0l" path="res://Scripts/Player/Player.gd" id="1_e80uo"]
 [ext_resource type="Texture2D" uid="uid://muf3kyvaoxe8" path="res://Assets/Art/diver/diver1.png" id="2_cxr5p"]
 [ext_resource type="PackedScene" uid="uid://c8btmt1p1c5oi" path="res://Mob/Hitbox.tscn" id="3_tdg3f"]
 [ext_resource type="PackedScene" uid="uid://dhafxmdd71i72" path="res://Mob/Hurtbox.tscn" id="4_dtqjt"]
+<<<<<<< Updated upstream
 [ext_resource type="Texture2D" uid="uid://bgpu2hwrgmrj" path="res://Assets/Particles/bubble_particle_super_small.png" id="5_cxr5p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e80uo"]
@@ -12,6 +17,39 @@ radius = 44.727
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cxr5p"]
 radius = 33.2065
 height = 224.312
+=======
+[ext_resource type="Texture2D" uid="uid://behx4ocvgc3j7" path="res://Assets/DiverAnimation/3.png" id="4_l6ohk"]
+[ext_resource type="Texture2D" uid="uid://crhs03rqwvlo7" path="res://Assets/DiverAnimation/4.png" id="5_oudfo"]
+[ext_resource type="Texture2D" uid="uid://0klq6kgjkht" path="res://Assets/DiverAnimation/5.png" id="6_d6rpx"]
+[ext_resource type="Texture2D" uid="uid://d2088yplcq6n4" path="res://Assets/DiverAnimation/6.png" id="7_r3kul"]
+[ext_resource type="Texture2D" uid="uid://bgpu2hwrgmrj" path="res://Assets/Particles/bubble_particle_super_small.png" id="8_3tkgg"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jatw7"]
+animations = [{
+"frames": [{
+"duration": 0.6,
+"texture": ExtResource("2_hp6x6")
+}, {
+"duration": 0.3,
+"texture": ExtResource("3_3tkgg")
+}, {
+"duration": 0.3,
+"texture": ExtResource("4_l6ohk")
+}, {
+"duration": 0.3,
+"texture": ExtResource("5_oudfo")
+}, {
+"duration": 0.3,
+"texture": ExtResource("6_d6rpx")
+}, {
+"duration": 0.3,
+"texture": ExtResource("7_r3kul")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+>>>>>>> Stashed changes
 
 [sub_resource type="Curve" id="Curve_cxr5p"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.898477, 0.898876), 0.0, 0.0, 0, 0, Vector2(1, 0.505618), 0.0, 0.0, 0, 0]
@@ -54,7 +92,31 @@ script = ExtResource("1_e80uo")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+<<<<<<< Updated upstream
 polygon = PackedVector2Array(46, 28, 26, 20, 7, 19, -10, 8, -27, 5, -46, 9, -53, 0, -55, -17, -50, -26, -42, -32, -30, -32, -24, -25, 3, -15, 4, -1, 14, 1, 33, 4, 48, 13)
+=======
+visible = false
+polygon = PackedVector2Array(-1, -7, 2, -7, 4, -8, 7, -11, 19, -18, 29, -13, 32, -9, 28, 3, 14, 2, 4, 7, -4, 9, -31, 10, -19, -12, -8, -11)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_jatw7")
+
+[node name="resparator" type="Node2D" parent="AnimatedSprite2D"]
+position = Vector2(28, -8)
+
+[node name="ExhaleBubbleParticles" type="GPUParticles2D" parent="AnimatedSprite2D"]
+position = Vector2(28, -8)
+emitting = false
+amount = 100
+texture = ExtResource("8_3tkgg")
+lifetime = 5.0
+one_shot = true
+explosiveness = 0.5
+process_material = SubResource("ParticleProcessMaterial_e80uo")
+
+[node name="speargun" type="Node2D" parent="AnimatedSprite2D"]
+position = Vector2(26, 2)
+>>>>>>> Stashed changes
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 use_parent_material = true
@@ -87,6 +149,7 @@ shape = SubResource("CapsuleShape2D_cxr5p")
 wait_time = 2.0
 autostart = true
 
+<<<<<<< Updated upstream
 [node name="resparator" type="Node2D" parent="."]
 position = Vector2(-41, -13)
 
@@ -105,6 +168,8 @@ process_material = SubResource("ParticleProcessMaterial_e80uo")
 [node name="speargun" type="Node2D" parent="."]
 position = Vector2(-45.7245, 2.28226)
 
+=======
+>>>>>>> Stashed changes
 [node name="spearTimer" type="Timer" parent="."]
 one_shot = true
 

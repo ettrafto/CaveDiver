@@ -45,7 +45,8 @@ turbulence_influence_over_life = SubResource("CurveTexture_tjres")
 radius = 4.00001
 
 [node name="Spear" type="RigidBody2D"]
-collision_layer = 16
+collision_layer = 0
+collision_mask = 7
 mass = 0.5
 gravity_scale = 0.3
 center_of_mass_mode = 1

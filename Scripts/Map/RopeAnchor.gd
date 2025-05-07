@@ -5,7 +5,7 @@ var rope_segments = []
 var player_attached_rope
 var player = null
 var can_start_rope = true
-var player_rope_index = 1
+var player_rope_index = 2
 
 func start_rope(player):
 	self.player = player
@@ -22,17 +22,24 @@ func start_rope(player):
 	rope_segments[0].face_towards(self, player)
 	
 	
+	rope_segments.append(rope_segment_scene.instantiate())
+	self.add_child(rope_segments[1])
+	rope_segments[1].set_pos(rope_segments[0].get_bottom_pos())
+	rope_segments[1].set_pin_a(rope_segments[0].get_rigidBody().get_path())
+	rope_segments[1].face_towards(rope_segments[0].get_bottom_node(), player)
+	
+	
 	#set up the rope that will stay attached to the player
 	self.add_child(player_attached_rope)
-	player_attached_rope.set_pos(rope_segments[0].get_bottom_pos())
-	player_attached_rope.set_pin_a(rope_segments[0].get_rigidBody().get_path())
-	player_attached_rope.face_towards(rope_segments[0].get_bottom_node(), player)
+	player_attached_rope.set_pos(rope_segments[1].get_bottom_pos())
+	player_attached_rope.set_pin_a(rope_segments[1].get_rigidBody().get_path())
+	player_attached_rope.face_towards(rope_segments[1].get_bottom_node(), player)
 	player_attached_rope.add_pin_joint(player)
 	rope_segments.append(player_attached_rope)
 	rope_segments[0].get_rigidBody().name = "anchor_rope"# has to be done here for some reason will break the code above if not
 	
 	#creates the ropes that will be rolled out
-	for i in range(22):
+	for i in range(44):
 		rope_segments.append(rope_segment_scene.instantiate())
 		rope_segments[-1].active(false)
 		self.add_child(rope_segments[-1])
@@ -45,15 +52,18 @@ func start_rope(player):
 		if i % 2: # if I thought of this instead of trying to add and remove pin joints. SO MUCH TIME WOULDVE BEEN SAVED
 			rope_segments[-1].add_pin_joint(player)
 	
-#extends the rope by two segments by removing the pinjoint from the current player_attached_rope
+#extends the rope by four segments by removing the pinjoint from the current player_attached_rope
 func extend():
-	if player_rope_index + 2 < len(rope_segments):# checks to see if there is rope to extend
+	if player_rope_index + 4 < len(rope_segments):# checks to see if there is rope to extend
 		player_attached_rope.remove_bottom_pin_joint()
 		rope_segments[player_rope_index + 1].active(true)
 		rope_segments[player_rope_index + 2].active(true)
-		player_rope_index += 2
+		rope_segments[player_rope_index + 2].remove_bottom_pin_joint()
+		rope_segments[player_rope_index + 3].active(true)
+		rope_segments[player_rope_index + 4].active(true)
+		player_rope_index += 4
 		player_attached_rope = rope_segments[player_rope_index]
-	
+	print(player_rope_index)
 #sets this anchor as inactive then connects a rope between the two and then attaches the player to next_anchor
 func switch_anchors(next_anchor):
 	if Vector2(player.global_position - next_anchor.global_position).length() > 80:

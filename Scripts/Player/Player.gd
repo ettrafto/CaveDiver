@@ -17,6 +17,14 @@ var has_speargun: bool = true #set to false by default
 var bubble_count: int = 0
 var attached_to = null
 
+<<<<<<< Updated upstream
+=======
+@onready var anim_sprite = $AnimatedSprite2D
+@onready var anim_sprite_children_pos = [$AnimatedSprite2D/ExhaleBubbleParticles.position, 
+										$AnimatedSprite2D/resparator.position, 
+										$AnimatedSprite2D/speargun.position]
+
+>>>>>>> Stashed changes
 
 @onready var hud = get_tree().get_first_node_in_group("HUD")
 	
@@ -50,8 +58,34 @@ func _move(state):
 		var direction: Vector2
 		direction.x = move_input * acceleration * (int(Input.is_action_pressed("sprint")) *  sprint_multiplier + 1)
 		state.apply_force(direction.rotated(rotation))
+<<<<<<< Updated upstream
 		
 	
+=======
+
+		# Animation speed based on sprinting
+		if is_sprinting:
+			anim_sprite.speed_scale = 0.4
+		else:
+			anim_sprite.speed_scale = 0.6
+
+		# Flip sprite and its children based on movement direction
+		if move_input > 0:
+			anim_sprite.flip_h = false
+			$AnimatedSprite2D/ExhaleBubbleParticles.position = anim_sprite_children_pos[0]
+			$AnimatedSprite2D/resparator.position = anim_sprite_children_pos[1]
+			$AnimatedSprite2D/speargun.position = anim_sprite_children_pos[2]
+		elif move_input < 0:
+			anim_sprite.flip_h = true
+			$AnimatedSprite2D/ExhaleBubbleParticles.position = anim_sprite_children_pos[0] * -1
+			$AnimatedSprite2D/resparator.position = anim_sprite_children_pos[1] * -1
+			$AnimatedSprite2D/speargun.position = anim_sprite_children_pos[2] * -1
+
+		# Optional: make sure animation is playing
+		if !anim_sprite.is_playing():
+			anim_sprite.play()
+
+>>>>>>> Stashed changes
 func _get_rotation_dir():
 	return Input.get_action_strength("tilt_up") - Input.get_action_strength("tilt_down")
 
@@ -93,7 +127,7 @@ func emit_bubble():
 	add_sibling(bubble)
 	bubble.global_position = $resparator.global_position
 	if bubble_count == 0:
-		$bubbleParticles.emitting = true
+		$AnimatedSprite2D/ExhaleBubbleParticles.emitting = true
 	if bubble_count < 5:
 		bubble_count += 1
 		$bubbleTimer.start(.25)

@@ -1,7 +1,6 @@
 extends RigidBody2D
 
 var t = 0
-var stop_time = 0
 var rng = RandomNumberGenerator.new()
 
 func _ready():
@@ -9,9 +8,7 @@ func _ready():
 
 func _physics_process(delta):
 	if linear_velocity.y < 1:
-		if t - stop_time > 2 and t > 2:
-			self.queue_free()
-		stop_time = t
+		self.queue_free()
 	elif t > 10:
 		self.queue_free()
 	t += delta
