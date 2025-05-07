@@ -42,7 +42,6 @@ turbulence_enabled = true
 turbulence_noise_scale = 5.0
 
 [node name="Silt" type="Node2D"]
-position = Vector2(570, 314)
 script = ExtResource("1_k4l6w")
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -55,17 +54,21 @@ scale = Vector2(5, 5)
 shape = SubResource("RectangleShape2D_k4l6w")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -6
 use_parent_material = true
 position = Vector2(4.76837e-07, 0)
 scale = Vector2(3, 3)
 texture = ExtResource("1_2w3v0")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+z_index = -6
 use_parent_material = true
 scale = Vector2(15, 15)
+emitting = false
 amount = 50
 texture = ExtResource("3_k4l6w")
 lifetime = 30.0
+one_shot = true
 explosiveness = 1.0
 randomness = 0.1
 process_material = SubResource("ParticleProcessMaterial_u7m6u")
