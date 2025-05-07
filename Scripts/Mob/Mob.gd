@@ -9,6 +9,25 @@ extends RigidBody2D
 @export var impulse = 200
 @export var accel = 7
 
+@export_category("Illumination")
+## The illumination mask is used to determine 
+## which custom light layers illuminate a mob.
+@export_flags("General", "Player Emitted", "Mob Emitted", "Misc") var illumination_mask = 7:
+	set(new_mask):
+		await self.ready
+		illumination_mask = new_mask
+		sprite.set_instance_shader_parameter("illumination_mask", new_mask)
+
+## Makes it so a mob is more transparent the less visible it is.
+## Eases the transition for when a mob is in the presence of a light that it
+## doesn't share a layer with while it's also currently being illuminated 
+## by a light it shares a layer with.
+@export var soft_illumination_cutoff: bool = false:
+	set(new_value):
+		await self.ready
+		soft_illumination_cutoff = new_value
+		sprite.set_instance_shader_parameter("soft_illumination_cutoff", new_value)
+
 # aliases for commonly referenced nodes
 @onready var player = $"../Player"
 @onready var nav = $NavigationAgent2D
@@ -36,7 +55,6 @@ func _ready():
 	# this re-enables it
 	hurtbox.set_deferred("disabled", false)
 	gravity_scale = 0.0
-	
 
 # this is set to false when the mob dies and is checked to enable the death effects
 var alive: bool = true
@@ -163,7 +181,7 @@ func _integrate_forces(state) -> void:
 	# kills mob if health is 0
 	if health <= 0 and alive:
 		die()
-	
+		
 	if alive:
 		approach_player(state)
 	# var new_position = NavigationServer2D.region_get_random_point(region, 1, false)
