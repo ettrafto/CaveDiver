@@ -135,9 +135,11 @@ func emit_bubble():
 	var bubble = bubble_scene.instantiate()
 	add_sibling(bubble)
 	bubble.global_position = $AnimatedSprite2D/resparator.global_position
+	if bubble_count == 0:
+		$bubbleParticles.emitting = true
 	if bubble_count < 5:
 		bubble_count += 1
-		$bubbleTimer.start(.5)
+		$bubbleTimer.start(.25)
 	elif bubble_count >= 5:
 		bubble_count = 0
 		$bubbleTimer.start(10)

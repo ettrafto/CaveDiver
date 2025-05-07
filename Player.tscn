@@ -37,18 +37,40 @@ animations = [{
 "speed": 5.0
 }]
 
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e80uo"]
+radius = 44.727
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cxr5p"]
+radius = 18.2477
+height = 131.808
+
+[sub_resource type="Curve" id="Curve_cxr5p"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.898477, 0.898876), 0.0, 0.0, 0, 0, Vector2(1, 0.505618), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_tdg3f"]
+curve = SubResource("Curve_cxr5p")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_e80uo"]
 particle_flag_disable_z = true
-gravity = Vector3(0, -30, 0)
+direction = Vector3(0, -5, 0)
+gravity = Vector3(0, -60, 0)
 radial_accel_min = -10.0
 radial_accel_max = 10.0
 damping_min = 2.0
 damping_max = 2.0
+scale_min = 0.5
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_tdg3f")
 turbulence_enabled = true
 turbulence_noise_strength = 7.07
-turbulence_noise_speed = Vector3(0, -2, 0)
+turbulence_noise_speed = Vector3(1, -2, 1)
+turbulence_noise_speed_random = 2.0
 turbulence_influence_min = 0.0
 turbulence_influence_max = 0.2
+turbulence_initial_displacement_min = 1.49012e-06
+turbulence_initial_displacement_max = 1.49012e-06
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e80uo"]
 radius = 44.727
@@ -123,9 +145,30 @@ rotation = 1.4399
 shape = SubResource("CapsuleShape2D_cxr5p")
 
 [node name="bubbleTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 2.0
 autostart = true
 
+<<<<<<< HEAD
+=======
+[node name="resparator" type="Node2D" parent="."]
+position = Vector2(-41, -13)
+
+[node name="bubbleParticles" type="GPUParticles2D" parent="."]
+position = Vector2(-41, -13)
+emitting = false
+amount = 25
+texture = ExtResource("5_cxr5p")
+lifetime = 5.0
+one_shot = true
+explosiveness = 0.8
+randomness = 1.0
+visibility_rect = Rect2(-100, -195, 200, 200)
+process_material = SubResource("ParticleProcessMaterial_e80uo")
+
+[node name="speargun" type="Node2D" parent="."]
+position = Vector2(-45.7245, 2.28226)
+
+>>>>>>> 1472bf7397197fe93e4fd6013fcdaa3a11fb5a0c
 [node name="spearTimer" type="Timer" parent="."]
 one_shot = true
 
