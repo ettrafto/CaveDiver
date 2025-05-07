@@ -225,6 +225,11 @@ func choose_behavior():
 	#	else the mob must have finished its current behavior, so start up its idle/wander/patrol loop
 	
 
+func look_for_player():
+	#factors to consider:
+	#light: based on light sources and line of sight
+	#sound: based on proximity and player actions
+	pass
 
 
 # Function to run every time the mob is injured
@@ -237,11 +242,6 @@ func hurt(damage: float):
 	# otherwise, it doesn't start soon enough to disable the hurtbox
 	anim_player.advance(0)
 	health -= damage
-
-# plays attack animation 
-func attack():
-	pass
-	
 
 
 func calc_impulse_for_rotation(angle) -> float:
