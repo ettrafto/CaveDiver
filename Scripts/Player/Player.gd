@@ -22,7 +22,7 @@ var attached_to = null
 									  $AnimatedSprite2D/speargun.position]
 
 
-@onready var hud = get_tree().get_first_node_in_group("HUD")
+@onready var hud = get_node("../HUD")
 	
 	#TODO
 	
