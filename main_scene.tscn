@@ -2867,26 +2867,35 @@ offset_right = 483.0
 offset_bottom = 319.0
 script = ExtResource("5_6w5lm")
 
-[node name="Oxygen" type="ProgressBar" parent="HUD"]
-visible = false
-layout_mode = 0
-offset_right = 4.0
-offset_bottom = 27.0
-
-[node name="Weight" type="ProgressBar" parent="HUD"]
-visible = false
-layout_mode = 0
-offset_right = 4.0
-offset_bottom = 27.0
-
-[node name="DiveWatch" type="CanvasGroup" parent="HUD"]
-visible = false
-
 [node name="BCD" type="ProgressBar" parent="HUD"]
 layout_mode = 0
-offset_right = 4.0
-offset_bottom = 27.0
+offset_left = -29.0
+offset_top = -263.0
+offset_right = 17.0
+offset_bottom = -236.0
 step = 1.0
+
+[node name="HealthBar" type="TextureProgressBar" parent="HUD"]
+layout_mode = 0
+offset_left = -403.0
+offset_top = -304.0
+offset_right = -231.0
+offset_bottom = -263.0
+
+[node name="OxygenBar" type="TextureProgressBar" parent="HUD"]
+layout_mode = 0
+offset_left = -426.0
+offset_top = -257.0
+offset_right = -225.0
+offset_bottom = -217.0
+
+[node name="Depth" type="Label" parent="HUD"]
+layout_mode = 0
+offset_left = -34.0
+offset_top = -294.0
+offset_right = 47.0
+offset_bottom = -266.0
+text = "Depth: "
 
 [node name="Scripts" type="Node2D" parent="."]
 

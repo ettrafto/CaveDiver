@@ -22,6 +22,26 @@ var attached_to = null
 
 @onready var hud = get_tree().get_first_node_in_group("HUD")
 	
+	#TODO
+	
+func _process(delta):
+	_update_depth()
+	_update_hud()
+
+	
+func _update_depth():
+	var depth = int(global_position.y * 0.0328084)  # Convert pixels to feet (adjust factor if needed)
+	hud.get_node("DepthLabel").text = "Depth: %d ft" % depth
+
+func _update_hud():
+	# Example health and oxygen values (replace with your actual variables)
+	var health = 75  # Example — replace with your actual health variable
+	var oxygen = 50  # Example — replace with your actual oxygen value
+
+	hud.get_node("HealthBar").value = health
+	hud.get_node("OxygenBar").value = oxygen
+
+	
 func get_resparator():
 	return $resparator
 	
