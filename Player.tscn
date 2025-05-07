@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dim5as52t6iqc"]
+[gd_scene load_steps=21 format=3 uid="uid://dim5as52t6iqc"]
 
 [ext_resource type="Script" uid="uid://wacxpn3t4p0l" path="res://Scripts/Player/Player.gd" id="1_e80uo"]
 [ext_resource type="Texture2D" uid="uid://muf3kyvaoxe8" path="res://Assets/Art/diver/diver1.png" id="2_cxr5p"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://d2088yplcq6n4" path="res://Assets/DiverAnimation/6.png" id="7_r3kul"]
 [ext_resource type="Script" uid="uid://br4n5fcavft5s" path="res://Shaders/CustomDirectionalLight2D.gd" id="6_tdg3f"]
 [ext_resource type="Texture2D" uid="uid://dhxeihy0jgch0" path="res://Assets/Art/spear.png" id="7_dtqjt"]
+[ext_resource type="Texture2D" uid="uid://bgpu2hwrgmrj" path="res://Assets/Particles/bubble_particle_super_small.png" id="8_3tkgg"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jatw7"]
 animations = [{
@@ -56,7 +57,7 @@ radial_accel_max = 10.0
 damping_min = 2.0
 damping_max = 2.0
 scale_min = 0.5
-scale_max = 3.0
+scale_max = 2.0
 scale_curve = SubResource("CurveTexture_tdg3f")
 turbulence_enabled = true
 turbulence_noise_strength = 7.07
@@ -67,6 +68,23 @@ turbulence_influence_max = 0.2
 turbulence_initial_displacement_min = 1.49012e-06
 turbulence_initial_displacement_max = 1.49012e-06
 
+
+[sub_resource type="Curve" id="Curve_l6ohk"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.71066, 1), 0.0, 0.0, 0, 0, Vector2(0.994924, 0.595506), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_oudfo"]
+curve = SubResource("Curve_l6ohk")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hp6x6"]
+particle_flag_disable_z = true
+direction = Vector3(0, -2, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, -20, 0)
+scale_min = 0.1
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_oudfo")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e80uo"]
 radius = 44.727
@@ -98,10 +116,11 @@ sprite_frames = SubResource("SpriteFrames_jatw7")
 [node name="resparator" type="Node2D" parent="AnimatedSprite2D"]
 position = Vector2(28, -8)
 
-[node name="bubbleParticles" type="GPUParticles2D" parent="AnimatedSprite2D"]
+[node name="ExhaleBubbleParticles" type="GPUParticles2D" parent="AnimatedSprite2D"]
 position = Vector2(28, -8)
 emitting = false
-amount = 100
+amount = 25
+texture = ExtResource("8_3tkgg")
 lifetime = 5.0
 one_shot = true
 explosiveness = 0.5
@@ -109,6 +128,14 @@ process_material = SubResource("ParticleProcessMaterial_e80uo")
 
 [node name="speargun" type="Node2D" parent="AnimatedSprite2D"]
 position = Vector2(26, 2)
+
+[node name="ConstantBubbleParticles" type="GPUParticles2D" parent="AnimatedSprite2D"]
+position = Vector2(28, -8)
+amount = 16
+texture = ExtResource("8_3tkgg")
+lifetime = 2.0
+randomness = 0.6
+process_material = SubResource("ParticleProcessMaterial_hp6x6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
@@ -139,6 +166,12 @@ collision_mask = 16
 position = Vector2(-4, 0)
 rotation = 1.4399
 shape = SubResource("CapsuleShape2D_cxr5p")
+
+[node name="bubbleTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="spearTimer" type="Timer" parent="."]
 
 [node name="RadialLight" type="Node2D" parent="."]
 script = ExtResource("5_cxr5p")
