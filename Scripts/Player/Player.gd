@@ -17,6 +17,8 @@ var has_speargun: bool = true #set to false by default
 var bubble_count: int = 0
 var attached_to = null
 
+@onready var anim_sprite = $AnimatedSprite2D
+
 
 @onready var hud = get_tree().get_first_node_in_group("HUD")
 	
@@ -44,12 +46,32 @@ func _buoyancy():
 		
 func _move(state):
 	_get_move_dir()
+	
 	if !move_input:
 		state.apply_force(Vector2())
+		anim_sprite.speed_scale = 0  # stop animation
 	else:
 		var direction: Vector2
-		direction.x = move_input * acceleration * (int(Input.is_action_pressed("sprint")) *  sprint_multiplier + 1)
+		var is_sprinting = Input.is_action_pressed("sprint")
+		direction.x = move_input * acceleration * (int(is_sprinting) *  sprint_multiplier + 1)
 		state.apply_force(direction.rotated(rotation))
+
+		# Animation speed based on sprinting
+		if is_sprinting:
+			anim_sprite.speed_scale = 0.4
+		else:
+			anim_sprite.speed_scale = 0.6
+
+		# Flip sprite based on movement direction
+		if move_input > 0:
+			anim_sprite.flip_h = false
+		elif move_input < 0:
+			anim_sprite.flip_h = true
+
+		# Optional: make sure animation is playing
+		if !anim_sprite.is_playing():
+			anim_sprite.play()
+
 		
 	
 func _get_rotation_dir():

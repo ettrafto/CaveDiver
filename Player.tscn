@@ -1,16 +1,48 @@
-[gd_scene load_steps=8 format=3 uid="uid://dim5as52t6iqc"]
+[gd_scene load_steps=15 format=3 uid="uid://dim5as52t6iqc"]
 
 [ext_resource type="Script" uid="uid://wacxpn3t4p0l" path="res://Scripts/Player/Player.gd" id="1_e80uo"]
-[ext_resource type="Texture2D" uid="uid://bu21un2aoysxj" path="res://Assets/Art/diver/diver1.png" id="2_cxr5p"]
+[ext_resource type="Texture2D" uid="uid://muf3kyvaoxe8" path="res://Assets/Art/diver/diver1.png" id="2_cxr5p"]
+[ext_resource type="Texture2D" uid="uid://j0u8e6g6hoxg" path="res://Assets/DiverAnimation/1.png" id="2_hp6x6"]
+[ext_resource type="Texture2D" uid="uid://s7chuj3dx6hv" path="res://Assets/DiverAnimation/2.png" id="3_3tkgg"]
 [ext_resource type="PackedScene" uid="uid://c8btmt1p1c5oi" path="res://Mob/Hitbox.tscn" id="3_tdg3f"]
 [ext_resource type="PackedScene" uid="uid://dhafxmdd71i72" path="res://Mob/Hurtbox.tscn" id="4_dtqjt"]
+[ext_resource type="Texture2D" uid="uid://behx4ocvgc3j7" path="res://Assets/DiverAnimation/3.png" id="4_l6ohk"]
+[ext_resource type="Texture2D" uid="uid://crhs03rqwvlo7" path="res://Assets/DiverAnimation/4.png" id="5_oudfo"]
+[ext_resource type="Texture2D" uid="uid://0klq6kgjkht" path="res://Assets/DiverAnimation/5.png" id="6_d6rpx"]
+[ext_resource type="Texture2D" uid="uid://d2088yplcq6n4" path="res://Assets/DiverAnimation/6.png" id="7_r3kul"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jatw7"]
+animations = [{
+"frames": [{
+"duration": 0.6,
+"texture": ExtResource("2_hp6x6")
+}, {
+"duration": 0.3,
+"texture": ExtResource("3_3tkgg")
+}, {
+"duration": 0.3,
+"texture": ExtResource("4_l6ohk")
+}, {
+"duration": 0.3,
+"texture": ExtResource("5_oudfo")
+}, {
+"duration": 0.3,
+"texture": ExtResource("6_d6rpx")
+}, {
+"duration": 0.3,
+"texture": ExtResource("7_r3kul")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e80uo"]
 radius = 44.727
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cxr5p"]
-radius = 16.8961
-height = 116.055
+radius = 18.2477
+height = 131.808
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_e80uo"]
 particle_flag_disable_z = true
@@ -39,9 +71,13 @@ script = ExtResource("1_e80uo")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-15, -16, -11, -12, -4, -10, 2, -7, 2, 0, 17, 2, 23, 6, 25, 9, 24, 14, 16, 13, 12, 10, 0, 8, -13, 2, -20, 4, -27, -1, -28, -8, -22, -17)
+polygon = PackedVector2Array(-1, -7, 2, -7, 4, -8, 7, -11, 19, -18, 29, -13, 32, -9, 28, 3, 14, 2, 4, 7, -4, 9, -31, 10, -19, -12, -8, -11)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_jatw7")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 use_parent_material = true
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_cxr5p")
@@ -58,7 +94,7 @@ position = Vector2(1.27344, -3.79188)
 shape = SubResource("CircleShape2D_e80uo")
 
 [node name="Hurtbox" parent="." instance=ExtResource("4_dtqjt")]
-position = Vector2(2, 1.19209e-07)
+position = Vector2(4, -2)
 rotation = 0.0349569
 scale = Vector2(0.5, 0.5)
 collision_layer = 32
@@ -66,7 +102,7 @@ collision_mask = 16
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 position = Vector2(-4, 0)
-rotation = -1.15992
+rotation = 1.4399
 shape = SubResource("CapsuleShape2D_cxr5p")
 
 [node name="bubbleTimer" type="Timer" parent="."]
