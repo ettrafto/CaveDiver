@@ -16,13 +16,14 @@ var attached_to_rope: bool = false
 var has_speargun: bool = true #set to false by default
 var bubble_count: int = 0
 var attached_to = null
+var facing = "right"
 
 @onready var anim_sprite = $AnimatedSprite2D
 @onready var anim_sprite_child_pos = [$AnimatedSprite2D/resparator.position, 
 									  $AnimatedSprite2D/speargun.position]
 
 
-@onready var hud = get_tree().get_first_node_in_group("HUD")
+@onready var hud = get_node("../HUD")
 	
 	#TODO
 	
@@ -88,12 +89,19 @@ func _move(state):
 			$AnimatedSprite2D/ExhaleBubbleParticles.position = anim_sprite_child_pos[0]
 			$AnimatedSprite2D/ConstantBubbleParticles.position = anim_sprite_child_pos[0]
 			$AnimatedSprite2D/speargun.position = anim_sprite_child_pos[1]
+			if facing != "right":
+				facing = "right"
+				rotation *= -1
+				
 		elif move_input < 0:
 			anim_sprite.flip_h = true
 			$AnimatedSprite2D/resparator.position = anim_sprite_child_pos[0] * -1
 			$AnimatedSprite2D/ExhaleBubbleParticles.position = anim_sprite_child_pos[0] * -1
 			$AnimatedSprite2D/ConstantBubbleParticles.position = anim_sprite_child_pos[0] * -1
 			$AnimatedSprite2D/speargun.position = anim_sprite_child_pos[1] * -1
+			if facing != "left":
+				facing = "left"
+				rotation *= -1
 			
 		# Optional: make sure animation is playing
 		if !anim_sprite.is_playing():
@@ -105,13 +113,26 @@ func _get_rotation_dir():
 	return Input.get_action_strength("tilt_up") - Input.get_action_strength("tilt_down")
 
 func _rotate():
-	if rotation > -1 and rotation < 0.33:
-		rotation += _get_rotation_dir() * 0.05
+	var base_lower_bound = -0.33
+	var base_upper_bound = 1
+	var lower_bound
+	var upper_bound
+	
+	if facing == "right":
+		lower_bound = base_lower_bound
+		upper_bound = base_upper_bound
+	elif facing == "left":
+		lower_bound = -1 * base_upper_bound
+		upper_bound = -1 * base_lower_bound
+	
+	var input: float = _get_rotation_dir() * 0.05
+	
+	if rotation > lower_bound and rotation < upper_bound:
+		rotation += input
 	else:
-		var input: float = _get_rotation_dir() * 0.05
-		if rotation >= 0.33 and input < 0:
+		if rotation >= upper_bound and input < 0:
 			rotation += input
-		elif rotation <= -1 and input > 0:
+		elif rotation <= lower_bound and input > 0:
 			rotation += input
 			
 func _speargun():
@@ -157,3 +178,6 @@ func emit_bubble():
 
 func _on_bubble_timer_timeout() -> void:
 	emit_bubble()
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	print("I don't have HP yet, but if I did I'd get hurt")

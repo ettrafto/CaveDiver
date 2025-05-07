@@ -2,12 +2,16 @@ extends RigidBody2D
 
 # variables defining the basic attributes of the mob
 # these can be customized per-type or per-instance to change behavior
-@export var health: float = 1
-@export var awareness: float = 0.6
+@export var health: float = 3
+@export var awareness: float = 0.5
 @export var aggression = 0
 @export var fear = 0
 @export var impulse = 200
 @export var accel = 7
+@export var attack_range = 100
+# maybe update this to more explicity reference the correct nav region
+@export var nav_region_path = "../Map/NavigationRegion2D"
+@onready var nav_region = get_node(nav_region_path)
 
 @export_category("Illumination")
 ## The illumination mask is used to determine 
@@ -30,13 +34,12 @@ extends RigidBody2D
 
 # aliases for commonly referenced nodes
 @onready var player = $"../Player"
-@onready var nav = $NavigationAgent2D
+@onready var nav_agent = $NavigationAgent2D
 @onready var sprite = $Sprite2D
 @onready var anim_player = $AnimationPlayer
 @onready var hurtbox = $Hurtbox/CollisionShape2D
 @onready var hitbox = $Hitbox/CollisionShape2D
-
-@onready var nav_region = $"../Map/NavigationRegion2D"
+@onready var corpse_box = $CorpseCollisionShape2D
 
 # variables for map and region used for getting random points 
 # in a NavigationRegion
@@ -45,10 +48,13 @@ var region: RID = NavigationServer2D.region_create()
 
 func setup_nav_server():
 	NavigationServer2D.map_set_active(map, true)
+	NavigationServer2D.map_set_cell_size(map, 1.0)
 	NavigationServer2D.region_set_transform(region, Transform2D())
 	NavigationServer2D.region_set_map(region, map)
 	NavigationServer2D.region_set_navigation_polygon(region, nav_region.navigation_polygon)
-
+	nav_agent.target_desired_distance = 35
+	
+	
 func _ready():
 	setup_nav_server()
 	# for some reason,the hurtbox is always instantiated disabled
@@ -62,6 +68,14 @@ var alive: bool = true
 # stores the direction to the next pathfinding location
 # setting this as a global so that methods called from AnimationPlayer keys can access it
 var movement_direction: Vector2 = Vector2.ZERO
+
+# enum of possible behavoirs
+enum Behaviors {CHASE, FLEE, WANDER, PATROL, IDLE}
+
+var current_behavior = Behaviors.IDLE
+
+# keeps track of whether the mob has reached its current navigation target
+var reached_nav_target: bool = false
 
 # maximum range at which the mob can detect the player
 var max_detection = 500
@@ -82,15 +96,19 @@ func shade(red_factor: float = 1.0, green_factor: float = 1.0,
 	sprite.set_instance_shader_parameter("blue_factor", blue_factor)
 	sprite.set_instance_shader_parameter("alpha", alpha)
 
+
 func die():
 	alive = false
 	# disable hurt/hitboxes
-	hurtbox.set("disabled", true)
-	hitbox.set("disabled", true)
-	$Hurtbox.set("monitoring", false)
-	$Hurtbox.set("monitorable", false)
-	$Hitbox.set("monitoring", false)
-	$Hitbox.set("monitorable", false)
+	hurtbox.set_deferred("disabled", true)
+	hitbox.set_deferred("disabled", true)
+	$Hurtbox.set_deferred("monitoring", false)
+	$Hurtbox.set_deferred("monitorable", false)
+	$Hitbox.set_deferred("monitoring", false)
+	$Hitbox.set_deferred("monitorable", false)
+	# disable regular collision shape & replace with collision shape that matches corpes
+	$CollisionShape2D.set_deferred('disabled', true)
+	corpse_box.set_deferred('disabled', false)
 	# disable collision with the player and other mobs
 	set_collision_mask_value(2, false) # player
 	set_collision_mask_value(3, false) # mob
@@ -100,33 +118,119 @@ func die():
 	anim_player.play("Die")
 	# here you can define additional behavior after death (i.e. explodes)
 
-func approach_player(state):	
-	# get player's position
-	nav.target_position = player.global_position
-	
+
+func get_random_nav_position(min_distance: float, max_radius: float):
+	var angle := randf_range(0, 2*PI)
+	var distance := randf_range(min_distance, max_radius)
+	var target_position = Vector2(0,0)
+	target_position.x = cos(angle) *  distance
+	target_position.y = sin(angle) * distance
+	# the random position is generated relative to the mob, so add the mob's position
+	# to the target position to make it relative to the scene
+	target_position += get_position()
+	# get the closest point in the nav region to the chosen point (prevents mob trying top path out of map)
+	return NavigationServer2D.map_get_closest_point(map, target_position)
+
+
+# this function rotates the sprite icon to match the actual heading of the mob
+func update_sprite_rotation() -> void:
 	# flip sprite only on vertical axis bc rotation takes care of the horizontal flip
 	if rotation > PI/2 or rotation < -PI/2:
 		sprite.flip_v = true
-		print("y: ", $Hitbox.position.x)
 		$Hitbox.position.y = abs($Hitbox.position.y)
+		corpse_box.position.y = -abs(corpse_box.position.y)
+		
 	else:
 		sprite.flip_v = false
 		$Hitbox.position.y = -abs($Hitbox.position.y)
+		corpse_box.position.y = abs(corpse_box.position.y)
+
+
+func move_towards_nav_target():
+	# create a vector of length 1 pointing towards the next pathfinding point
+	movement_direction = nav_agent.get_next_path_position() - global_position
+	movement_direction = movement_direction.normalized()
+	anim_player.play("Swim")
+
+# checks if there is a target available to chase
+# this will in the future take into account the creature's fear, perception, and aggression
+func player_in_range() -> bool:
+	# save the previous target to restore later
+	var prev_target = nav_agent.target_position
+	nav_agent.target_position = player.global_position
+	var return_val: bool = false
+	if nav_agent.distance_to_target() <= detection_range:
+		return_val = true
+	nav_agent.target_position = prev_target
+	return return_val
+
+
+func begin_wander() -> void:
+	current_behavior = Behaviors.WANDER
+	print('wandering towards ', nav_agent.target_position, ", currently at ", position)
+	nav_agent.target_position = get_random_nav_position(150, 500)
+	reached_nav_target = false
+
+func begin_chase() -> void:
+	current_behavior = Behaviors.CHASE
+	nav_agent.target_position = player.global_position
+	reached_nav_target = false
+
+func chase():
+	# attack player if in range
+	if ((player.global_position - global_position).length() < attack_range 
+		and $AttackCooldown.time_left == 0):
+		anim_player.play("Attack")
+		$AttackCooldown.start();
+	else:  # else continue chasing
+		nav_agent.target_position = player.global_position	
+		move_towards_nav_target()
+
+
+func begin_idle() -> void:
+	current_behavior = Behaviors.IDLE
+	$IdleTimer.start()
+	reached_nav_target = false
+	anim_player.play("Idle")
 	
+
+func choose_behavior():
 	# prevent the mob from transitioning into another animation until the current one has finished
-	if anim_player.is_playing() == true and anim_player.current_animation != "Idle":
+	if anim_player.is_playing() and anim_player.current_animation != "Idle":
 		return
 	
-	# persue if within aggro range
-	if nav.distance_to_target() <= detection_range:
-		# create a vector of length 1 pointing towards the next pathfinding point
-		movement_direction = nav.get_next_path_position() - global_position
-		movement_direction = movement_direction.normalized()
-		anim_player.play("Swim")
+	if current_behavior == Behaviors.CHASE:
+		if not player_in_range():
+			begin_idle()
+		else:
+			chase()
+	elif current_behavior == Behaviors.FLEE:
+		pass
+	elif player_in_range():
+		begin_chase()
+	elif current_behavior == Behaviors.WANDER:
+		if reached_nav_target:
+			begin_idle()
+		else:
+			move_towards_nav_target()
+	elif current_behavior == Behaviors.IDLE:
+		pass
+			
 		
-	# return to idle
-	elif state.linear_velocity.length() != 0:
-		anim_player.queue("Idle")
+	# if the mob is currently doing an animation, let it finish
+	# otherwise:
+	#	if the mob is currently chasing the player, continue to do so
+	#	else if the mob is fleeing the player, continue to do
+	#	else if the mob is wandering towards a point, continue to do so
+	#		the mob will interrupt this behavior if it starts chasing or fleeing
+	#	else the mob must have finished its current behavior, so start up its idle/wander/patrol loop
+	
+
+func look_for_player():
+	#factors to consider:
+	#light: based on light sources and line of sight
+	#sound: based on proximity and player actions
+	pass
 
 
 # Function to run every time the mob is injured
@@ -139,6 +243,7 @@ func hurt(damage: float):
 	# otherwise, it doesn't start soon enough to disable the hurtbox
 	anim_player.advance(0)
 	health -= damage
+
 
 func calc_impulse_for_rotation(angle) -> float:
 	# to calculate the correct instantaneous torque to rotate r radians:
@@ -165,7 +270,7 @@ func apply_swim_impulse() -> void:
 	apply_central_impulse(movement_direction * impulse)
 	var angle = calc_shortest_rotation(movement_direction.angle(), rotation)
 	apply_torque_impulse(calc_impulse_for_rotation(angle))
-	
+
 
 func apply_idle_impulse() -> void:
 	print("0: ", Vector2(1, 0).angle(), ", pi: ", Vector2(-1, 0).angle(), ", rot: ", rotation)
@@ -177,16 +282,14 @@ func apply_idle_impulse() -> void:
 	apply_torque_impulse(calc_impulse_for_rotation(angle))
 
 
-func _integrate_forces(state) -> void:
+func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	# kills mob if health is 0
 	if health <= 0 and alive:
 		die()
 		
 	if alive:
-		approach_player(state)
-	# var new_position = NavigationServer2D.region_get_random_point(region, 1, false)
-	  # print(position, global_position)
-	  # position = new_position
+		choose_behavior()
+
 	# otherwise, fade out corpse and have it sink to cave floor
 	else:
 		# makes sprite's color slowly fade to MAX_FADE
@@ -197,9 +300,26 @@ func _integrate_forces(state) -> void:
 		if abs(rotation) > 0.001:
 			rotation = clampf(rotation - rotation * accel/2 * state.step, min(0, rotation), max(0, rotation))
 		else:
-			rotation = 0	
+			rotation = 0
+	
+	update_sprite_rotation()
 	
 
 func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	print("mob hurtbox entered")
 	hurt(1)
+
+
+func _on_navigation_agent_2d_target_reached() -> void:
+	#reached_nav_target = true
+	pass
+
+
+func _on_navigation_agent_2d_navigation_finished() -> void:
+	reached_nav_target = true
+	print("nav finished")
+
+
+func _on_idle_timer_timeout() -> void:
+	if current_behavior == Behaviors.IDLE:
+		begin_wander()

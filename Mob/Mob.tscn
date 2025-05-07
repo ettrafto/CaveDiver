@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c8i7a05824we3"]
+[gd_scene load_steps=17 format=3 uid="uid://c8i7a05824we3"]
 
 [ext_resource type="Script" uid="uid://c1u63nykolw0w" path="res://Scripts/Mob/Mob.gd" id="1_pjnhb"]
 [ext_resource type="Texture2D" uid="uid://bicp35bmrvm3h" path="res://Assets/Art/Mob/octopus/octopus.png" id="3_86loi"]
@@ -8,8 +8,8 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ca8wf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n5qr6"]
-radius = 21.0
-height = 60.0
+radius = 14.0
+height = 36.0
 
 [sub_resource type="Animation" id="Animation_v02h3"]
 resource_name = "Attack"
@@ -26,6 +26,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [12, 13, 14, 15, 16, 17]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
 }
 
 [sub_resource type="Animation" id="Animation_7ka78"]
@@ -132,6 +144,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hitbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_eg7qh"]
 resource_name = "Swim"
@@ -175,12 +199,16 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_frul3"]
-radius = 31.2178
-height = 71.7403
+radius = 18.0
+height = 48.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f0g3t"]
-radius = 23.0
-height = 58.0
+radius = 13.0
+height = 42.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7eo5j"]
+radius = 6.0
+height = 36.0
 
 [node name="Mob" type="RigidBody2D"]
 editor_description = "Default Mob Template"
@@ -194,7 +222,6 @@ metadata/_edit_group_ = true
 material = SubResource("ShaderMaterial_ca8wf")
 use_parent_material = true
 position = Vector2(4, 0)
-scale = Vector2(2, 2)
 texture = ExtResource("3_86loi")
 hframes = 6
 vframes = 5
@@ -217,12 +244,12 @@ collision_layer = 64
 collision_mask = 8
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
-rotation = 1.64903
+rotation = 1.5708
 shape = SubResource("CapsuleShape2D_frul3")
 disabled = true
 
 [node name="Hitbox" parent="." instance=ExtResource("5_58ufe")]
-position = Vector2(33, -10)
+position = Vector2(19, -7)
 collision_layer = 16
 collision_mask = 32
 
@@ -230,7 +257,26 @@ collision_mask = 32
 shape = SubResource("CapsuleShape2D_f0g3t")
 disabled = true
 
+[node name="CorpseCollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, 18)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_7eo5j")
+disabled = true
+
+[node name="IdleTimer" type="Timer" parent="."]
+wait_time = 2.4
+one_shot = true
+autostart = true
+
+[node name="AttackCooldown" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[connection signal="navigation_finished" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_navigation_finished"]
+[connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]
 
 [editable path="Hurtbox"]
 [editable path="Hitbox"]

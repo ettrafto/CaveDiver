@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dim5as52t6iqc"]
+[gd_scene load_steps=24 format=3 uid="uid://dim5as52t6iqc"]
 
 [ext_resource type="Script" uid="uid://wacxpn3t4p0l" path="res://Scripts/Player/Player.gd" id="1_e80uo"]
 [ext_resource type="Texture2D" uid="uid://muf3kyvaoxe8" path="res://Assets/Art/diver/diver1.png" id="2_cxr5p"]
@@ -10,9 +10,9 @@
 [ext_resource type="Script" uid="uid://c77uck4vbimcc" path="res://Shaders/CustomPointLight2D.gd" id="5_cxr5p"]
 [ext_resource type="Texture2D" uid="uid://crhs03rqwvlo7" path="res://Assets/DiverAnimation/4.png" id="5_oudfo"]
 [ext_resource type="Texture2D" uid="uid://0klq6kgjkht" path="res://Assets/DiverAnimation/5.png" id="6_d6rpx"]
-[ext_resource type="Texture2D" uid="uid://d2088yplcq6n4" path="res://Assets/DiverAnimation/6.png" id="7_r3kul"]
 [ext_resource type="Script" uid="uid://br4n5fcavft5s" path="res://Shaders/CustomDirectionalLight2D.gd" id="6_tdg3f"]
-[ext_resource type="Texture2D" uid="uid://dhxeihy0jgch0" path="res://Assets/Art/spear.png" id="7_dtqjt"]
+[ext_resource type="Texture2D" uid="uid://cimkfoe3rjek0" path="res://Assets/Art/spear.png" id="7_dtqjt"]
+[ext_resource type="Texture2D" uid="uid://d2088yplcq6n4" path="res://Assets/DiverAnimation/6.png" id="7_r3kul"]
 [ext_resource type="Texture2D" uid="uid://bgpu2hwrgmrj" path="res://Assets/Particles/bubble_particle_super_small.png" id="8_3tkgg"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jatw7"]
@@ -68,7 +68,6 @@ turbulence_influence_max = 0.2
 turbulence_initial_displacement_min = 1.49012e-06
 turbulence_initial_displacement_max = 1.49012e-06
 
-
 [sub_resource type="Curve" id="Curve_l6ohk"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.71066, 1), 0.0, 0.0, 0, 0, Vector2(0.994924, 0.595506), 0.0, 0.0, 0, 0]
 point_count = 3
@@ -105,6 +104,7 @@ angular_damp = 1.0
 script = ExtResource("1_e80uo")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 visible = false
@@ -144,15 +144,17 @@ scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_cxr5p")
 
 [node name="Hitbox" parent="." instance=ExtResource("3_tdg3f")]
-visible = false
 position = Vector2(-48, -10)
 scale = Vector2(0.5, 0.5)
 collision_layer = 8
 collision_mask = 64
+monitoring = false
+monitorable = false
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
 position = Vector2(1.27344, -3.79188)
 shape = SubResource("CircleShape2D_e80uo")
+disabled = true
 
 [node name="Hurtbox" parent="." instance=ExtResource("4_dtqjt")]
 visible = false
@@ -175,14 +177,15 @@ autostart = true
 
 [node name="RadialLight" type="Node2D" parent="."]
 script = ExtResource("5_cxr5p")
-distance = 150.0
-intensity = 0.8
+distance = 225.0
+intensity = 1.5
 illumination_mask = 2
 
 [node name="Flashlight" type="Node2D" parent="."]
 script = ExtResource("6_tdg3f")
 upper_angle = 7.2
-distance = 500.0
+distance = 990.0
+intensity = 1.6
 illumination_mask = 2
 metadata/_custom_type_script = "uid://br4n5fcavft5s"
 
@@ -193,7 +196,7 @@ texture = ExtResource("7_dtqjt")
 offset = Vector2(0, 0.6)
 metadata/_edit_lock_ = true
 
-[connection signal="timeout" from="bubbleTimer" to="." method="_on_bubble_timer_timeout"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 
 [editable path="Hitbox"]
 [editable path="Hurtbox"]
