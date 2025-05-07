@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://3p7dib4vg3ma"]
+
+[ext_resource type="Texture2D" uid="uid://cuku4u41c7p6o" path="res://Assets/Particles/20250417_1323_Pixel Art Bubble_simple_compose_01js2ccdbyf44vhh3emqts0jtb.png" id="1_18bqt"]
+[ext_resource type="Script" uid="uid://6dvxm782am42" path="res://Scripts/Player/PlayerBubble.gd" id="1_xxnts"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2ha5o"]
+radius = 6.0
+
+[node name="PlayerBubble" type="RigidBody2D"]
+collision_layer = 0
+gravity_scale = -0.2
+script = ExtResource("1_xxnts")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(6.19888e-06, -6.67572e-06)
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("1_18bqt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_2ha5o")

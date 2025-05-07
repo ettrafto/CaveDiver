@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://0veqi5gcgddy"]
+
+[ext_resource type="Texture2D" uid="uid://b75ogayr6y1up" path="res://Assets/Particles/bubble_particle_small.png" id="1_64dq5"]
+[ext_resource type="Material" uid="uid://ca6k5px5pt6ak" path="res://projectile_bubbles.tres" id="2_tuc8v"]
+
+[node name="ProjectileBubbles" type="GPUParticles2D"]
+amount = 50
+texture = ExtResource("1_64dq5")
+lifetime = 2.0
+randomness = 1.0
+process_material = ExtResource("2_tuc8v")

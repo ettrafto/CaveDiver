@@ -8,6 +8,7 @@
 size = Vector2(4.624, 3.136)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u7m6u"]
+lifetime_randomness = 0.3
 particle_flag_disable_z = true
 particle_flag_damping_as_friction = true
 emission_shape = 3
@@ -27,6 +28,7 @@ collision_friction = 0.35
 collision_bounce = 0.0
 
 [node name="Silt" type="Node2D"]
+position = Vector2(570, 314)
 script = ExtResource("1_k4l6w")
 
 [node name="Area2D" type="Area2D" parent="."]

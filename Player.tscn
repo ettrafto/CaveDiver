@@ -1,19 +1,85 @@
-[gd_scene load_steps=10 format=3 uid="uid://dim5as52t6iqc"]
+[gd_scene load_steps=15 format=3 uid="uid://dim5as52t6iqc"]
 
-[ext_resource type="Script" uid="uid://wacxpn3t4p0l" path="res://Scripts/Player/Player.gd" id="1_e80uo"]
-[ext_resource type="Texture2D" uid="uid://bmyqf7pt0t3g8" path="res://Assets/Art/diver/diver1.png" id="2_cxr5p"]
-[ext_resource type="PackedScene" uid="uid://c8btmt1p1c5oi" path="res://Mob/Hitbox.tscn" id="3_tdg3f"]
-[ext_resource type="PackedScene" uid="uid://dhafxmdd71i72" path="res://Mob/Hurtbox.tscn" id="4_dtqjt"]
 [ext_resource type="Script" uid="uid://c77uck4vbimcc" path="res://Shaders/CustomPointLight2D.gd" id="5_cxr5p"]
 [ext_resource type="Script" uid="uid://br4n5fcavft5s" path="res://Shaders/CustomDirectionalLight2D.gd" id="6_tdg3f"]
-[ext_resource type="Texture2D" uid="uid://dhxeihy0jgch0" path="res://Assets/Art/spear.png" id="7_dtqjt"]
+[ext_resource type="Script" uid="uid://wacxpn3t4p0l" path="res://Scripts/Player/Player.gd" id="1_e80uo"]
+[ext_resource type="Texture2D" uid="uid://muf3kyvaoxe8" path="res://Assets/Art/diver/diver1.png" id="2_cxr5p"]
+[ext_resource type="Texture2D" uid="uid://j0u8e6g6hoxg" path="res://Assets/DiverAnimation/1.png" id="2_hp6x6"]
+[ext_resource type="Texture2D" uid="uid://s7chuj3dx6hv" path="res://Assets/DiverAnimation/2.png" id="3_3tkgg"]
+[ext_resource type="PackedScene" uid="uid://c8btmt1p1c5oi" path="res://Mob/Hitbox.tscn" id="3_tdg3f"]
+[ext_resource type="PackedScene" uid="uid://dhafxmdd71i72" path="res://Mob/Hurtbox.tscn" id="4_dtqjt"]
+[ext_resource type="Texture2D" uid="uid://behx4ocvgc3j7" path="res://Assets/DiverAnimation/3.png" id="4_l6ohk"]
+[ext_resource type="Texture2D" uid="uid://crhs03rqwvlo7" path="res://Assets/DiverAnimation/4.png" id="5_oudfo"]
+[ext_resource type="Texture2D" uid="uid://0klq6kgjkht" path="res://Assets/DiverAnimation/5.png" id="6_d6rpx"]
+[ext_resource type="Texture2D" uid="uid://d2088yplcq6n4" path="res://Assets/DiverAnimation/6.png" id="7_r3kul"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jatw7"]
+animations = [{
+"frames": [{
+"duration": 0.6,
+"texture": ExtResource("2_hp6x6")
+}, {
+"duration": 0.3,
+"texture": ExtResource("3_3tkgg")
+}, {
+"duration": 0.3,
+"texture": ExtResource("4_l6ohk")
+}, {
+"duration": 0.3,
+"texture": ExtResource("5_oudfo")
+}, {
+"duration": 0.3,
+"texture": ExtResource("6_d6rpx")
+}, {
+"duration": 0.3,
+"texture": ExtResource("7_r3kul")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e80uo"]
 radius = 44.727
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cxr5p"]
-radius = 33.2065
-height = 224.312
+radius = 18.2477
+height = 131.808
+
+[sub_resource type="Curve" id="Curve_cxr5p"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.898477, 0.898876), 0.0, 0.0, 0, 0, Vector2(1, 0.505618), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_tdg3f"]
+curve = SubResource("Curve_cxr5p")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_e80uo"]
+particle_flag_disable_z = true
+direction = Vector3(0, -5, 0)
+gravity = Vector3(0, -60, 0)
+radial_accel_min = -10.0
+radial_accel_max = 10.0
+damping_min = 2.0
+damping_max = 2.0
+scale_min = 0.5
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_tdg3f")
+turbulence_enabled = true
+turbulence_noise_strength = 7.07
+turbulence_noise_speed = Vector3(1, -2, 1)
+turbulence_noise_speed_random = 2.0
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.2
+turbulence_initial_displacement_min = 1.49012e-06
+turbulence_initial_displacement_max = 1.49012e-06
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e80uo"]
+radius = 44.727
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cxr5p"]
+radius = 18.2477
+height = 131.808
 
 [node name="Player" type="RigidBody2D"]
 use_parent_material = true
@@ -29,14 +95,35 @@ script = ExtResource("1_e80uo")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(46, 28, 26, 20, 7, 19, -10, 8, -27, 5, -46, 9, -53, 0, -55, -17, -50, -26, -42, -32, -30, -32, -24, -25, 3, -15, 4, -1, 14, 1, 33, 4, 48, 13)
+visible = false
+polygon = PackedVector2Array(-1, -7, 2, -7, 4, -8, 7, -11, 19, -18, 29, -13, 32, -9, 28, 3, 14, 2, 4, 7, -4, 9, -31, 10, -19, -12, -8, -11)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_jatw7")
+
+[node name="resparator" type="Node2D" parent="AnimatedSprite2D"]
+position = Vector2(28, -8)
+
+[node name="bubbleParticles" type="GPUParticles2D" parent="AnimatedSprite2D"]
+position = Vector2(28, -8)
+emitting = false
+amount = 100
+lifetime = 5.0
+one_shot = true
+explosiveness = 0.5
+process_material = SubResource("ParticleProcessMaterial_e80uo")
+
+[node name="speargun" type="Node2D" parent="AnimatedSprite2D"]
+position = Vector2(26, 2)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 use_parent_material = true
-scale = Vector2(0.39, 0.39)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_cxr5p")
 
 [node name="Hitbox" parent="." instance=ExtResource("3_tdg3f")]
+visible = false
 position = Vector2(-48, -10)
 scale = Vector2(0.5, 0.5)
 collision_layer = 8
@@ -47,7 +134,8 @@ position = Vector2(1.27344, -3.79188)
 shape = SubResource("CircleShape2D_e80uo")
 
 [node name="Hurtbox" parent="." instance=ExtResource("4_dtqjt")]
-position = Vector2(-1, 0)
+visible = false
+position = Vector2(4, -2)
 rotation = 0.0349569
 scale = Vector2(0.5, 0.5)
 collision_layer = 32
@@ -55,7 +143,7 @@ collision_mask = 16
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 position = Vector2(-4, 0)
-rotation = -1.15992
+rotation = 1.4399
 shape = SubResource("CapsuleShape2D_cxr5p")
 
 [node name="RadialLight" type="Node2D" parent="."]
@@ -71,12 +159,32 @@ distance = 500.0
 illumination_mask = 2
 metadata/_custom_type_script = "uid://br4n5fcavft5s"
 
-[node name="DirectionArrow" type="Sprite2D" parent="Flashlight"]
-modulate = Color(100, 100, 100, 1)
-scale = Vector2(2, 2)
-texture = ExtResource("7_dtqjt")
-offset = Vector2(0, 0.6)
-metadata/_edit_lock_ = true
+[node name="bubbleTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="resparator" type="Node2D" parent="."]
+position = Vector2(-41, -13)
+
+[node name="bubbleParticles" type="GPUParticles2D" parent="."]
+position = Vector2(-41, -13)
+emitting = false
+amount = 25
+texture = ExtResource("5_cxr5p")
+lifetime = 5.0
+one_shot = true
+explosiveness = 0.8
+randomness = 1.0
+visibility_rect = Rect2(-100, -195, 200, 200)
+process_material = SubResource("ParticleProcessMaterial_e80uo")
+
+[node name="speargun" type="Node2D" parent="."]
+position = Vector2(-45.7245, 2.28226)
+
+[node name="spearTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="bubbleTimer" to="." method="_on_bubble_timer_timeout"]
 
 [editable path="Hitbox"]
 [editable path="Hurtbox"]
