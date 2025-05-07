@@ -41,14 +41,11 @@ scale = Vector2(5, 5)
 shape = SubResource("RectangleShape2D_k4l6w")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-use_parent_material = true
 position = Vector2(4.76837e-07, 0)
 scale = Vector2(3, 3)
 texture = ExtResource("1_2w3v0")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Sprite2D"]
-use_parent_material = true
-position = Vector2(-9.53674e-07, 0)
 scale = Vector2(5, 5)
 emitting = false
 amount = 24

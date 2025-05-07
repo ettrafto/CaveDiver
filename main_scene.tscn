@@ -8,9 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://dim5as52t6iqc" path="res://Player.tscn" id="5_wr18j"]
 [ext_resource type="PackedScene" uid="uid://cyo2yviksowvg" path="res://Things/rope_anchor.tscn" id="6_hq1ik"]
 [ext_resource type="Script" uid="uid://nlpb4fatxvju" path="res://Shaders/ShaderContext.gd" id="10_sg8do"]
-[ext_resource type="Script" uid="uid://c77uck4vbimcc" path="res://Shaders/CustomPointLight2D.gd" id="11_qwutr"]
-[ext_resource type="Script" uid="uid://br4n5fcavft5s" path="res://Shaders/CustomDirectionalLight2D.gd" id="12_671wp"]
-[ext_resource type="Texture2D" uid="uid://dhxeihy0jgch0" path="res://Assets/Art/spear.png" id="13_mo76n"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mydmx"]
 texture = ExtResource("4_x3thl")
@@ -2839,12 +2836,6 @@ sources/0 = SubResource("TileSetAtlasSource_mydmx")
 sources/1 = SubResource("TileSetAtlasSource_sk2l4")
 sources/2 = SubResource("TileSetAtlasSource_qwutr")
 
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_qwutr"]
-polygon = PackedVector2Array(64, 0, 64, 64, 0, 64, 0, 0)
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_671wp"]
-polygon = PackedVector2Array(0, -1, 71, -30, 124, 37, 46, 182, -68, 240, -58, 45)
-
 [node name="MainScene" type="Node2D"]
 
 [node name="Map" type="Node2D" parent="."]
@@ -2914,90 +2905,8 @@ position = Vector2(438, 237)
 scale = Vector2(0.996716, 1)
 
 [node name="Player" parent="." instance=ExtResource("5_wr18j")]
-material = ExtResource("1_rgmf6")
-use_parent_material = false
+
 position = Vector2(545, 293)
 gravity_scale = 0.2
-
-[node name="Lights" type="Node2D" parent="."]
-
-[node name="CustomPointLight2D" type="Node2D" parent="Lights"]
-position = Vector2(449, 60)
-script = ExtResource("11_qwutr")
-distance = 500.0
-intensity = 0.05
-frequency = 30
-
-[node name="CustomPointLight2D2" type="Node2D" parent="Lights"]
-position = Vector2(264, 389)
-script = ExtResource("11_qwutr")
-distance = 200.0
-green = 0.2
-
-[node name="CustomPointLight2D3" type="Node2D" parent="Lights"]
-position = Vector2(29, 671)
-script = ExtResource("11_qwutr")
-distance = 300.0
-intensity = 1.5
-oscillates = true
-frequency = 10
-offset = 180
-
-[node name="CustomDirectionalLight2D" type="Node2D" parent="Lights"]
-position = Vector2(895, 66.0001)
-rotation = 2.31613
-script = ExtResource("12_671wp")
-distance = 500.0
-red = 0.4
-metadata/_custom_type_script = "uid://br4n5fcavft5s"
-
-[node name="DirectionArrow" type="Sprite2D" parent="Lights/CustomDirectionalLight2D"]
-modulate = Color(100, 100, 100, 1)
-scale = Vector2(2, 2)
-texture = ExtResource("13_mo76n")
-offset = Vector2(0, 0.6)
-metadata/_edit_lock_ = true
-
-[node name="CustomDirectionalLight2D2" type="Node2D" parent="Lights"]
-position = Vector2(735, 64)
-rotation = 0.808562
-script = ExtResource("12_671wp")
-distance = 500.0
-blue = 0.4
-metadata/_custom_type_script = "uid://br4n5fcavft5s"
-
-[node name="DirectionArrow" type="Sprite2D" parent="Lights/CustomDirectionalLight2D2"]
-modulate = Color(100, 100, 100, 1)
-scale = Vector2(2, 2)
-texture = ExtResource("13_mo76n")
-offset = Vector2(0, 0.6)
-metadata/_edit_lock_ = true
-
-[node name="CustomDirectionalLight2D3" type="Node2D" parent="Lights"]
-position = Vector2(326, 81)
-rotation = 0.435671
-script = ExtResource("12_671wp")
-distance = 500.0
-intensity = 0.5
-green = 0.4
-blue = 0.4
-oscillates = true
-frequency = 30
-metadata/_custom_type_script = "uid://br4n5fcavft5s"
-
-[node name="DirectionArrow" type="Sprite2D" parent="Lights/CustomDirectionalLight2D3"]
-modulate = Color(100, 100, 100, 1)
-scale = Vector2(2, 2)
-texture = ExtResource("13_mo76n")
-offset = Vector2(0, 0.6)
-metadata/_edit_lock_ = true
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-position = Vector2(640, 64)
-occluder = SubResource("OccluderPolygon2D_qwutr")
-
-[node name="LightOccluder2D2" type="LightOccluder2D" parent="."]
-position = Vector2(196, 178)
-occluder = SubResource("OccluderPolygon2D_671wp")
 
 [connection signal="bcd_change" from="Player" to="HUD" method="_on_player_bcd_change"]
