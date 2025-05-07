@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://bw61hcrsu2ee5"]
+[gd_scene load_steps=13 format=4 uid="uid://bw61hcrsu2ee5"]
 
 [ext_resource type="Material" uid="uid://bdw7j3m7ekmuh" path="res://Shaders/Map.tres" id="1_rgmf6"]
 [ext_resource type="Texture2D" uid="uid://bh8gbmxhd3es" path="res://Assets/Art/CaveTiles1/CaveBG.png" id="3_debib"]
@@ -7,8 +7,6 @@
 [ext_resource type="Script" uid="uid://cgbjcuwu7kt4x" path="res://Scripts/HUD/HUD.gd" id="5_6w5lm"]
 [ext_resource type="PackedScene" uid="uid://dim5as52t6iqc" path="res://Player.tscn" id="5_wr18j"]
 [ext_resource type="PackedScene" uid="uid://cyo2yviksowvg" path="res://Things/rope_anchor.tscn" id="6_hq1ik"]
-[ext_resource type="PackedScene" uid="uid://c8i7a05824we3" path="res://Mob/Mob.tscn" id="8_xcfsc"]
-[ext_resource type="Material" uid="uid://8o2yodwffd3x" path="res://Shaders/Mob.tres" id="10_6xdyb"]
 [ext_resource type="Script" uid="uid://nlpb4fatxvju" path="res://Shaders/ShaderContext.gd" id="10_sg8do"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mydmx"]
@@ -1962,22 +1960,10 @@ position = Vector2(438, 237)
 scale = Vector2(0.996716, 1)
 
 [node name="Player" parent="." instance=ExtResource("5_wr18j")]
-position = Vector2(451, 569)
+position = Vector2(541, 253)
 gravity_scale = 0.2
 
 [node name="rope_anchor2" parent="." instance=ExtResource("6_hq1ik")]
 position = Vector2(221, 351)
 
 [connection signal="bcd_change" from="Player" to="HUD" method="_on_player_bcd_change"]
-[node name="Mob2" parent="." instance=ExtResource("8_xcfsc")]
-editor_description = " Default Mob Template "
-material = ExtResource("10_6xdyb")
-position = Vector2(700, 600)
-awareness = 0.5
-
-[editable path="Mob"]
-[editable path="Mob/Hurtbox"]
-[editable path="Mob/Hitbox"]
-[editable path="Mob2"]
-[editable path="Mob2/Hurtbox"]
-[editable path="Mob2/Hitbox"]

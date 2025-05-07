@@ -11,6 +11,7 @@ func start_rope(player):
 	self.player = player
 	can_start_rope = false
 	player.set_attached_to(self)
+	$Sprite2D.texture = load("res://Assets/Art/anchor_point_with_rope.png")
 	
 	rope_segments.append(rope_segment_scene.instantiate())
 	player_attached_rope = rope_segment_scene.instantiate()
@@ -59,7 +60,7 @@ func switch_anchors(next_anchor):
 		extend()
 	extend()
 	player_attached_rope.remove_bottom_pin_joint()
-	next_anchor.get_ending_joint().node_b = player_attached_rope.get_rigidBody().get_path()
+	player_attached_rope.gravitate_towards(next_anchor)
 	for i in range(player_rope_index + 1, len(rope_segments)):
 		rope_segments[i].queue_free()
 	player = null

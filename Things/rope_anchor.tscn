@@ -1,13 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cyo2yviksowvg"]
+[gd_scene load_steps=5 format=3 uid="uid://cyo2yviksowvg"]
 
 [ext_resource type="Script" uid="uid://dw6b8pnj2ohsa" path="res://Scripts/Map/RopeAnchor.gd" id="1_vmdxm"]
-[ext_resource type="Texture2D" uid="uid://bh21sp0isvf5o" path="res://Assets/Art/anchor-placeholder.png" id="2_de16p"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_d4tq8"]
-size = Vector2(8, 8)
+[ext_resource type="Texture2D" uid="uid://dltuioxm5nceb" path="res://Assets/Art/anchor_point.png" id="2_d4tq8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2tisg"]
-radius = 24.3311
+radius = 27.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d4tq8"]
 radius = 5.0
@@ -16,10 +13,10 @@ radius = 5.0
 script = ExtResource("1_vmdxm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_de16p")
+texture = ExtResource("2_d4tq8")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_d4tq8")
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(16, 16, 12, 5, 10, -1, 8, -2, 8, -8, 6, -11, 5, -12, 3, -12, -4, -12, -9, -9, -10, -6, -11, -2, -12, 0, -12, 8, -13, 10, -14, 12, -16, 13, -16, 16)
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 128
@@ -42,9 +39,11 @@ length = 10.0
 rest_length = 1.0
 damping = 0.75
 
-[node name="EndingJoint" type="PinJoint2D" parent="."]
+[node name="EndingJoint" type="DampedSpringJoint2D" parent="."]
 node_a = NodePath("..")
 bias = 0.9
+length = 2.0
+rest_length = 1.0
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="BodyDetectionArea" to="." method="_on_body_detection_area_body_exited"]
