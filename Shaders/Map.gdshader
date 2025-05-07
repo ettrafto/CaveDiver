@@ -18,16 +18,16 @@ bool within_shadow(vec2 frag_position) {
 	bool in_shadow = false;
 	vec2 curr_pos = frag_position;
 	float distance_from_player = distance(curr_pos, player_pos);
-	//for (int i = 0; i < step_limit; i++) {
-	//	float sdf = texture_sdf(curr_pos);
-	//	if (sdf <= 0.0) {
-	//		in_shadow = true;
-	//		break;
-	//	}
-	//	vec2 step_distance = vec2(1, 1) / distance_from_player;
-	//	curr_pos = mix(curr_pos, player_pos, step_distance);
-	//	distance_from_player = distance(curr_pos, player_pos);
-	//}
+	for (int i = 0; i < step_limit; i++) {
+		float sdf = texture_sdf(curr_pos);
+		if (sdf <= 0.0) {
+			in_shadow = true;
+			break;
+		}
+		vec2 step_distance = vec2(1, 1) / distance_from_player;
+		curr_pos = mix(curr_pos, player_pos, step_distance);
+		distance_from_player = distance(curr_pos, player_pos);
+	}
 		
 	return in_shadow;
 }
