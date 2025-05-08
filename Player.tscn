@@ -104,7 +104,6 @@ angular_damp = 1.0
 script = ExtResource("1_e80uo")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.5, 1.5)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 visible = false
