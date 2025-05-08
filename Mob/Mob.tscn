@@ -1,5 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://c8i7a05824we3"]
 
+[ext_resource type="Material" uid="uid://8o2yodwffd3x" path="res://Shaders/Mob.tres" id="1_78y8u"]
 [ext_resource type="Script" uid="uid://c1u63nykolw0w" path="res://Scripts/Mob/Mob.gd" id="1_pjnhb"]
 [ext_resource type="Texture2D" uid="uid://bicp35bmrvm3h" path="res://Assets/Art/Mob/octopus/octopus.png" id="3_86loi"]
 [ext_resource type="PackedScene" uid="uid://dhafxmdd71i72" path="res://Mob/Hurtbox.tscn" id="4_a38h6"]
@@ -212,6 +213,7 @@ height = 36.0
 
 [node name="Mob" type="RigidBody2D"]
 editor_description = "Default Mob Template"
+material = ExtResource("1_78y8u")
 collision_layer = 4
 collision_mask = 7
 can_sleep = false
