@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://6h5y87iow3xe"]
+[gd_scene load_steps=5 format=3 uid="uid://6h5y87iow3xe"]
 
+[ext_resource type="Material" uid="uid://bdw7j3m7ekmuh" path="res://Shaders/Map.tres" id="1_5hdm7"]
 [ext_resource type="Script" uid="uid://bogisrdtaryw" path="res://Scripts/Map/RopeSegment.gd" id="1_jykfr"]
 [ext_resource type="Texture2D" uid="uid://duoy7rsq8ne23" path="res://Assets/Art/rope_segment.png" id="1_vv2so"]
 
@@ -8,6 +9,7 @@ radius = 1.0
 height = 12.0
 
 [node name="RopeSegment" type="Node2D"]
+material = ExtResource("1_5hdm7")
 script = ExtResource("1_jykfr")
 
 [node name="PinJoint2D" type="PinJoint2D" parent="."]
@@ -15,6 +17,7 @@ scale = Vector2(2.5, 2.5)
 node_b = NodePath("../RigidBody2D")
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
+use_parent_material = true
 collision_layer = 128
 mass = 0.05
 gravity_scale = 0.0
@@ -22,6 +25,7 @@ gravity_scale = 0.0
 [node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
 position = Vector2(0, 6)
 scale = Vector2(1.12488, 1.53838)
+use_parent_material = true
 texture = ExtResource("1_vv2so")
 
 [node name="BottomPos" type="Node2D" parent="RigidBody2D"]
