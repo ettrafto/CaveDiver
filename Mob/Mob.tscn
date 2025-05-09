@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c8i7a05824we3"]
+[gd_scene load_steps=18 format=3 uid="uid://c8i7a05824we3"]
 
 [ext_resource type="Material" uid="uid://8o2yodwffd3x" path="res://Shaders/Mob.tres" id="1_78y8u"]
 [ext_resource type="Script" uid="uid://c1u63nykolw0w" path="res://Scripts/Mob/Mob.gd" id="1_pjnhb"]
@@ -221,6 +221,7 @@ script = ExtResource("1_pjnhb")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
 material = SubResource("ShaderMaterial_ca8wf")
 use_parent_material = true
 position = Vector2(4, 0)

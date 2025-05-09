@@ -3362,7 +3362,7 @@ offset = Vector2(0, 0.6)
 metadata/_edit_lock_ = true
 
 [node name="Mob" parent="." instance=ExtResource("12_mo76n")]
-position = Vector2(-162, 535)
+position = Vector2(343, 315)
 nav_region_path = "../Map/CaveUpper"
 
 [node name="Mob2" parent="." instance=ExtResource("12_mo76n")]
