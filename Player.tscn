@@ -112,7 +112,7 @@ polygon = PackedVector2Array(-1, -7, 2, -7, 4, -8, 7, -11, 19, -18, 29, -13, 32,
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_jatw7")
 
-[node name="resparator" type="Node2D" parent="AnimatedSprite2D"]
+[node name="respirator" type="Node2D" parent="AnimatedSprite2D"]
 position = Vector2(28, -8)
 
 [node name="ExhaleBubbleParticles" type="GPUParticles2D" parent="AnimatedSprite2D"]
