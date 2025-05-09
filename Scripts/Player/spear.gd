@@ -12,7 +12,7 @@ func _physics_process(delta):
 		# Apply angular velocity to rotate toward the linear velocity vectors angle
 		angular_velocity = wrapf(linear_velocity.angle() - rotation, -PI, PI) * 10 * int(is_turning)
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
+func _on_physics_collison_area_body_entered(body: Node2D) -> void:
 	is_turning = false
 	linear_velocity = Vector2.ZERO
 	set_deferred("freeze",true)

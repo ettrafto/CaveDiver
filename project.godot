@@ -88,6 +88,7 @@ sprint={
 2d_physics/layer_6="Player Hurtbox"
 2d_physics/layer_7="Mob Hurtbox"
 2d_physics/layer_8="Leyline"
+2d_physics/layer_9="Projectile"
 
 [physics]
 
