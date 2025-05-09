@@ -3122,36 +3122,45 @@ rotation = -3.13074
 navigation_polygon = SubResource("NavigationPolygon_wr18j")
 
 [node name="Polygon2D" type="Polygon2D" parent="Map/CaveUpper"]
+visible = false
 polygon = PackedVector2Array(1472, 412, 1535, 465, 1521, 520, 1362, 664, 1218, 613, 1319, 558)
 
 [node name="Polygon2D2" type="Polygon2D" parent="Map/CaveUpper"]
+visible = false
 polygon = PackedVector2Array(1282, 418, 1218, 476, 1282, 542, 1344, 481)
 
 [node name="Polygon2D3" type="Polygon2D" parent="Map/CaveUpper"]
+visible = false
 polygon = PackedVector2Array(1484, 262, 1597, 255, 1592, 288, 1551, 315, 1502, 311, 1487, 283)
 
 [node name="CaveLowerLeft" type="NavigationRegion2D" parent="Map"]
 navigation_polygon = SubResource("NavigationPolygon_qwutr")
 
 [node name="Polygon2D" type="Polygon2D" parent="Map/CaveLowerLeft"]
+visible = false
 polygon = PackedVector2Array(-443, 1787, -312, 1856, -448, 1924, -575, 1855)
 
 [node name="Polygon2D2" type="Polygon2D" parent="Map/CaveLowerLeft"]
+visible = false
 polygon = PackedVector2Array(-253, 1278, -137, 1217, -70, 1218, -31, 1262, -31, 1294, -55, 1331, -118, 1349)
 
 [node name="Polygon2D3" type="Polygon2D" parent="Map/CaveLowerLeft"]
+visible = false
 polygon = PackedVector2Array(-608, 1212, -529, 1162, -480, 1093, -415, 1087, -384, 1136, -384, 1286, -424, 1339, -478, 1338, -528, 1259)
 
 [node name="Polygon2D4" type="Polygon2D" parent="Map/CaveLowerLeft"]
+visible = false
 polygon = PackedVector2Array(-639, 1024, -571, 959, -514, 1027, -579, 1085)
 
 [node name="CaveLowerRight" type="NavigationRegion2D" parent="Map"]
 navigation_polygon = SubResource("NavigationPolygon_671wp")
 
 [node name="Polygon2D5" type="Polygon2D" parent="Map/CaveLowerRight"]
+visible = false
 polygon = PackedVector2Array(278, 1286, 444, 1365, 511, 1313, 457, 1240, 510, 1091, 448, 962, 393, 1074, 413, 1168, 329, 1187, 266, 1214)
 
 [node name="Polygon2D" type="Polygon2D" parent="Map/CaveLowerRight"]
+visible = false
 polygon = PackedVector2Array(193, 881, 223, 862, 256, 870, 277, 898, 287, 933, 270, 970, 221, 989, 177, 971, 167, 933, 170, 897)
 
 [node name="Light Occluders" type="Node2D" parent="Map"]
