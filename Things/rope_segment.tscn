@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://6h5y87iow3xe"]
 
-[ext_resource type="Material" uid="uid://bdw7j3m7ekmuh" path="res://Shaders/Map.tres" id="1_5hdm7"]
+[ext_resource type="Material" uid="uid://brmfw8cr1466c" path="res://Shaders/NonWobble.tres" id="1_5hdm7"]
 [ext_resource type="Script" uid="uid://bogisrdtaryw" path="res://Scripts/Map/RopeSegment.gd" id="1_jykfr"]
 [ext_resource type="Texture2D" uid="uid://duoy7rsq8ne23" path="res://Assets/Art/rope_segment.png" id="1_vv2so"]
 
@@ -23,9 +23,9 @@ mass = 0.05
 gravity_scale = 0.0
 
 [node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+use_parent_material = true
 position = Vector2(0, 6)
 scale = Vector2(1.12488, 1.53838)
-use_parent_material = true
 texture = ExtResource("1_vv2so")
 
 [node name="BottomPos" type="Node2D" parent="RigidBody2D"]
