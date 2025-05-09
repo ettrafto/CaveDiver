@@ -113,7 +113,7 @@ func _get_rotation_dir():
 	return Input.get_action_strength("tilt_up") - Input.get_action_strength("tilt_down")
 
 func _rotate():
-	var base_lower_bound = -0.33
+	var base_lower_bound = -0.45
 	var base_upper_bound = 1
 	var lower_bound
 	var upper_bound
