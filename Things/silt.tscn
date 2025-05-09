@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://dc7pd2nhl2ows"]
+[gd_scene load_steps=11 format=3 uid="uid://dc7pd2nhl2ows"]
 
 [ext_resource type="Texture2D" uid="uid://cdwd5jieywghy" path="res://Assets/Art/silt-pile.png" id="1_2w3v0"]
 [ext_resource type="Script" uid="uid://clum74ws7e4tl" path="res://Scripts/Map/silt.gd" id="1_k4l6w"]
+[ext_resource type="Material" uid="uid://bdw7j3m7ekmuh" path="res://Shaders/Map.tres" id="1_rws6s"]
 [ext_resource type="Texture2D" uid="uid://buiapjgdoom1l" path="res://Assets/Particles/silt-particle-placeholder.png" id="3_k4l6w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k4l6w"]
@@ -42,6 +43,7 @@ turbulence_enabled = true
 turbulence_noise_scale = 5.0
 
 [node name="Silt" type="Node2D"]
+material = ExtResource("1_rws6s")
 script = ExtResource("1_k4l6w")
 
 [node name="Area2D" type="Area2D" parent="."]

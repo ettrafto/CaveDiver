@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://cyo2yviksowvg"]
+[gd_scene load_steps=6 format=3 uid="uid://cyo2yviksowvg"]
 
+[ext_resource type="Material" uid="uid://bdw7j3m7ekmuh" path="res://Shaders/Map.tres" id="1_2tisg"]
 [ext_resource type="Script" uid="uid://dw6b8pnj2ohsa" path="res://Scripts/Map/RopeAnchor.gd" id="1_vmdxm"]
 [ext_resource type="Texture2D" uid="uid://dltuioxm5nceb" path="res://Assets/Art/anchor_point.png" id="2_d4tq8"]
 
@@ -12,9 +13,11 @@ radius = 5.0
 [node name="RopeAnchor" type="StaticBody2D"]
 collision_layer = 0
 collision_mask = 0
+material = ExtResource("1_2tisg")
 script = ExtResource("1_vmdxm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+use_parent_material = true
 texture = ExtResource("2_d4tq8")
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
