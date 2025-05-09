@@ -40,7 +40,7 @@ func start_rope(player):
 		if i:
 			rope_segments[-1].face_towards(rope_segments[-1], rope_segments[-2])
 		else:
-			rope_segments[-1].face_towards(rope_segments[-1],player.get_resparator())#first rope in the bundle has to be away from the player attached rope
+			rope_segments[-1].face_towards(rope_segments[-1],player.get_respirator())#first rope in the bundle has to be away from the player attached rope
 		rope_segments[-1].set_pin_a(rope_segments[-2].get_rigidBody().get_path())
 		if i % 2: # if I thought of this instead of trying to add and remove pin joints. SO MUCH TIME WOULDVE BEEN SAVED
 			rope_segments[-1].add_pin_joint(player)
