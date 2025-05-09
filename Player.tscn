@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dim5as52t6iqc"]
+[gd_scene load_steps=24 format=3 uid="uid://dim5as52t6iqc"]
 
 [ext_resource type="Script" uid="uid://wacxpn3t4p0l" path="res://Scripts/Player/Player.gd" id="1_e80uo"]
 [ext_resource type="Texture2D" uid="uid://muf3kyvaoxe8" path="res://Assets/Art/diver/diver1.png" id="2_cxr5p"]
@@ -156,7 +156,6 @@ shape = SubResource("CircleShape2D_e80uo")
 disabled = true
 
 [node name="Hurtbox" parent="." instance=ExtResource("4_dtqjt")]
-visible = false
 position = Vector2(4, -2)
 rotation = 0.0349569
 scale = Vector2(0.5, 0.5)
@@ -173,6 +172,8 @@ wait_time = 2.0
 autostart = true
 
 [node name="spearTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
 
 [node name="RadialLight" type="Node2D" parent="."]
 script = ExtResource("5_cxr5p")
@@ -195,6 +196,7 @@ offset = Vector2(0, 0.6)
 metadata/_edit_lock_ = true
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="timeout" from="bubbleTimer" to="." method="_on_bubble_timer_timeout"]
 
 [editable path="Hitbox"]
 [editable path="Hurtbox"]
