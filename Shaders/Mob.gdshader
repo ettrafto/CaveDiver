@@ -19,7 +19,7 @@ instance uniform float green_factor : hint_range(0.0, 1.0) = 1.0;
 instance uniform float blue_factor : hint_range(0.0, 1.0) = 1.0;
 instance uniform float alpha : hint_range(0.0, 1.0) = 1.0;
 
-instance uniform int illumination_mask = 1;
+instance uniform int illumination_mask = 7;
 instance uniform bool soft_illumination_cutoff = false;
 
 bool within_shadow(vec2 frag_position) {
@@ -96,8 +96,22 @@ vec4 get_point_light_influence(vec2 frag_position) {
 vec4 get_directional_light_influence(vec2 frag_position) {
 	float greatest_brightness = 0.0;
 	vec3 color_influence = vec3(0, 0, 0);
+	bool illumination_mask_arr[4] = get_mask_as_array(illumination_mask);
 
 	for (int i = num_point_lights; i < num_point_lights + num_directional_lights; i++) {
+		bool[4] light_illumination_mask_arr = get_mask_as_array(light_illumination_masks[i]);
+
+		bool illuminated = false;
+		for (int i = 0; i < 4; i++) {
+			if (illumination_mask_arr[i] && light_illumination_mask_arr[i]) {
+				illuminated = true;
+				break;
+			}
+		}
+
+		if (!illuminated)
+			continue;
+
 		vec4 light_info = general_light_info[i];
 		vec2 light_position = light_info.xy;
 		float light_distance = light_info.z;
