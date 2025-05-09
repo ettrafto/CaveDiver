@@ -118,14 +118,20 @@ func _rotate():
 	var lower_bound
 	var upper_bound
 	
+	# used to make sure that pressing "tilt up" will tilt the player up
+	# regardless of direction they are facing 
+	var input_correction
+	
 	if facing == "right":
 		lower_bound = base_lower_bound
 		upper_bound = base_upper_bound
+		input_correction = -1
 	elif facing == "left":
 		lower_bound = -1 * base_upper_bound
 		upper_bound = -1 * base_lower_bound
+		input_correction = 1
 	
-	var input: float = _get_rotation_dir() * 0.05
+	var input: float = _get_rotation_dir() * 0.05 * input_correction
 	
 	if rotation > lower_bound and rotation < upper_bound:
 		rotation += input
