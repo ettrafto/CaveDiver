@@ -61,7 +61,6 @@ scale = Vector2(2.42827, 1.21414)
 texture = ExtResource("1_vqt7i")
 
 [node name="ProjectileBubbles" parent="." instance=ExtResource("2_1rx1k")]
-use_parent_material = true
 position = Vector2(-0.399994, -0.5)
 emitting = false
 process_material = SubResource("ParticleProcessMaterial_7clw7")
