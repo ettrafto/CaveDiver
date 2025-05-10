@@ -19,7 +19,7 @@ var attached_to = null
 var facing = "right"
 
 @onready var anim_sprite = $AnimatedSprite2D
-@onready var anim_sprite_child_pos = [$AnimatedSprite2D/resparator.position, 
+@onready var anim_sprite_child_pos = [$AnimatedSprite2D/respirator.position, 
 									  $AnimatedSprite2D/speargun.position]
 
 
@@ -85,7 +85,7 @@ func _move(state):
 		# Flip sprite based on movement direction
 		if move_input > 0:
 			anim_sprite.flip_h = false
-			$AnimatedSprite2D/resparator.position = anim_sprite_child_pos[0]
+			$AnimatedSprite2D/respirator.position = anim_sprite_child_pos[0]
 			$AnimatedSprite2D/ExhaleBubbleParticles.position = anim_sprite_child_pos[0]
 			$AnimatedSprite2D/ConstantBubbleParticles.position = anim_sprite_child_pos[0]
 			$AnimatedSprite2D/speargun.position = anim_sprite_child_pos[1]
@@ -95,7 +95,7 @@ func _move(state):
 				
 		elif move_input < 0:
 			anim_sprite.flip_h = true
-			$AnimatedSprite2D/resparator.position = anim_sprite_child_pos[0] * -1
+			$AnimatedSprite2D/respirator.position = anim_sprite_child_pos[0] * -1
 			$AnimatedSprite2D/ExhaleBubbleParticles.position = anim_sprite_child_pos[0] * -1
 			$AnimatedSprite2D/ConstantBubbleParticles.position = anim_sprite_child_pos[0] * -1
 			$AnimatedSprite2D/speargun.position = anim_sprite_child_pos[1] * -1
@@ -113,19 +113,25 @@ func _get_rotation_dir():
 	return Input.get_action_strength("tilt_up") - Input.get_action_strength("tilt_down")
 
 func _rotate():
-	var base_lower_bound = -0.33
+	var base_lower_bound = -0.45
 	var base_upper_bound = 1
 	var lower_bound
 	var upper_bound
 	
+	# used to make sure that pressing "tilt up" will tilt the player up
+	# regardless of direction they are facing 
+	var input_correction
+	
 	if facing == "right":
 		lower_bound = base_lower_bound
 		upper_bound = base_upper_bound
+		input_correction = -1
 	elif facing == "left":
 		lower_bound = -1 * base_upper_bound
 		upper_bound = -1 * base_lower_bound
+		input_correction = 1
 	
-	var input: float = _get_rotation_dir() * 0.05
+	var input: float = _get_rotation_dir() * 0.05 * input_correction
 	
 	if rotation > lower_bound and rotation < upper_bound:
 		rotation += input
@@ -147,8 +153,8 @@ func _speargun():
 func get_speargun_pos():
 	return $AnimatedSprite2D/speargun.global_position
 	
-func get_resparator():
-	return $AnimatedSprite2D/resparator
+func get_respirator():
+	return $AnimatedSprite2D/respirator
 	
 func get_attached_to():
 	return attached_to
@@ -165,7 +171,7 @@ func set_attached_to(rope_anchor):
 func emit_bubble():
 	var bubble = bubble_scene.instantiate()
 	add_sibling(bubble)
-	bubble.global_position = $AnimatedSprite2D/resparator.global_position
+	bubble.global_position = $AnimatedSprite2D/respirator.global_position
 	if bubble_count == 0:
 		$AnimatedSprite2D/ExhaleBubbleParticles.emitting = true
 	if bubble_count < 5:

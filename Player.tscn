@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dim5as52t6iqc"]
+[gd_scene load_steps=25 format=3 uid="uid://dim5as52t6iqc"]
 
 [ext_resource type="Script" uid="uid://wacxpn3t4p0l" path="res://Scripts/Player/Player.gd" id="1_e80uo"]
 [ext_resource type="Texture2D" uid="uid://muf3kyvaoxe8" path="res://Assets/Art/diver/diver1.png" id="2_cxr5p"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://cimkfoe3rjek0" path="res://Assets/Art/spear.png" id="7_dtqjt"]
 [ext_resource type="Texture2D" uid="uid://d2088yplcq6n4" path="res://Assets/DiverAnimation/6.png" id="7_r3kul"]
 [ext_resource type="Texture2D" uid="uid://bgpu2hwrgmrj" path="res://Assets/Particles/bubble_particle_super_small.png" id="8_3tkgg"]
+[ext_resource type="Material" uid="uid://brmfw8cr1466c" path="res://Shaders/NonWobble.tres" id="8_r3kul"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jatw7"]
 animations = [{
@@ -112,10 +113,11 @@ polygon = PackedVector2Array(-1, -7, 2, -7, 4, -8, 7, -11, 19, -18, 29, -13, 32,
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_jatw7")
 
-[node name="resparator" type="Node2D" parent="AnimatedSprite2D"]
+[node name="respirator" type="Node2D" parent="AnimatedSprite2D"]
 position = Vector2(28, -8)
 
 [node name="ExhaleBubbleParticles" type="GPUParticles2D" parent="AnimatedSprite2D"]
+material = ExtResource("8_r3kul")
 position = Vector2(28, -8)
 emitting = false
 amount = 25
@@ -129,6 +131,7 @@ process_material = SubResource("ParticleProcessMaterial_e80uo")
 position = Vector2(26, 2)
 
 [node name="ConstantBubbleParticles" type="GPUParticles2D" parent="AnimatedSprite2D"]
+material = ExtResource("8_r3kul")
 position = Vector2(28, -8)
 amount = 16
 texture = ExtResource("8_3tkgg")

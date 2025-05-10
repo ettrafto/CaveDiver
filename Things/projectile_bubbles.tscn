@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://0veqi5gcgddy"]
+[gd_scene load_steps=4 format=3 uid="uid://0veqi5gcgddy"]
 
-[ext_resource type="Texture2D" uid="uid://b75ogayr6y1up" path="res://Assets/Particles/bubble_particle_small.png" id="1_64dq5"]
+[ext_resource type="Texture2D" uid="uid://c8nv7ptpo18x0" path="res://Assets/Particles/bubble_particle_small.png" id="1_64dq5"]
+[ext_resource type="Material" uid="uid://brmfw8cr1466c" path="res://Shaders/NonWobble.tres" id="1_tuc8v"]
 [ext_resource type="Material" uid="uid://ca6k5px5pt6ak" path="res://projectile_bubbles.tres" id="2_tuc8v"]
 
 [node name="ProjectileBubbles" type="GPUParticles2D"]
+material = ExtResource("1_tuc8v")
 amount = 50
 texture = ExtResource("1_64dq5")
 lifetime = 2.0

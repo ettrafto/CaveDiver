@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://v54svjph8knq"]
+[gd_scene load_steps=10 format=3 uid="uid://v54svjph8knq"]
 
 [ext_resource type="Script" uid="uid://cby0llta4l1wn" path="res://Scripts/Player/spear.gd" id="1_7clw7"]
+[ext_resource type="Material" uid="uid://bdw7j3m7ekmuh" path="res://Shaders/Map.tres" id="1_rrc16"]
 [ext_resource type="Texture2D" uid="uid://cimkfoe3rjek0" path="res://Assets/Art/spear.png" id="1_vqt7i"]
 [ext_resource type="PackedScene" uid="uid://0veqi5gcgddy" path="res://Things/projectile_bubbles.tscn" id="2_1rx1k"]
+[ext_resource type="PackedScene" uid="uid://c8btmt1p1c5oi" path="res://Mob/Hitbox.tscn" id="4_ehjhf"]
 
 [sub_resource type="Curve" id="Curve_p7y5c"]
 _data = [Vector2(0.162162, 0.123596), 0.0, 0.0, 0, 0, Vector2(0.472973, 0.483146), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -41,11 +43,11 @@ turbulence_initial_displacement_min = -10.0
 turbulence_initial_displacement_max = 10.0
 turbulence_influence_over_life = SubResource("CurveTexture_tjres")
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_7clw7"]
-radius = 4.00001
+[sub_resource type="CircleShape2D" id="CircleShape2D_rrc16"]
+radius = 4.0
 
 [node name="Spear" type="RigidBody2D"]
-collision_layer = 16
+collision_layer = 256
 mass = 0.5
 gravity_scale = 0.3
 center_of_mass_mode = 1
@@ -53,25 +55,34 @@ center_of_mass = Vector2(100, 0)
 script = ExtResource("1_7clw7")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = ExtResource("1_rrc16")
 position = Vector2(36.8317, -0.286901)
 scale = Vector2(2.42827, 1.21414)
 texture = ExtResource("1_vqt7i")
-
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
-position = Vector2(36.8317, -0.286901)
-scale = Vector2(0.555034, 0.555034)
-build_mode = 1
-polygon = PackedVector2Array(62, -1, 22, -9, 22, -6, 26, -4, -67, -4, -70, -1, -67, 2, 26, 2, 22, 5, 22, 7)
 
 [node name="ProjectileBubbles" parent="." instance=ExtResource("2_1rx1k")]
 position = Vector2(-0.399994, -0.5)
 emitting = false
 process_material = SubResource("ParticleProcessMaterial_7clw7")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="PhysicsCollisionArea" type="Area2D" parent="."]
 position = Vector2(68, -1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CircleShape2D_7clw7")
+[node name="PhysicsCollisionShape" type="CollisionPolygon2D" parent="PhysicsCollisionArea"]
+position = Vector2(-31.1683, 0.713099)
+scale = Vector2(0.555034, 0.555034)
+build_mode = 1
+polygon = PackedVector2Array(62, -1, 22, -9, 22, -6, 26, -4, -67, -4, -70, -1, -67, 2, 26, 2, 22, 5, 22, 7)
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[node name="Hitbox" parent="." instance=ExtResource("4_ehjhf")]
+position = Vector2(56, -1)
+collision_layer = 8
+collision_mask = 64
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource("CircleShape2D_rrc16")
+
+[connection signal="body_entered" from="PhysicsCollisionArea" to="." method="_on_physics_collison_area_body_entered"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+
+[editable path="Hitbox"]
