@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cyo2yviksowvg"]
+[gd_scene load_steps=7 format=3 uid="uid://cyo2yviksowvg"]
 
 [ext_resource type="Material" uid="uid://bdw7j3m7ekmuh" path="res://Shaders/Map.tres" id="1_2tisg"]
 [ext_resource type="Script" uid="uid://dw6b8pnj2ohsa" path="res://Scripts/Map/RopeAnchor.gd" id="1_vmdxm"]
 [ext_resource type="Texture2D" uid="uid://dltuioxm5nceb" path="res://Assets/Art/anchor_point.png" id="2_d4tq8"]
+[ext_resource type="Script" uid="uid://c77uck4vbimcc" path="res://Shaders/CustomPointLight2D.gd" id="4_1hilf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2tisg"]
 radius = 27.0
@@ -11,9 +12,9 @@ radius = 27.0
 radius = 5.0
 
 [node name="RopeAnchor" type="StaticBody2D"]
+material = ExtResource("1_2tisg")
 collision_layer = 0
 collision_mask = 0
-material = ExtResource("1_2tisg")
 script = ExtResource("1_vmdxm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -51,6 +52,11 @@ node_a = NodePath("..")
 bias = 0.9
 length = 2.0
 rest_length = 1.0
+
+[node name="CustomPointLight2D" type="Node2D" parent="."]
+script = ExtResource("4_1hilf")
+intensity = 0.2
+metadata/_custom_type_script = "uid://c77uck4vbimcc"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="BodyDetectionArea" to="." method="_on_body_detection_area_body_exited"]
